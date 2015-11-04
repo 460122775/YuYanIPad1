@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIView"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NavListView" customModule="YuYanIPad1" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="748"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_bg" translatesAutoresizingMaskIntoConstraints="NO" id="nif-CL-RSe">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="748"/>
+                    <animations/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="未登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3i-7m-4jC">
+                    <rect key="frame" x="75" y="126" width="90" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="Hnn-7R-sH9">
+                    <rect key="frame" x="15" y="173" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6z7-ye-5uQ">
+                    <rect key="frame" x="16" y="175" width="210" height="42"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="应用设置">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled" backgroundImage="list_item_choosed"/>
+                    <state key="selected" title="应用设置" backgroundImage="list_item_choosed"/>
+                    <state key="highlighted" title="应用设置"/>
+                    <connections>
+                        <action selector="setBtnClickSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="Oep-VD-vzu"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="Fk0-Ap-kcZ">
+                    <rect key="frame" x="15" y="217" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFS-L8-0NJ">
+                    <rect key="frame" x="15" y="219" width="210" height="42"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="关于我们">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="list_item_choosed"/>
+                    <connections>
+                        <action selector="setBtnClickSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="Y9p-AF-p0L"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="lin-OZ-28t">
+                    <rect key="frame" x="15" y="261" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wy-RJ-F1s">
+                    <rect key="frame" x="15" y="263" width="210" height="42"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="政策法规">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="list_item_choosed"/>
+                    <connections>
+                        <action selector="setBtnClickSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="Nvj-32-LkF"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="ldw-at-8r6">
+                    <rect key="frame" x="15" y="305" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kcn-hf-YvX">
+                    <rect key="frame" x="15" y="307" width="210" height="42"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="条款声明">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="list_item_choosed"/>
+                    <connections>
+                        <action selector="setBtnClickSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="8qO-NR-o2P"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="iFJ-gq-Phr">
+                    <rect key="frame" x="15" y="349" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5oA-U8-r6f">
+                    <rect key="frame" x="15" y="351" width="210" height="42"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="版本信息">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" backgroundImage="list_item_choosed"/>
+                    <connections>
+                        <action selector="setBtnClickSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Ll-3m-g2k"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="Odh-EY-T8x">
+                    <rect key="frame" x="15" y="393" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="setting_pic_Co" translatesAutoresizingMaskIntoConstraints="NO" id="kUs-sC-9km">
+                    <rect key="frame" x="20" y="725" width="201" height="10"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Efk-T8-pam">
+                    <rect key="frame" x="75" y="18" width="90" height="90"/>
+                    <animations/>
+                    <state key="normal" image="setting_btn_login_pressed">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="setting_btn_login_normal"/>
+                    <connections>
+                        <action selector="setBtnClickSelect:" destination="iN0-l3-epB" eventType="touchUpInside" id="alP-Nh-GhL"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" red="0.20392156862745098" green="0.29019607843137257" blue="0.34509803921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="aboutUsBtn" destination="bFS-L8-0NJ" id="iFA-GB-De4"/>
+                <outlet property="clauseBtn" destination="Kcn-hf-YvX" id="bmp-G1-DN8"/>
+                <outlet property="configBtn" destination="6z7-ye-5uQ" id="jID-HI-bJ8"/>
+                <outlet property="lawBtn" destination="0wy-RJ-F1s" id="P14-T2-Drf"/>
+                <outlet property="loginBtn" destination="Efk-T8-pam" id="7GV-3m-PZo"/>
+                <outlet property="userNameLabel" destination="v3i-7m-4jC" id="coG-Wa-PRO"/>
+                <outlet property="versionBtn" destination="5oA-U8-r6f" id="Isc-EV-yjX"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="list_bg" width="240" height="748"/>
+        <image name="list_item_choosed" width="210" height="40"/>
+        <image name="list_item_split" width="210" height="1"/>
+        <image name="setting_btn_login_normal" width="90" height="90"/>
+        <image name="setting_btn_login_pressed" width="90" height="90"/>
+        <image name="setting_pic_Co" width="201" height="10"/>
+    </resources>
+</document>

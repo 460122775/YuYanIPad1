@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CartoonBarView" customModule="YuYanIPad1" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="594" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YYg-mS-Xsf">
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIV-qc-rax">
+                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_ani_btn_rewind_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_ani_btn_rewind_pressed"/>
+                            <connections>
+                                <action selector="multipleBackBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="RcA-Id-lhS"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rx8-V4-Wjg">
+                            <rect key="frame" x="48" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_ani_btn_prev_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_ani_btn_prev_pressed"/>
+                            <connections>
+                                <action selector="backBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="l0h-aF-SZ3"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map_ani_playbar_bg" translatesAutoresizingMaskIntoConstraints="NO" id="qw8-uZ-Hbk">
+                            <rect key="frame" x="96" y="0.0" width="354" height="48"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofv-tt-wRw">
+                            <rect key="frame" x="110" y="6" width="36" height="36"/>
+                            <state key="normal" title="Button" image="map_ani_btn_controller_pressed">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="map_ani_btn_controller_normal"/>
+                            <connections>
+                                <action selector="sliderBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Kn0-o2-9Oh"/>
+                                <action selector="sliderBtnClick:" destination="iN0-l3-epB" eventType="touchUpOutside" id="wRk-cT-JAB"/>
+                                <action selector="sliderBtnDrag:forEvent:" destination="iN0-l3-epB" eventType="touchDragInside" id="0Kk-69-MV8"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mbS-VS-Trn">
+                            <rect key="frame" x="450" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_ani_btn_next_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_ani_btn_next_pressed"/>
+                            <connections>
+                                <action selector="preBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="q6d-Vh-i3q"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8K-do-cgi">
+                            <rect key="frame" x="498" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_ani_btn_forward_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_ani_btn_forward_pressed"/>
+                            <connections>
+                                <action selector="multiplePreBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="ARO-br-L3F"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwX-1T-eFg">
+                    <rect key="frame" x="546" y="0.0" width="48" height="48"/>
+                    <state key="normal" title="Button" image="map_btn_ani_normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="map_ani_btn_stop_normal"/>
+                    <state key="highlighted" image="map_ani_btn_stop_normal"/>
+                    <connections>
+                        <action selector="controlBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="V5K-k0-SmW"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backBtn" destination="Rx8-V4-Wjg" id="Wkc-ou-SVG"/>
+                <outlet property="buttonContainerView" destination="YYg-mS-Xsf" id="izA-I4-4A1"/>
+                <outlet property="controlBtn" destination="ZwX-1T-eFg" id="W9Z-p4-IVt"/>
+                <outlet property="multipleBackBtn" destination="wIV-qc-rax" id="cuj-5B-s7b"/>
+                <outlet property="multiplePreBtn" destination="S8K-do-cgi" id="7S3-qW-d2R"/>
+                <outlet property="preBtn" destination="mbS-VS-Trn" id="ag7-3h-flB"/>
+                <outlet property="sliderBgImg" destination="qw8-uZ-Hbk" id="IG6-ln-5EJ"/>
+                <outlet property="sliderBtn" destination="Ofv-tt-wRw" id="gtc-Az-6ep"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="map_ani_btn_controller_normal" width="36" height="36"/>
+        <image name="map_ani_btn_controller_pressed" width="36" height="36"/>
+        <image name="map_ani_btn_forward_normal" width="49" height="48"/>
+        <image name="map_ani_btn_forward_pressed" width="49" height="48"/>
+        <image name="map_ani_btn_next_normal" width="49" height="48"/>
+        <image name="map_ani_btn_next_pressed" width="49" height="48"/>
+        <image name="map_ani_btn_prev_normal" width="49" height="48"/>
+        <image name="map_ani_btn_prev_pressed" width="49" height="48"/>
+        <image name="map_ani_btn_rewind_normal" width="49" height="48"/>
+        <image name="map_ani_btn_rewind_pressed" width="49" height="48"/>
+        <image name="map_ani_btn_stop_normal" width="49" height="48"/>
+        <image name="map_ani_playbar_bg" width="353" height="48"/>
+        <image name="map_btn_ani_normal" width="48" height="48"/>
+    </resources>
+</document>

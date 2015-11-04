@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SwitchToolView" customModule="YuYanIPad1" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="188" height="188"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yzu-Ff-LEn">
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AX4-iN-A9q">
+                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_btn_view_angle_up_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_btn_view_angle_up_pressed"/>
+                            <connections>
+                                <action selector="upBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="LiA-JN-QPE"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map_btn_view_angle_mid" translatesAutoresizingMaskIntoConstraints="NO" id="or7-Rc-voB">
+                            <rect key="frame" x="0.0" y="48" width="48" height="24"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uy4-hU-20e">
+                            <rect key="frame" x="0.0" y="72" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_btn_view_angle_down_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_btn_view_angle_down_pressed"/>
+                            <connections>
+                                <action selector="downBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="dt2-i1-oo9"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EXW-MT-2Zc">
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Al5-1c-NND">
+                            <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_btn_view_layer_left_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_btn_view_layer_left_pressed"/>
+                            <connections>
+                                <action selector="leftBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="ubU-43-eVy"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map_btn_view_layer_mid" translatesAutoresizingMaskIntoConstraints="NO" id="FMp-xc-1Vj">
+                            <rect key="frame" x="48" y="0.0" width="24" height="48"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kkT-N4-BeS">
+                            <rect key="frame" x="72" y="0.0" width="48" height="48"/>
+                            <state key="normal" title="Button" image="map_btn_view_layer_right_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="map_btn_view_layer_right_pressed"/>
+                            <connections>
+                                <action selector="rightBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="bOb-U3-7vt"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wad-1z-AkL">
+                    <rect key="frame" x="140" y="140" width="48" height="48"/>
+                    <state key="normal" title="Button" image="map_btn_view_normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="map_btn_view_pressed"/>
+                    <state key="highlighted" image="map_btn_view_pressed"/>
+                    <connections>
+                        <action selector="swtichControlBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="FsW-kX-qYT"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="buttonContainerH" destination="EXW-MT-2Zc" id="GMP-Bo-zdI"/>
+                <outlet property="buttonContainerV" destination="Yzu-Ff-LEn" id="3rZ-4z-sVa"/>
+                <outlet property="downBtn" destination="Uy4-hU-20e" id="8P5-vj-Dsj"/>
+                <outlet property="leftBtn" destination="Al5-1c-NND" id="sF0-A2-dAP"/>
+                <outlet property="leftRightImg" destination="FMp-xc-1Vj" id="2ac-VE-EJ3"/>
+                <outlet property="rightBtn" destination="kkT-N4-BeS" id="zm5-8q-gY8"/>
+                <outlet property="switchControlBtn" destination="Wad-1z-AkL" id="elp-aW-zQb"/>
+                <outlet property="upBtn" destination="AX4-iN-A9q" id="nej-Nf-RHK"/>
+                <outlet property="upDownImg" destination="or7-Rc-voB" id="Mcg-ZR-NYo"/>
+            </connections>
+            <point key="canvasLocation" x="258" y="494"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="map_btn_view_angle_down_normal" width="48" height="48"/>
+        <image name="map_btn_view_angle_down_pressed" width="48" height="48"/>
+        <image name="map_btn_view_angle_mid" width="48" height="24"/>
+        <image name="map_btn_view_angle_up_normal" width="48" height="48"/>
+        <image name="map_btn_view_angle_up_pressed" width="48" height="48"/>
+        <image name="map_btn_view_layer_left_normal" width="48" height="48"/>
+        <image name="map_btn_view_layer_left_pressed" width="48" height="48"/>
+        <image name="map_btn_view_layer_mid" width="24" height="48"/>
+        <image name="map_btn_view_layer_right_normal" width="48" height="48"/>
+        <image name="map_btn_view_layer_right_pressed" width="48" height="48"/>
+        <image name="map_btn_view_normal" width="48" height="48"/>
+        <image name="map_btn_view_pressed" width="48" height="48"/>
+    </resources>
+</document>

@@ -1,0 +1,99 @@
+//
+//  ProductViewController.swift
+//  YuYanIPad1
+//
+//  Created by Yachen Dai on 3/18/15.
+//  Copyright (c) 2015 cdyw. All rights reserved.
+//
+
+import Foundation
+import UIKit
+
+class ProductViewController : UIViewController
+{
+    @IBOutlet var topTitleBarView: UIView!
+    @IBOutlet var titleBarBgImg: UIImageView!
+    @IBOutlet var productContainerView: UIView!
+    @IBOutlet var leftControlBtn: UIButton!
+    @IBOutlet var titleLabel: UILabel!
+    
+    var productViewA : ProductViewA?
+    var switchToolView : SwitchToolView?
+    var cartoonBarView : CartoonBarView?
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        self.topTitleBarView.layer.masksToBounds = true
+        // Init product view.
+        self.productViewA = (NSBundle.mainBundle().loadNibNamed("ProductViewA", owner: self, options: nil) as NSArray).lastObject as? ProductViewA
+        self.productViewA!.frame.origin = CGPointMake(0, 0)
+        self.productContainerView.subviews.map { $0.removeFromSuperview() }
+        self.productContainerView.addSubview(self.productViewA!)
+        // Init tools of the switch at right bottom corner.
+        self.switchToolView = (NSBundle.mainBundle().loadNibNamed("SwitchToolView", owner: self, options: nil) as NSArray).lastObject as? SwitchToolView
+        self.switchToolView!.frame.origin = CGPointMake(738, 422)
+        self.productContainerView.addSubview(self.switchToolView!)
+        // Init tools of the cartoon bar at right bottom corner.
+        self.cartoonBarView = (NSBundle.mainBundle().loadNibNamed("CartoonBarView", owner: self, options: nil) as NSArray).lastObject as? CartoonBarView
+        self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
+        self.productContainerView.addSubview(self.cartoonBarView!)
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
+        
+    }
+    
+    var productLeftView : ProductLeftView?
+    @IBAction func leftControlBtnClick(sender: UIButton)
+    {
+        sender.selected = !sender.selected
+        if sender.selected == true
+        {
+            if self.productLeftView == nil
+            {
+                self.productLeftView = (NSBundle.mainBundle().loadNibNamed("ProductLeftView", owner: self, options: nil) as NSArray).lastObject as? ProductLeftView
+                self.productLeftView?.frame.origin = CGPointMake(-240, 0)
+                self.view.addSubview(self.productLeftView!)
+            }
+            self.productLeftView!.segmentControlChanged(self.productLeftView!.segmentControl)
+            UIView.animateWithDuration(0.6, animations: { () -> Void in
+                self.topTitleBarView.frame.origin = CGPointMake(240, 0)
+                self.topTitleBarView.frame.size = CGSizeMake(522, 48)
+                self.productLeftView!.frame.origin = CGPointMake(0, 0)
+            }, completion: { (Bool) -> Void in
+                self.titleBarBgImg.frame.size = CGSizeMake(464, 48)
+            })
+        }else{
+            self.titleBarBgImg.frame.size = CGSizeMake(704, 48)
+            UIView.animateWithDuration(0.6, animations: { () -> Void in
+                self.topTitleBarView.frame = CGRectMake(0, 0, 762, 48)
+                self.productLeftView!.frame.origin = CGPointMake(-240, 0)
+            })
+        }
+    }
+    
+    @IBAction func positionBtnClick(sender: UIButton)
+    {
+        sender.selected = !sender.selected
+    }
+
+    @IBAction func lineBtnClick(sender: UIButton)
+    {
+        sender.selected = !sender.selected
+    }
+    
+    @IBAction func camaraBtnClick(sender: UIButton)
+    {
+        sender.selected = !sender.selected
+    }
+    
+    override func didReceiveMemoryWarning()
+    {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+}
+    

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LoginResultView" customModule="YuYanIPad1" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="704" height="748"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting_user_ico_big" translatesAutoresizingMaskIntoConstraints="NO" id="OnA-o2-9Yf">
+                    <rect key="frame" x="272" y="100" width="160" height="160"/>
+                    <animations/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user007" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyR-pS-jUt">
+                    <rect key="frame" x="300" y="290" width="104" height="34"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting_user_ico_admin" translatesAutoresizingMaskIntoConstraints="NO" id="ffI-vM-DWS">
+                    <rect key="frame" x="313" y="340" width="78" height="24"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="78" id="lnn-0t-xZj"/>
+                        <constraint firstAttribute="height" constant="24" id="rql-8a-8cu"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r8y-oJ-hvo">
+                    <rect key="frame" x="247" y="439" width="210" height="48"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="B0d-Be-85p"/>
+                        <constraint firstAttribute="width" constant="210" id="RS9-Cv-bDS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="退出登录" backgroundImage="common_btn_type2_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="loginOutBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="2cO-jD-MZZ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ffI-vM-DWS" firstAttribute="top" secondItem="oyR-pS-jUt" secondAttribute="bottom" constant="16" id="03b-42-xoH"/>
+                <constraint firstItem="r8y-oJ-hvo" firstAttribute="top" secondItem="ffI-vM-DWS" secondAttribute="bottom" constant="75" id="3oT-FK-IOd"/>
+                <constraint firstItem="r8y-oJ-hvo" firstAttribute="centerX" secondItem="ffI-vM-DWS" secondAttribute="centerX" id="YID-Pl-R22"/>
+                <constraint firstItem="OnA-o2-9Yf" firstAttribute="centerX" secondItem="oyR-pS-jUt" secondAttribute="centerX" id="Zym-5j-WlK"/>
+                <constraint firstItem="oyR-pS-jUt" firstAttribute="top" secondItem="OnA-o2-9Yf" secondAttribute="bottom" constant="30" id="gkG-6X-dwV"/>
+                <constraint firstItem="OnA-o2-9Yf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="joK-SX-D1X"/>
+                <constraint firstItem="OnA-o2-9Yf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="wrG-Iq-D75"/>
+                <constraint firstItem="ffI-vM-DWS" firstAttribute="centerX" secondItem="oyR-pS-jUt" secondAttribute="centerX" id="yiK-qa-ZSg"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="userJobImg" destination="ffI-vM-DWS" id="2MN-kb-DR2"/>
+                <outlet property="userNameLabel" destination="oyR-pS-jUt" id="h1R-CG-rhQ"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="common_btn_type2_normal" width="130" height="48"/>
+        <image name="setting_user_ico_admin" width="78" height="24"/>
+        <image name="setting_user_ico_big" width="160" height="160"/>
+    </resources>
+</document>

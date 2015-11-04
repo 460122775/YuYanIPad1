@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIView"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HistoryChoiceView" customModule="YuYanIPad1" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="748"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_bg" translatesAutoresizingMaskIntoConstraints="NO" id="H8H-4H-tiY">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="748"/>
+                    <animations/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="产品选择" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ6-fD-ztS">
+                    <rect key="frame" x="18" y="18" width="204" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.015686274510000001" green="0.69803921570000005" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUZ-Pf-A7Z">
+                    <rect key="frame" x="18" y="54" width="204" height="36"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="14"/>
+                    <state key="normal" backgroundImage="history_pic_infobg">
+                        <color key="titleColor" red="0.015686274510000001" green="0.69803921570000005" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="productSelectControl:" destination="iN0-l3-epB" eventType="touchUpInside" id="a29-ed-1ZD"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="XmN-8i-LX0">
+                    <rect key="frame" x="15" y="110" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="固定时段" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0J1-Ga-RoJ">
+                    <rect key="frame" x="18" y="137" width="204" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.015686274510000001" green="0.69803921570000005" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wmd-Qa-NyB">
+                    <rect key="frame" x="18" y="173" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="半小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="8r6-dT-xLc"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NCy-r9-k0d">
+                    <rect key="frame" x="127" y="173" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="1小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Nbi-e0-kai"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Eb-8h-n9v">
+                    <rect key="frame" x="18" y="228" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="2小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="43v-lQ-8ii"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SA-ij-OSX">
+                    <rect key="frame" x="127" y="228" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="4小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="8Uo-cc-jrp"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AuT-Q2-gY2">
+                    <rect key="frame" x="18" y="283" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="6小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="c08-0S-deE"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XuF-1S-i2t">
+                    <rect key="frame" x="127" y="283" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="8小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="rrB-h4-JaU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qPv-LR-I9f">
+                    <rect key="frame" x="18" y="338" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="12小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="TUQ-2s-TBV"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZSd-tN-A1N">
+                    <rect key="frame" x="127" y="338" width="95" height="40"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="24小时" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="preciseTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="orx-gP-SiK"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="XBY-6Q-phW">
+                    <rect key="frame" x="15" y="398" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="自选时段" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxk-jc-FfM">
+                    <rect key="frame" x="18" y="425" width="204" height="21"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.015686274510000001" green="0.69803921570000005" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="common_btn_type1_normal" translatesAutoresizingMaskIntoConstraints="NO" id="iL5-7O-idJ">
+                    <rect key="frame" x="18" y="469" width="204" height="80"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8x3-Yc-lWH">
+                    <rect key="frame" x="46" y="484" width="148" height="14"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="2014-07-21 15:30:30">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="startTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="S5u-OH-5Mb"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ydI-bf-orS">
+                    <rect key="frame" x="46" y="502" width="148" height="14"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="~">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLP-Mn-1F4">
+                    <rect key="frame" x="46" y="520" width="148" height="14"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="2014-07-22 14:28:00">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="endTimeBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="uIp-bG-Lvf"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_item_split" translatesAutoresizingMaskIntoConstraints="NO" id="7i9-Fl-RNX">
+                    <rect key="frame" x="15" y="568" width="210" height="2"/>
+                    <animations/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yem-4F-tfB">
+                    <rect key="frame" x="18" y="683" width="207" height="48"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <state key="normal" title="查询" backgroundImage="common_btn_type2_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type2_pressed"/>
+                    <connections>
+                        <action selector="queryBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="VoH-KP-imo"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="endTimeBtn" destination="lLP-Mn-1F4" id="VHB-FN-V8o"/>
+                <outlet property="preciseTimeBtn_eightHour" destination="XuF-1S-i2t" id="JqB-5M-LyS"/>
+                <outlet property="preciseTimeBtn_fourHour" destination="8SA-ij-OSX" id="1Qf-ck-lE4"/>
+                <outlet property="preciseTimeBtn_halfAnHour" destination="Wmd-Qa-NyB" id="9a2-jw-A5N"/>
+                <outlet property="preciseTimeBtn_oneDay" destination="ZSd-tN-A1N" id="X5k-HF-O1I"/>
+                <outlet property="preciseTimeBtn_oneHour" destination="NCy-r9-k0d" id="rxt-D2-pQV"/>
+                <outlet property="preciseTimeBtn_sixHour" destination="AuT-Q2-gY2" id="7fD-rf-XZ5"/>
+                <outlet property="preciseTimeBtn_twelveHour" destination="qPv-LR-I9f" id="MhZ-Ze-utc"/>
+                <outlet property="preciseTimeBtn_twoHour" destination="5Eb-8h-n9v" id="Wob-OD-LC5"/>
+                <outlet property="productChooseBtn" destination="TUZ-Pf-A7Z" id="sJr-X5-ggi"/>
+                <outlet property="startTimeBtn" destination="8x3-Yc-lWH" id="1qg-Y3-Wh6"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="common_btn_type1_normal" width="130" height="48"/>
+        <image name="common_btn_type1_pressed" width="130" height="48"/>
+        <image name="common_btn_type2_normal" width="130" height="48"/>
+        <image name="common_btn_type2_pressed" width="130" height="48"/>
+        <image name="history_pic_infobg" width="216" height="36"/>
+        <image name="list_bg" width="240" height="748"/>
+        <image name="list_item_split" width="210" height="1"/>
+    </resources>
+</document>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductViewController" customModule="YuYanIPad1" customModuleProvider="target">
+            <connections>
+                <outlet property="leftControlBtn" destination="GkX-fQ-Bmf" id="zMD-bX-58U"/>
+                <outlet property="productContainerView" destination="mmb-6w-rQZ" id="8fT-Z5-NwD"/>
+                <outlet property="titleBarBgImg" destination="ffV-JP-nzK" id="QWE-gw-Xo4"/>
+                <outlet property="titleLabel" destination="HnZ-9P-uLF" id="l5g-N3-BBf"/>
+                <outlet property="topTitleBarView" destination="oqI-n0-S0q" id="icb-7q-aTf"/>
+                <outlet property="view" destination="Iz8-e8-3GA" id="SCV-C1-NTN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Iz8-e8-3GA">
+            <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" id="mmb-6w-rQZ">
+                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view clipsSubviews="YES" contentMode="top" id="oqI-n0-S0q">
+                    <rect key="frame" x="0.0" y="0.0" width="762" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GkX-fQ-Bmf">
+                            <rect key="frame" x="0.0" y="0.0" width="58" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <accessibility key="accessibilityConfiguration">
+                                <accessibilityTraits key="traits" none="YES" button="YES" selected="YES"/>
+                            </accessibility>
+                            <state key="normal" image="topbar_btn_pinfo_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="topbar_btn_pinfo_pressed"/>
+                            <state key="highlighted" image="topbar_btn_pinfo_pressed"/>
+                            <connections>
+                                <action selector="leftControlBtnClick:" destination="-1" eventType="touchUpInside" id="cIE-RL-dtP"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topbar_bg" id="ffV-JP-nzK">
+                            <rect key="frame" x="58" y="0.0" width="704" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" id="jTn-VV-IHK">
+                            <rect key="frame" x="70" y="15" width="47" height="18"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="topbar_pic_radarstatus_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-12-10  00:15:56  [6.19°]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HnZ-9P-uLF">
+                            <rect key="frame" x="125" y="13" width="250" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="j0p-PX-G5E">
+                    <rect key="frame" x="761" y="0.0" width="174" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AKH-nU-iro">
+                            <rect key="frame" x="117" y="0.0" width="58" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="topbar_btn_scrshot_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="topbar_btn_scrshot_pressed"/>
+                            <state key="highlighted" image="topbar_btn_scrshot_pressed"/>
+                            <connections>
+                                <action selector="camaraBtnClick:" destination="-1" eventType="touchUpInside" id="eAq-q8-iEC"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Z76-E5-hlL">
+                            <rect key="frame" x="59" y="0.0" width="58" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="topbar_btn_mesure_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="topbar_btn_mesure_pressed"/>
+                            <state key="highlighted" image="topbar_btn_mesure_pressed"/>
+                            <connections>
+                                <action selector="lineBtnClick:" destination="-1" eventType="touchUpInside" id="Zmd-16-uxn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mO1-c1-eRR">
+                            <rect key="frame" x="1" y="0.0" width="58" height="48"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button" image="topbar_btn_showtag_normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="topbar_btn_showtag_pressed"/>
+                            <state key="highlighted" image="topbar_btn_showtag_pressed"/>
+                            <connections>
+                                <action selector="positionBtnClick:" destination="-1" eventType="touchUpInside" id="Ltn-Nb-IUl"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="374" y="585"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="topbar_bg" width="704" height="48"/>
+        <image name="topbar_btn_mesure_normal" width="58" height="48"/>
+        <image name="topbar_btn_mesure_pressed" width="58" height="48"/>
+        <image name="topbar_btn_pinfo_normal" width="58" height="48"/>
+        <image name="topbar_btn_pinfo_pressed" width="58" height="48"/>
+        <image name="topbar_btn_scrshot_normal" width="58" height="48"/>
+        <image name="topbar_btn_scrshot_pressed" width="58" height="48"/>
+        <image name="topbar_btn_showtag_normal" width="58" height="48"/>
+        <image name="topbar_btn_showtag_pressed" width="58" height="48"/>
+        <image name="topbar_pic_radarstatus_normal" width="47" height="18"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

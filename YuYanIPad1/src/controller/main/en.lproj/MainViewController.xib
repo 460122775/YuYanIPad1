@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="YuYanIPad1" customModuleProvider="target">
+            <connections>
+                <outlet property="chatBtn" destination="NE9-wY-alv" id="zgM-50-ni4"/>
+                <outlet property="currentBtn" destination="HMz-iS-m1E" id="MkP-dh-x8c"/>
+                <outlet property="historyBtn" destination="MK2-CN-v2i" id="gLa-eG-fNJ"/>
+                <outlet property="rightView" destination="IEA-Jj-Ijb" id="mxo-Uo-IeC"/>
+                <outlet property="settingBtn" destination="3kW-SU-GaW" id="kgn-MV-g6G"/>
+                <outlet property="thresholdBtn" destination="ltf-ja-eIH" id="s3N-xJ-Dvo"/>
+                <outlet property="view" destination="BuD-WI-j8H" id="xqG-Ib-XgY"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="BuD-WI-j8H">
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IEA-Jj-Ijb" userLabel="rightView">
+                    <rect key="frame" x="88" y="20" width="936" height="748"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPC-82-ADN">
+                            <rect key="frame" x="-79" y="8" width="936" height="748"/>
+                            <animations/>
+                        </imageView>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gys-cH-mRq" userLabel="navBar">
+                    <rect key="frame" x="0.0" y="20" width="88" height="748"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMz-iS-m1E" userLabel="currentBtn">
+                            <rect key="frame" x="0.0" y="0.0" width="88" height="100"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="FTE-nS-5wR"/>
+                                <constraint firstAttribute="width" constant="88" id="g0g-8H-0iq"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="navbar_btn_home_normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="实时产品">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <state key="selected" backgroundImage="navbar_btn_home_pressed"/>
+                            <connections>
+                                <action selector="currentBtnClick:" destination="-1" eventType="touchUpInside" id="Nbf-DU-6wx"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MK2-CN-v2i" userLabel="historyBtn">
+                            <rect key="frame" x="0.0" y="100" width="88" height="100"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="100" id="7Eh-ho-lCw"/>
+                                <constraint firstAttribute="width" constant="88" id="ZtI-7b-PNd"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="navbar_btn_history_normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="历史查询">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <state key="selected" backgroundImage="navbar_btn_history_pressed"/>
+                            <state key="highlighted">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="历史查询">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <connections>
+                                <action selector="historyBtnClick:" destination="-1" eventType="touchUpInside" id="3yc-GG-FC3"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="chatBtn">
+                            <rect key="frame" x="0.0" y="200" width="88" height="100"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="88" id="8Wn-lt-1b6"/>
+                                <constraint firstAttribute="height" constant="100" id="SVy-Sh-Ffo"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="navbar_btn_chat_normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="聊天">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <state key="selected" backgroundImage="navbar_btn_chat_pressed"/>
+                            <state key="highlighted" backgroundImage="navbar_btn_chat_pressed">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="聊天">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <connections>
+                                <action selector="chatBtnClick:" destination="-1" eventType="touchUpInside" id="gYg-jx-ipJ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ltf-ja-eIH" userLabel="thresholdBtn">
+                            <rect key="frame" x="0.0" y="300" width="88" height="100"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="88" id="Ca1-h0-l1M"/>
+                                <constraint firstAttribute="height" constant="100" id="GAP-sc-Ojp"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="navbar_btn_warning_normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="预警">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <state key="selected" backgroundImage="navbar_btn_warning_pressed"/>
+                            <state key="highlighted" backgroundImage="navbar_btn_warning_pressed"/>
+                            <connections>
+                                <action selector="thresholdBtnClick:" destination="-1" eventType="touchUpInside" id="7mu-KN-4yg"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3kW-SU-GaW" userLabel="settingBtn">
+                            <rect key="frame" x="0.0" y="648" width="88" height="100"/>
+                            <animations/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="88" id="LAE-IB-TuW"/>
+                                <constraint firstAttribute="height" constant="100" id="dBo-L5-kxM"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="navbar_btn_setting_normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="系统设置">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                            <color key="titleColor" red="0.40000000596046448" green="1" blue="0.80000001192092896" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <state key="selected" backgroundImage="navbar_btn_setting_pressed"/>
+                            <state key="highlighted" backgroundImage="navbar_btn_setting_pressed">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="系统设置">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <connections>
+                                <action selector="settingBtnClick:" destination="-1" eventType="touchUpInside" id="RIA-ga-Q6J"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="0.015686274509803921" green="0.69803921568627447" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="ltf-ja-eIH" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="leading" id="1Nb-8e-Bbt"/>
+                        <constraint firstItem="MK2-CN-v2i" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="leading" id="5b2-n8-Fsu"/>
+                        <constraint firstAttribute="trailing" secondItem="MK2-CN-v2i" secondAttribute="trailing" id="6I8-zk-xE6"/>
+                        <constraint firstItem="HMz-iS-m1E" firstAttribute="top" secondItem="gys-cH-mRq" secondAttribute="top" id="89T-Nq-bx0"/>
+                        <constraint firstAttribute="bottom" secondItem="3kW-SU-GaW" secondAttribute="bottom" id="FhH-Xo-d7h"/>
+                        <constraint firstItem="MK2-CN-v2i" firstAttribute="top" secondItem="HMz-iS-m1E" secondAttribute="top" constant="100" id="IHD-o8-wy4"/>
+                        <constraint firstItem="HMz-iS-m1E" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="leading" id="Sxl-jH-N7N"/>
+                        <constraint firstItem="ltf-ja-eIH" firstAttribute="top" secondItem="NE9-wY-alv" secondAttribute="top" constant="100" id="Un3-d2-Z7B"/>
+                        <constraint firstItem="3kW-SU-GaW" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="leading" id="abh-0F-fa2"/>
+                        <constraint firstItem="NE9-wY-alv" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="leading" id="prl-MC-JGD"/>
+                        <constraint firstAttribute="trailing" secondItem="HMz-iS-m1E" secondAttribute="trailing" id="wFE-d1-sOf"/>
+                        <constraint firstItem="MK2-CN-v2i" firstAttribute="top" secondItem="NE9-wY-alv" secondAttribute="top" constant="-100" id="xIQ-YU-OmT"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="IEA-Jj-Ijb" firstAttribute="top" secondItem="BuD-WI-j8H" secondAttribute="top" constant="20" id="0oB-zh-4XD"/>
+                <constraint firstItem="IEA-Jj-Ijb" firstAttribute="height" secondItem="gys-cH-mRq" secondAttribute="height" id="Ngw-b1-2w3"/>
+                <constraint firstItem="gys-cH-mRq" firstAttribute="leading" secondItem="BuD-WI-j8H" secondAttribute="leading" id="OLI-Eb-dWn"/>
+                <constraint firstAttribute="bottom" secondItem="gys-cH-mRq" secondAttribute="bottom" id="c03-b1-nbj"/>
+                <constraint firstAttribute="bottom" secondItem="IEA-Jj-Ijb" secondAttribute="bottom" id="cgj-P6-WIp"/>
+                <constraint firstItem="gys-cH-mRq" firstAttribute="top" secondItem="BuD-WI-j8H" secondAttribute="top" constant="20" id="i2S-iq-Say"/>
+                <constraint firstItem="IEA-Jj-Ijb" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="trailing" id="men-Qe-Key"/>
+                <constraint firstAttribute="trailing" secondItem="IEA-Jj-Ijb" secondAttribute="trailing" id="yU0-uk-Ggr"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="navbar_btn_chat_normal" width="88" height="100"/>
+        <image name="navbar_btn_chat_pressed" width="88" height="100"/>
+        <image name="navbar_btn_history_normal" width="88" height="100"/>
+        <image name="navbar_btn_history_pressed" width="88" height="100"/>
+        <image name="navbar_btn_home_normal" width="88" height="100"/>
+        <image name="navbar_btn_home_pressed" width="88" height="100"/>
+        <image name="navbar_btn_setting_normal" width="88" height="100"/>
+        <image name="navbar_btn_setting_pressed" width="88" height="100"/>
+        <image name="navbar_btn_warning_normal" width="88" height="100"/>
+        <image name="navbar_btn_warning_pressed" width="88" height="100"/>
+    </resources>
+</document>
