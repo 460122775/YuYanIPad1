@@ -38,7 +38,6 @@ class MainViewController : UIViewController
     
     func socketConnectSuccess(notification : NSNotification)
     {
-        print("MainViewController : Socket Connect Success.")
         UserModel.getInstance.loginControl(nil, userPwd: nil)
     }
     

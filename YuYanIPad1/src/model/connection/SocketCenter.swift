@@ -42,37 +42,10 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
         }
         return Static.instance
     }
-
-    /*
-    *  Delegates of NSNetService
-    **/
-    
-    func netServiceDidPublish(sender: NSNetService)
-    {
-        print("Bonjour service published. domain: \(sender.domain), type: \(sender.type), name: \(sender.name), port: \(sender.port)")
-    }
-    
-    func netService(sender: NSNetService, didNotPublish errorDict: [String : NSNumber])
-    {
-        print("Unable to create socket. domain: \(sender.domain), type: \(sender.type), name: \(sender.name), port: \(sender.port), Error \(errorDict)")
-    }
-    
-    /*
-    *  END OF Delegates
-    **/
     
     /*
     *  Delegates of GCDAsyncSokcket
     **/
-    
-    func socket(sock: GCDAsyncSocket!, didAcceptNewSocket newSocket: GCDAsyncSocket!)
-    {
-        print("Did accept new socket")
-        gcdSocket = newSocket
-        gcdSocket.readDataToLength(UInt(sizeof(UInt64)), withTimeout: -1.0, tag: 0)
-        print("Connected to " + self.service!.name)
-    }
-    
     func socket(socket : GCDAsyncSocket, didConnectToHost host:String, port p:UInt16)
     {
         LogModel.getInstance.insertLog("Socket Connect Success !!!")
@@ -81,6 +54,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     func socketDidDisconnect(sock: GCDAsyncSocket!, withError err: NSError!)
     {
+        heartJumpTimer?.invalidate()
         LogModel.getInstance.insertLog("Socket Connect Failed !!![\(err)]")
         NSNotificationCenter.defaultCenter().postNotificationName("\(SOCKET)\(FAIL)", object: nil)
     }
@@ -144,10 +118,13 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     internal func conntcpclient()
     {
-        gcdSocket = GCDAsyncSocket(delegate: self, delegateQueue: dispatch_get_main_queue())
         if gcdSocket == nil
         {
-            return
+            gcdSocket = GCDAsyncSocket(delegate: self, delegateQueue: dispatch_get_main_queue())
+            if gcdSocket == nil
+            {
+                return
+            }
         }
         do{
             try self.gcdSocket.connectToHost(IP_PT, onPort: PORT_PT, withTimeout: 10)
@@ -175,7 +152,10 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
                 _packageData.getBytes(&_loginStatus, range: NSMakeRange(20 + 96, 4))
                 if _loginStatus == USERCONST_LOGIN_IN_SUCCESS
                 {
-                    heartJumpTimer = NSTimer.scheduledTimerWithTimeInterval(HeartPkgCycle, target: self, selector: "sendHeartJumpData", userInfo: nil, repeats: true)
+                    if heartJumpTimer == nil
+                    {
+                        heartJumpTimer = NSTimer.scheduledTimerWithTimeInterval(HeartPkgCycle, target: self, selector: "sendHeartJumpData", userInfo: nil, repeats: true)
+                    }
                     heartJumpTimer!.fire()
                 }
                 UserModel.getInstance.loginResultControl(packageData: _packageData, status: _loginStatus)
@@ -206,6 +186,11 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     internal func send(var type _type : UInt32, var subType _subType : UInt32, var status _status : UInt32, data _data : NSData)->Bool
     {
+        if gcdSocket.isConnected == false
+        {
+            conntcpclient()
+        }
+        
         // Send Data.
         let socketData : NSMutableData = NSMutableData()
         var socketDataLength : UInt32 = 20 + 20 + UInt32(_data.length) + 4 + 4

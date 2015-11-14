@@ -62,7 +62,7 @@ class UserModel: NSObject {
         // Get user info
         if userName == nil || userPwd == nil
         {
-            if NSUserDefaults.standardUserDefaults().stringForKey(CURRENTUSERINFO) == nil
+            if NSUserDefaults.standardUserDefaults().objectForKey(CURRENTUSERINFO) == nil
             {
                 userName = USERCONST_GUEST_NAME
                 userPwd = USERCONST_GUEST_PWD
@@ -77,7 +77,7 @@ class UserModel: NSObject {
                 }
             }
         }
-        
+        LogModel.getInstance.insertLog(">>>>>> UserMoel -> Login Request:\(userName),\(userPwd)")
         let loginData : NSMutableData = NSMutableData()
         loginData.appendBytes([UInt8](userName!.utf8), length: userName!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
         loginData.appendData(NSMutableData(length: 32 - userName!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))!)
@@ -100,14 +100,14 @@ class UserModel: NSObject {
             _packageData.getBytes(&CurrentUserVo!.jobs, range: NSMakeRange(120, 4))
             _packageData.getBytes(&CurrentUserVo!.userID, range: NSMakeRange(124, 4))
             _packageData.getBytes(&CurrentUserVo!.userSocketID, range: NSMakeRange(128, 4))
-            if needAutoLogin == true
-            {
-                NSUserDefaults.standardUserDefaults().setObject(NSKeyedArchiver.archivedDataWithRootObject(CurrentUserVo!), forKey: CURRENTUSERINFO)
-                NSUserDefaults.standardUserDefaults().synchronize()
-            }
             if CurrentUserVo?.name != USERCONST_GUEST_NAME
             {
                 SwiftNotice.showNoticeWithText(NoticeType.success, text: "登录成功！", autoClear: true, autoClearTime: 3)
+                if needAutoLogin == true
+                {
+                    NSUserDefaults.standardUserDefaults().setObject(NSKeyedArchiver.archivedDataWithRootObject(CurrentUserVo!), forKey: CURRENTUSERINFO)
+                    NSUserDefaults.standardUserDefaults().synchronize()
+                }
             }
             NSNotificationCenter.defaultCenter().postNotificationName("\(LOGIN)\(SUCCESS)", object: nil)
         }else if _loginStatus == USERCONST_LOIGN_IN_FAILED{

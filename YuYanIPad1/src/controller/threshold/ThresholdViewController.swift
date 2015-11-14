@@ -23,11 +23,7 @@ class ThresholdViewController : UIViewController, UITableViewDataSource, UITable
         self.logTableView!.dataSource = self
         self.logTableView!.delegate = self
         self.logTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: LogTableCellIndentifier)
-        if #available(iOS 8.0, *) {
-            self.logTableView.layoutMargins = UIEdgeInsetsZero
-        } else {
-            // Fallback on earlier versions
-        }
+        self.logTableView.layoutMargins = UIEdgeInsetsZero
         self.logTableView.separatorInset = UIEdgeInsetsZero
     }
     
@@ -78,11 +74,7 @@ class ThresholdViewController : UIViewController, UITableViewDataSource, UITable
         cell.textLabel?.adjustsFontSizeToFitWidth = false
         cell.textLabel?.font = UIFont.init(name: "Arial", size: 12)
         cell.separatorInset = UIEdgeInsetsZero
-        if #available(iOS 8.0, *) {
-            cell.layoutMargins = UIEdgeInsetsZero
-        } else {
-            // Fallback on earlier versions
-        }
+        cell.layoutMargins = UIEdgeInsetsZero
         return cell
     }
     

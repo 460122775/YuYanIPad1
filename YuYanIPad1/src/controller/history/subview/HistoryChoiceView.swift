@@ -12,7 +12,7 @@ import UIKit
 
 protocol HistoryChoiceProtocol
 {
-    func historyQueryControl()
+    func historyQueryControl(selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     func chooseProductControl()
     func chooseTimeControl()
 }
@@ -150,9 +150,8 @@ class HistoryChoiceView : UIView
         // Change left view.
         if delegate != nil
         {
-            delegate?.historyQueryControl()
+            delegate?.historyQueryControl(self._selectProductConfigDir!, startTimeStr: (startTimeBtn.titleLabel?.text)!, endTimeStr: (endTimeBtn.titleLabel?.text)!) 
         }
-        print(self.startTime,self.endTime)
         // Get Data.
         ProductModel.getInstance.getHistoryData(
             self.startTime!.timeIntervalSince1970,

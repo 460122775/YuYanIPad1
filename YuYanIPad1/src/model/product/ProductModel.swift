@@ -32,7 +32,6 @@ class ProductModel : NSObject {
             {
                 return
             }
-            print(data)
             let productConfigDir : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
             self._productConfigArr = productConfigDir.objectForKey("list") as! NSMutableArray
             LogModel.getInstance.insertLog("Get product config count : \(self._productConfigArr.count)")
@@ -124,8 +123,9 @@ class ProductModel : NSObject {
         _pageVo.currentPage = _currentPage
         let _productVo : ProductVo = ProductVo()
         _productVo.type = _productType
-        let urlStr : NSString = "\(URL_Server)/ios/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
-        LogModel.getInstance.insertLog("\(URL_Server)/ios/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\"\(_pageVo.getJsonStr())\"&productVo=\"\(_productVo.getJsonStr())\"")
+        let urlStr : NSString = "\(URL_Server)/ios/selectProductByTypeInPeriod?startTime=\(Int64(1442815200))&endTime=\(Int64(1442822400))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+//        let urlStr : NSString = "\(URL_Server)/ios/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+        LogModel.getInstance.insertLog("\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             if response == nil || data == nil
@@ -133,8 +133,8 @@ class ProductModel : NSObject {
                 return
             }
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+//            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
             NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: resultDic)
-            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
         })
         task.resume()
     }

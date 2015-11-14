@@ -31,8 +31,12 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         self.navListView?.sysSettingDelegate = self
         // Add observer
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginSuccess", name: "\(LOGIN)\(SUCCESS)", object: nil)
+    }
+    
+    override func viewWillAppear(animated: Bool)
+    {
         // Default show login view.
-        loginBtnClick()
+        self.navListView?.setBtnClickSelect((self.navListView?.loginBtn)!)
     }
     
     func loginSuccess()
@@ -53,8 +57,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
     
     func loginOutControl()
     {
-        UserModel.getInstance.loginControl(USERCONST_GUEST_NAME, userPwd: USERCONST_GUEST_PWD)
         loginBtnClick()
+        UserModel.getInstance.loginControl(USERCONST_GUEST_NAME, userPwd: USERCONST_GUEST_PWD)
     }
     
     func loginBtnClick()

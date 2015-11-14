@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
-class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryResultProtocol
+class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryResultProtocol, HSDatePickerViewControllerDelegate
 {
     @IBOutlet var topTitleBarView: UIView!
     @IBOutlet var titleBarBgImg: UIImageView!
@@ -102,7 +103,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     // History Choice Protocol.
     var historyQueryLeftView : HistoryQueryLeftView?
-    func historyQueryControl()
+    func historyQueryControl(selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     {
         self.historyChoiceView?.removeFromSuperview()
         if self.historyQueryLeftView == nil
@@ -111,7 +112,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             self.historyQueryLeftView?.historyResultProtocolDelegate = self
         }
         self.historyLeftView.addSubview(self.historyQueryLeftView!)
-        self.historyQueryLeftView?.showQueryResult()
+        self.historyQueryLeftView?.showQueryResult(selectProductConfigDir, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
     }
     
     var historyChoiceOfProductView : HistoryChoiceOfProductView?
@@ -126,9 +127,15 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.historyLeftView.addSubview(self.historyChoiceOfProductView!)
     }
     
+    var datePickerController : HSDatePickerViewController?
     func chooseTimeControl()
     {
-        
+        if datePickerController == nil
+        {
+            datePickerController = HSDatePickerViewController()
+            datePickerController?.delegate = self
+        }
+        self.presentViewController(datePickerController!, animated: true, completion: nil)
     }
     
     // History Choice of Product Protocol.
@@ -143,6 +150,51 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     {
         self.historyLeftView?.subviews.map { $0.removeFromSuperview() }
         self.historyLeftView.addSubview(self.historyChoiceView!)
+    }
+    
+    // History result protocol.
+    func selectedProductControl(selectedProductDic: NSMutableDictionary)
+    {
+        let productData : NSData? = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+        if productData != nil
+        {
+            LogModel.getInstance.insertLog("HistoryViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
+        }else{
+            LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+            let something : Manager = Manager.sharedInstance
+            print(something)
+            let url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
+            Alamofire.request(.GET, url).responseData { response in
+                LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                print(response.request)
+                print(response.response)
+                print(response.result)
+                if response.result.value == nil
+                {
+                    // Tell reason to user.
+                    
+                    return
+                }
+                selectedProductDic.setObject(response.result.value!, forKey: "data")
+                CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
+            }
+        }
+    }
+    
+    // HSDatePickerViewControllerDelegate
+    func hsDatePickerPickedDate(date: NSDate!)
+    {
+        print("\(date)")
+    }
+    
+    func hsDatePickerDidDismissWithQuitMethod(method: HSDatePickerQuitMethod)
+    {
+        
+    }
+    
+    func hsDatePickerWillDismissWithQuitMethod(method: HSDatePickerQuitMethod)
+    {
+        
     }
     
     override func didReceiveMemoryWarning()

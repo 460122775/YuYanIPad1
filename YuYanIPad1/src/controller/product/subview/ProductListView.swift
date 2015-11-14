@@ -14,8 +14,10 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     @IBOutlet var scanNameLabel: UILabel!
     @IBOutlet var scanTimeLabel: UILabel!
     @IBOutlet var productListTableView: UITableView!
+    
     var ProductListTableCellIndentifier : String = "ProductListTableCellIndentifier"
     var productArr : NSMutableArray?
+    var _selectProductConfigDic : NSMutableDictionary?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -27,12 +29,8 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         // Set product table view.
         self.productListTableView!.dataSource = self
         self.productListTableView!.delegate = self
-        self.productListTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ProductListTableCellIndentifier)
-        if #available(iOS 8.0, *) {
-            self.productListTableView.layoutMargins = UIEdgeInsetsZero
-        } else {
-            // Fallback on earlier versions
-        }
+//        self.productListTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ProductListTableCellIndentifier)
+        self.productListTableView.layoutMargins = UIEdgeInsetsZero
         self.productListTableView.separatorInset = UIEdgeInsetsZero
 
         // Add Listener.
@@ -73,20 +71,29 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier(ProductListTableCellIndentifier, forIndexPath: indexPath)
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        cell.backgroundColor = UIColor.clearColor()
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.contentView.backgroundColor = UIColor.clearColor();
-        let _productDic : NSMutableDictionary = (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
-        cell.textLabel?.text = (_productDic.objectForKey("cname") as! String) + "（" + (_productDic.objectForKey("ename") as! String) + "）"
-        cell.separatorInset = UIEdgeInsetsZero
-        if #available(iOS 8.0, *) {
-            cell.layoutMargins = UIEdgeInsetsZero
-        } else {
-            // Fallback on earlier versions
+        var cell : UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(ProductListTableCellIndentifier) as UITableViewCell!
+        if cell == nil
+        {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: ProductListTableCellIndentifier) as UITableViewCell!
+            cell!.selectionStyle = UITableViewCellSelectionStyle.None
+            cell!.backgroundColor = UIColor.clearColor()
+            cell!.textLabel?.textColor = UIColor.whiteColor()
+            cell!.textLabel?.font = UIFont.systemFontOfSize(13)
+            cell!.contentView.backgroundColor = UIColor.clearColor();
+            cell!.separatorInset = UIEdgeInsetsZero
+            cell!.layoutMargins = UIEdgeInsetsZero
         }
-        return cell
+        let _productDic : NSMutableDictionary = (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
+        if _productDic != _selectProductConfigDic
+        {
+            cell!.contentView.backgroundColor = UIColor.clearColor();
+            cell!.textLabel?.textColor = UIColor.whiteColor()
+        }else{
+            cell!.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
+            cell!.textLabel?.textColor = UIColor.blackColor()
+        }
+        cell!.textLabel?.text = (_productDic.objectForKey("cname") as! String) + "（" + (_productDic.objectForKey("ename") as! String) + "）"
+        return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -98,11 +105,11 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
             _cell.contentView.backgroundColor = UIColor.clearColor();
             _cell.textLabel?.textColor = UIColor.whiteColor()
         }
+        _selectProductConfigDic = (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
         let cell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         cell.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
         cell.textLabel?.textColor = UIColor.blackColor()
-        let _productDic : NSMutableDictionary = (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
-        LogModel.getInstance.insertLog("用户点击了：" + (_productDic.objectForKey("cname") as! String) + "（" + (_productDic.objectForKey("ename") as! String) + "）")
+        LogModel.getInstance.insertLog("用户点击了：" + (_selectProductConfigDic!.objectForKey("cname") as! String) + "（" + (_selectProductConfigDic!.objectForKey("ename") as! String) + "）")
 //        self.delegate?.getSelectedProduct(
 //            (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
 //        )

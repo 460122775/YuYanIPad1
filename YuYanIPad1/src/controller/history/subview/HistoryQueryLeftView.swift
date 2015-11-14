@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+//protocol HistoryQueryLeftViewProtocol
+//{
+//    func selectedProductControl(selectedProductDic : NSMutableDictionary)
+//}
+
 class HistoryQueryLeftView : UIView, HistoryResultProtocol
 {
     @IBOutlet var segmentControl: UISegmentedControl!
@@ -56,10 +61,11 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         }
     }
     
-    func showQueryResult()
+    func showQueryResult(selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     {
         self.segmentControl.selectedSegmentIndex = 0;
         self.segmentControlChanged(self.segmentControl)
+        self.historyResultView?.changResultTitle(selectProductConfigDir, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
     }
     
     // History Result Protocol.
@@ -77,5 +83,14 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         {
             historyResultProtocolDelegate?.returnBackToChoice()
         }
+    }
+    
+    func selectedProductControl(selectedProductDic: NSMutableDictionary)
+    {
+        if historyResultProtocolDelegate != nil
+        {
+            historyResultProtocolDelegate?.selectedProductControl(selectedProductDic)
+        }
+
     }
 }

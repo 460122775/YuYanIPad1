@@ -1,17 +1,25 @@
 PODS:
+  - Alamofire (3.1.2)
   - CocoaAsyncSocket (7.4.2)
-  - FMDB (2.5):
-    - FMDB/standard (= 2.5)
-  - FMDB/common (2.5)
-  - FMDB/standard (2.5):
-    - FMDB/common
+  - SQLite.swift (1.0.0)
 
 DEPENDENCIES:
+  - Alamofire
   - CocoaAsyncSocket
-  - FMDB
+  - SQLite.swift (from `https://github.com/stephencelis/SQLite.swift.git`)
+
+EXTERNAL SOURCES:
+  SQLite.swift:
+    :git: https://github.com/stephencelis/SQLite.swift.git
+
+CHECKOUT OPTIONS:
+  SQLite.swift:
+    :commit: c9d3082d1f5ddc2e55a792a8eb1a677b8a1b15f5
+    :git: https://github.com/stephencelis/SQLite.swift.git
 
 SPEC CHECKSUMS:
+  Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
   CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
-  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
+  SQLite.swift: 3bb75f5a650f08673276bc6d3fb1de1b542b8f4d
 
 COCOAPODS: 0.39.0

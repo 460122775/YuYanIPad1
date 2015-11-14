@@ -8,14 +8,18 @@
 
 import Foundation
 
-var IP_Server : String = "192.168.191.1"
-var PORT_SERVER : Int = 9090
+var IP_Server : String = "192.168.137.1" // 192.168.191.1
+var PORT_SERVER : Int = 8080 // 9090
 var URL_Server : String = "http://\(IP_Server):\(PORT_SERVER)/XYSystem"
+var URL_DATA : String = "http://\(IP_Server):\(PORT_SERVER)/data"
 
-var IP_PT : String = "192.168.191.1"
+var IP_PT : String = "\(IP_Server)"
 var PORT_PT : UInt16 = 8112
 
-var HeartPkgCycle : NSTimeInterval = 5.0
+var PATH_PRODUCT : String = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first! + "/produtFile/"
+
+var HeartPkgCycle : NSTimeInterval = 4.0
+var MAX_PRODUCTCACHE : Int = 30
 
 var CurrentUserVo : UserVo?
 
@@ -25,9 +29,6 @@ var BYTE_ZERO : UInt8 = 0
 let SOCKET : String = "Socket"
 let LOGIN : String = "Login"
     let CURRENTUSERINFO : String = "CurrentUserInfo"
-//    let USERNAME : String = "UserName"
-//    let USERPWD : String = "UserPWD"
-//    let USERTYPE : String = "UserType"
 let SUCCESS : String = "Success"
 let FAIL : String = "Fail"
 

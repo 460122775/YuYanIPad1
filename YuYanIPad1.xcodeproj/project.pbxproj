@@ -43,11 +43,6 @@
 		017AF5901AC3E31900757E50 /* VersionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017AF58F1AC3E31900757E50 /* VersionView.xib */; };
 		017AF5921AC3E41800757E50 /* NavListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017AF5911AC3E41800757E50 /* NavListView.xib */; };
 		01806B8B1BA189BE005CBA7E /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01806B8A1BA189BE005CBA7E /* ProductModel.swift */; };
-		018236B01BA025FD0006B930 /* ysocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018236AB1BA025FD0006B930 /* ysocket.swift */; };
-		018236B11BA025FD0006B930 /* ytcpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 018236AC1BA025FD0006B930 /* ytcpsocket.c */; };
-		018236B21BA025FD0006B930 /* ytcpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018236AD1BA025FD0006B930 /* ytcpsocket.swift */; };
-		018236B31BA025FD0006B930 /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 018236AE1BA025FD0006B930 /* yudpsocket.c */; };
-		018236B41BA025FD0006B930 /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018236AF1BA025FD0006B930 /* yudpsocket.swift */; };
 		018236B61BA026340006B930 /* SocketCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018236B51BA026340006B930 /* SocketCenter.swift */; };
 		018236B91BA026880006B930 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018236B81BA026880006B930 /* UserModel.swift */; };
 		01823A1A1ABBA96400E70E74 /* ProductListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01823A191ABBA96400E70E74 /* ProductListView.xib */; };
@@ -77,6 +72,7 @@
 		01823A581ABBF11F00E70E74 /* ColorBarHorizontalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01823A571ABBF11F00E70E74 /* ColorBarHorizontalView.swift */; };
 		0192F7651BB3EEF800CC6498 /* PageVo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192F7641BB3EEF800CC6498 /* PageVo.swift */; };
 		0192F7681BB3EFDD00CC6498 /* ProductVo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192F7671BB3EFDD00CC6498 /* ProductVo.swift */; };
+		019525021BEC476700041B30 /* HSDatePickerViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */; };
 		01A514411BD0CF550042BD82 /* LogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A514401BD0CF550042BD82 /* LogModel.swift */; };
 		01A859E71BE85DEB009FECCA /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859D81BE85DEB009FECCA /* Bool.swift */; };
 		01A859E91BE85DEB009FECCA /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859DA1BE85DEB009FECCA /* Dictionary.swift */; };
@@ -88,10 +84,15 @@
 		01A859F01BE85DEB009FECCA /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E21BE85DEB009FECCA /* NSDate.swift */; };
 		01A859F11BE85DEB009FECCA /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E31BE85DEB009FECCA /* Range.swift */; };
 		01A859F31BE85DEB009FECCA /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E51BE85DEB009FECCA /* String.swift */; };
+		01C01E091BF2E55500B1175A /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E081BF2E55500B1175A /* DBModel.swift */; };
+		01C01E0B1BF33FAD00B1175A /* ProductFileCacheModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E0A1BF33FAD00B1175A /* ProductFileCacheModel.swift */; };
 		01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */; };
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
 		01C29D021AB7D9C4008CBE96 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */; };
+		01E101701BF41F0600ABB6BD /* CacheManageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */; };
+		01E405721BEB2D6200C68C21 /* HSDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */; };
+		01E405731BEB2D6200C68C21 /* HSDatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */; };
 		01FB3C3A1AB9664000C41264 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB3C391AB9664000C41264 /* ProductViewController.swift */; };
 		01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FB3C3D1AB980ED00C41264 /* ProductViewController.xib */; };
 		AABEDF1B9E1B820A2EB7B54F /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AAA00BD685CCC948FB539A8 /* Pods.framework */; };
@@ -149,11 +150,6 @@
 		017AF58F1AC3E31900757E50 /* VersionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VersionView.xib; path = src/controller/setting/subview/version/VersionView.xib; sourceTree = "<group>"; };
 		017AF5911AC3E41800757E50 /* NavListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NavListView.xib; path = src/controller/setting/subview/NavListView.xib; sourceTree = "<group>"; };
 		01806B8A1BA189BE005CBA7E /* ProductModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductModel.swift; path = src/model/product/ProductModel.swift; sourceTree = "<group>"; };
-		018236AB1BA025FD0006B930 /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ysocket.swift; path = src/model/otherAPI/ysocket/ysocket.swift; sourceTree = "<group>"; };
-		018236AC1BA025FD0006B930 /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ytcpsocket.c; path = src/model/otherAPI/ysocket/ytcpsocket.c; sourceTree = "<group>"; };
-		018236AD1BA025FD0006B930 /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ytcpsocket.swift; path = src/model/otherAPI/ysocket/ytcpsocket.swift; sourceTree = "<group>"; };
-		018236AE1BA025FD0006B930 /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = yudpsocket.c; path = src/model/otherAPI/ysocket/yudpsocket.c; sourceTree = "<group>"; };
-		018236AF1BA025FD0006B930 /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = yudpsocket.swift; path = src/model/otherAPI/ysocket/yudpsocket.swift; sourceTree = "<group>"; };
 		018236B51BA026340006B930 /* SocketCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketCenter.swift; path = src/model/connection/SocketCenter.swift; sourceTree = "<group>"; };
 		018236B81BA026880006B930 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserModel.swift; path = src/model/user/UserModel.swift; sourceTree = "<group>"; };
 		01823A191ABBA96400E70E74 /* ProductListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductListView.xib; path = src/controller/product/subview/ProductListView.xib; sourceTree = "<group>"; };
@@ -183,7 +179,6 @@
 		01823A571ABBF11F00E70E74 /* ColorBarHorizontalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorBarHorizontalView.swift; path = src/controller/product/productview/tool/colorbar/ColorBarHorizontalView.swift; sourceTree = "<group>"; };
 		0192F7641BB3EEF800CC6498 /* PageVo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageVo.swift; path = src/model/common/PageVo.swift; sourceTree = "<group>"; };
 		0192F7671BB3EFDD00CC6498 /* ProductVo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductVo.swift; path = src/model/product/ProductVo.swift; sourceTree = "<group>"; };
-		019B5AD11BCF39B800DA958D /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BridgingHeader.h; path = src/model/common/BridgingHeader.h; sourceTree = "<group>"; };
 		01A514401BD0CF550042BD82 /* LogModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogModel.swift; path = src/model/log/LogModel.swift; sourceTree = "<group>"; };
 		01A859D81BE85DEB009FECCA /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bool.swift; path = src/model/otherAPI/ExSwift/Bool.swift; sourceTree = "<group>"; };
 		01A859DA1BE85DEB009FECCA /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dictionary.swift; path = src/model/otherAPI/ExSwift/Dictionary.swift; sourceTree = "<group>"; };
@@ -196,10 +191,16 @@
 		01A859E21BE85DEB009FECCA /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDate.swift; path = src/model/otherAPI/ExSwift/NSDate.swift; sourceTree = "<group>"; };
 		01A859E31BE85DEB009FECCA /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Range.swift; path = src/model/otherAPI/ExSwift/Range.swift; sourceTree = "<group>"; };
 		01A859E51BE85DEB009FECCA /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = src/model/otherAPI/ExSwift/String.swift; sourceTree = "<group>"; };
+		01C01E081BF2E55500B1175A /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBModel.swift; path = src/model/database/DBModel.swift; sourceTree = "<group>"; };
+		01C01E0A1BF33FAD00B1175A /* ProductFileCacheModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductFileCacheModel.swift; path = src/model/product/ProductFileCacheModel.swift; sourceTree = "<group>"; };
 		01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = src/controller/main/MainViewController.swift; sourceTree = "<group>"; };
 		01C29CFC1AB7D621008CBE96 /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
 		01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = src/controller/app/LaunchScreen.xib; sourceTree = "<group>"; };
+		01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManageModel.swift; path = src/model/cache/CacheManageModel.swift; sourceTree = "<group>"; };
+		01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSDatePickerViewController.h; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.h; sourceTree = "<group>"; };
+		01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSDatePickerViewController.m; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.m; sourceTree = "<group>"; };
+		01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HSDatePickerViewController.xib; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.xib; sourceTree = "<group>"; };
 		01FB3C391AB9664000C41264 /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductViewController.swift; path = src/controller/product/ProductViewController.swift; sourceTree = "<group>"; };
 		01FB3C3D1AB980ED00C41264 /* ProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductViewController.xib; path = src/controller/product/ProductViewController.xib; sourceTree = "<group>"; };
 		090B6A2A28490095ADF73B13 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -374,29 +375,18 @@
 			children = (
 				01806B8A1BA189BE005CBA7E /* ProductModel.swift */,
 				0192F7671BB3EFDD00CC6498 /* ProductVo.swift */,
+				01C01E0A1BF33FAD00B1175A /* ProductFileCacheModel.swift */,
 			);
 			name = product;
-			sourceTree = "<group>";
-		};
-		0182369C1BA01E400006B930 /* ysocket */ = {
-			isa = PBXGroup;
-			children = (
-				018236AB1BA025FD0006B930 /* ysocket.swift */,
-				018236AC1BA025FD0006B930 /* ytcpsocket.c */,
-				018236AD1BA025FD0006B930 /* ytcpsocket.swift */,
-				018236AE1BA025FD0006B930 /* yudpsocket.c */,
-				018236AF1BA025FD0006B930 /* yudpsocket.swift */,
-			);
-			name = ysocket;
 			sourceTree = "<group>";
 		};
 		018236A91BA0255F0006B930 /* otherAPI */ = {
 			isa = PBXGroup;
 			children = (
+				01E4056E1BEB2D4100C68C21 /* HSDatePickerViewController */,
 				0156A7411BE8AA87008E41D1 /* SwiftNotice */,
 				01A859D61BE85DB4009FECCA /* ExSwift */,
 				0170B23B1BC66BB0009E2845 /* timechooser */,
-				0182369C1BA01E400006B930 /* ysocket */,
 			);
 			name = otherAPI;
 			sourceTree = "<group>";
@@ -493,7 +483,7 @@
 		0192F7661BB3EEFD00CC6498 /* common */ = {
 			isa = PBXGroup;
 			children = (
-				019B5AD11BCF39B800DA958D /* BridgingHeader.h */,
+				012606B61BDA1AF5009BB949 /* YuYanIPad1-Bridging-Header.h */,
 				0192F7641BB3EEF800CC6498 /* PageVo.swift */,
 			);
 			name = common;
@@ -537,11 +527,13 @@
 		01B3CB311AB716B60028AB9D /* model */ = {
 			isa = PBXGroup;
 			children = (
+				018236AA1BA0257B0006B930 /* connection */,
+				01E1016E1BF41EBE00ABB6BD /* cache */,
+				01C01E071BF2E50400B1175A /* database */,
 				01A5143F1BD0CF2D0042BD82 /* log */,
 				0192F7661BB3EEFD00CC6498 /* common */,
 				01806B891BA189A1005CBA7E /* product */,
 				018236B71BA026540006B930 /* user */,
-				018236AA1BA0257B0006B930 /* connection */,
 				018236A91BA0255F0006B930 /* otherAPI */,
 			);
 			name = model;
@@ -571,6 +563,14 @@
 			name = history;
 			sourceTree = "<group>";
 		};
+		01C01E071BF2E50400B1175A /* database */ = {
+			isa = PBXGroup;
+			children = (
+				01C01E081BF2E55500B1175A /* DBModel.swift */,
+			);
+			name = database;
+			sourceTree = "<group>";
+		};
 		01C29CFB1AB7D5D8008CBE96 /* class */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,9 +586,26 @@
 				012606B71BDA1B0B009BB949 /* NameSpace.swift */,
 				01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */,
 				01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */,
-				012606B61BDA1AF5009BB949 /* YuYanIPad1-Bridging-Header.h */,
 			);
 			name = app;
+			sourceTree = "<group>";
+		};
+		01E1016E1BF41EBE00ABB6BD /* cache */ = {
+			isa = PBXGroup;
+			children = (
+				01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */,
+			);
+			name = cache;
+			sourceTree = "<group>";
+		};
+		01E4056E1BEB2D4100C68C21 /* HSDatePickerViewController */ = {
+			isa = PBXGroup;
+			children = (
+				01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */,
+				01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */,
+				01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */,
+			);
+			name = HSDatePickerViewController;
 			sourceTree = "<group>";
 		};
 		01FB3C331AB9576A00C41264 /* product */ = {
@@ -758,6 +775,7 @@
 				01823A541ABBC7B600E70E74 /* CartoonBarView.xib in Resources */,
 				01823A271ABBAADA00E70E74 /* HistoryChoiceOfProductView.xib in Resources */,
 				016F567F1AC3050C008D8615 /* ChatMainView.xib in Resources */,
+				01E405731BEB2D6200C68C21 /* HSDatePickerViewController.xib in Resources */,
 				017AF58A1AC3E2B700757E50 /* ConfigView.xib in Resources */,
 				01823A1A1ABBA96400E70E74 /* ProductListView.xib in Resources */,
 				01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */,
@@ -838,11 +856,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				019525021BEC476700041B30 /* HSDatePickerViewController.h in Sources */,
 				016F56811AC30534008D8615 /* ChatMainView.swift in Sources */,
 				016FFD311AC2483000596975 /* ScreenShotView.swift in Sources */,
 				01A859EB1BE85DEB009FECCA /* ExSwift.swift in Sources */,
 				0156A7471BE9D4E3008E41D1 /* LoginResultView.swift in Sources */,
 				01823A581ABBF11F00E70E74 /* ColorBarHorizontalView.swift in Sources */,
+				01E101701BF41F0600ABB6BD /* CacheManageModel.swift in Sources */,
 				01823A4B1ABBC06000E70E74 /* ProductViewA.swift in Sources */,
 				01823A401ABBBB0800E70E74 /* ProductInfoView.swift in Sources */,
 				01A859EE1BE85DEB009FECCA /* Int.swift in Sources */,
@@ -857,12 +877,12 @@
 				0156A7431BE8AAA0008E41D1 /* SwiftNotice.swift in Sources */,
 				01806B8B1BA189BE005CBA7E /* ProductModel.swift in Sources */,
 				01A859EC1BE85DEB009FECCA /* Float.swift in Sources */,
-				018236B41BA025FD0006B930 /* yudpsocket.swift in Sources */,
 				018236B61BA026340006B930 /* SocketCenter.swift in Sources */,
 				0192F7681BB3EFDD00CC6498 /* ProductVo.swift in Sources */,
 				01A859F11BE85DEB009FECCA /* Range.swift in Sources */,
 				016FFD351AC2620500596975 /* HistoryQueryLeftView.swift in Sources */,
 				01823A521ABBC79600E70E74 /* CartoonBarView.swift in Sources */,
+				01E405721BEB2D6200C68C21 /* HSDatePickerViewController.m in Sources */,
 				016F567B1AC3041E008D8615 /* FriendListView.swift in Sources */,
 				01823A2F1ABBABF900E70E74 /* ChatViewController.swift in Sources */,
 				012606B81BDA1B0B009BB949 /* NameSpace.swift in Sources */,
@@ -870,18 +890,16 @@
 				01A859EF1BE85DEB009FECCA /* NSArray.swift in Sources */,
 				01A859E71BE85DEB009FECCA /* Bool.swift in Sources */,
 				01823A321ABBAC3600E70E74 /* HistoryViewController.swift in Sources */,
-				018236B01BA025FD0006B930 /* ysocket.swift in Sources */,
-				018236B11BA025FD0006B930 /* ytcpsocket.c in Sources */,
-				018236B21BA025FD0006B930 /* ytcpsocket.swift in Sources */,
+				01C01E0B1BF33FAD00B1175A /* ProductFileCacheModel.swift in Sources */,
 				010E17CB1AC2F676008E2F69 /* HistoryChoiceOfProductView.swift in Sources */,
 				017AF5731AC3E17200757E50 /* AboutUsView.swift in Sources */,
-				018236B31BA025FD0006B930 /* yudpsocket.c in Sources */,
 				01823A421ABBBE5E00E70E74 /* ProductListView.swift in Sources */,
 				01A859EA1BE85DEB009FECCA /* Double.swift in Sources */,
 				0170B23E1BC66BFB009E2845 /* TimeChooserViewController.swift in Sources */,
 				01823A3E1ABBAD6E00E70E74 /* SettingViewController.swift in Sources */,
 				01A514411BD0CF550042BD82 /* LogModel.swift in Sources */,
 				017AF5821AC3E22900757E50 /* LoginView.swift in Sources */,
+				01C01E091BF2E55500B1175A /* DBModel.swift in Sources */,
 				017AF57B1AC3E1C200757E50 /* ClauseView.swift in Sources */,
 				01A859F31BE85DEB009FECCA /* String.swift in Sources */,
 				0170B23F1BC66BFB009E2845 /* DVDatePickerTableViewCell.swift in Sources */,
@@ -1028,7 +1046,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1039,7 +1057,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = YuYanIPad1/src/model/common/BridgingHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "YuYanIPad1/YuYanIPad1-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1053,7 +1071,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1064,7 +1082,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = YuYanIPad1/src/model/common/BridgingHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = "YuYanIPad1/YuYanIPad1-Bridging-Header.h";
 			};
 			name = Release;
 		};

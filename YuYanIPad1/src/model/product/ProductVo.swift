@@ -22,6 +22,8 @@ class ProductVo : NSObject {
     var note : String = ""
     var mcode : String = ""
     
+    var data : NSData?
+    
     internal func getJsonStr() -> String
     {
         return "{\"id\":\(id),\"name\":\"\(name)\",\"pos_file\":\"\(pos_file)\",\"file_size\":\(file_size),\"pos_picture\":\"\(pos_picture)\",\"type\":\(type),\"time\":\(time),\"layer\":\(layer),\"scan_mode\":\(scan_mode),\"process\":\(process),\"note\":\"\(note)\",\"mcode\":\"\(mcode)\"}"

@@ -21,6 +21,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
     
     var delegate : HistoryChoiceOfProductProtocol?
     var _productConfigArr : NSMutableArray?
+    var _selectProductConfigDic : NSMutableDictionary?
     let ProductTableCellIndentifier : String = "ProductTableCellIndentifier"
     
     override func drawRect(rect : CGRect)
@@ -29,12 +30,8 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
         // Set product table view.
         self.productTableView!.dataSource = self
         self.productTableView!.delegate = self
-        self.productTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ProductTableCellIndentifier)
-        if #available(iOS 8.0, *) {
-            self.productTableView.layoutMargins = UIEdgeInsetsZero
-        } else {
-            // Fallback on earlier versions
-        }
+//        self.productTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ProductTableCellIndentifier)
+        self.productTableView.layoutMargins = UIEdgeInsetsZero
         self.productTableView.separatorInset = UIEdgeInsetsZero
         // Get product table view data & reset the view.
         if ProductModel.getInstance.getProductConfigArr().count == 0
@@ -56,6 +53,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
         {
             return
         }
+        _selectProductConfigDic = _productConfigArr?.objectAtIndex(0) as! NSMutableDictionary
         self.productTableView.reloadData()
     }
     
@@ -82,20 +80,30 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let cell : UITableViewCell = tableView.dequeueReusableCellWithIdentifier(ProductTableCellIndentifier, forIndexPath: indexPath) 
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        cell.backgroundColor = UIColor.clearColor()
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.contentView.backgroundColor = UIColor.clearColor();
-        let _productConfigDic : NSMutableDictionary = (_productConfigArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
-        cell.textLabel?.text = (_productConfigDic.objectForKey("cname") as! String) + "（" + (_productConfigDic.objectForKey("ename") as! String) + "）"
-        cell.separatorInset = UIEdgeInsetsZero
-        if #available(iOS 8.0, *) {
-            cell.layoutMargins = UIEdgeInsetsZero
-        } else {
-            // Fallback on earlier versions
+        var cell : UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(ProductTableCellIndentifier) as UITableViewCell!
+        if cell == nil
+        {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: ProductTableCellIndentifier) as UITableViewCell!
+            cell!.selectionStyle = UITableViewCellSelectionStyle.None
+            cell!.backgroundColor = UIColor.clearColor()
+            cell!.textLabel?.textColor = UIColor.whiteColor()
+            cell!.textLabel?.font = UIFont.systemFontOfSize(13)
+            cell!.detailTextLabel?.textColor = UIColor.grayColor()
+            cell!.contentView.backgroundColor = UIColor.clearColor();
+            cell!.separatorInset = UIEdgeInsetsZero
+            cell!.layoutMargins = UIEdgeInsetsZero
         }
-        return cell
+        let _productConfigDic : NSMutableDictionary = (_productConfigArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
+        if _productConfigDic != _selectProductConfigDic
+        {
+            cell!.contentView.backgroundColor = UIColor.clearColor();
+            cell!.textLabel?.textColor = UIColor.whiteColor()
+        }else{
+            cell!.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
+            cell!.textLabel?.textColor = UIColor.blackColor()
+        }
+        cell!.textLabel?.text = (_productConfigDic.objectForKey("cname") as! String) + "（" + (_productConfigDic.objectForKey("ename") as! String) + "）"
+        return cell!
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -107,12 +115,11 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
             _cell.contentView.backgroundColor = UIColor.clearColor();
             _cell.textLabel?.textColor = UIColor.whiteColor()
         }
+        _selectProductConfigDic = (_productConfigArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
         let cell : UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         cell.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
         cell.textLabel?.textColor = UIColor.blackColor()
-        self.delegate?.getSelectedProduct(
-            (_productConfigArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
-        )
+        self.delegate?.getSelectedProduct(_selectProductConfigDic!)
     }
     
     @IBAction func returnBtnClick(sender: UIButton)
