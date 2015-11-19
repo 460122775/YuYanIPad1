@@ -18,6 +18,10 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>获取用户位置，为用户提供气象预警的服务。</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 </dict>

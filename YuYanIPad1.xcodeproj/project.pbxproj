@@ -85,7 +85,6 @@
 		01A859F11BE85DEB009FECCA /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E31BE85DEB009FECCA /* Range.swift */; };
 		01A859F31BE85DEB009FECCA /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E51BE85DEB009FECCA /* String.swift */; };
 		01C01E091BF2E55500B1175A /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E081BF2E55500B1175A /* DBModel.swift */; };
-		01C01E0B1BF33FAD00B1175A /* ProductFileCacheModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E0A1BF33FAD00B1175A /* ProductFileCacheModel.swift */; };
 		01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */; };
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
@@ -192,7 +191,6 @@
 		01A859E31BE85DEB009FECCA /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Range.swift; path = src/model/otherAPI/ExSwift/Range.swift; sourceTree = "<group>"; };
 		01A859E51BE85DEB009FECCA /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = src/model/otherAPI/ExSwift/String.swift; sourceTree = "<group>"; };
 		01C01E081BF2E55500B1175A /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBModel.swift; path = src/model/database/DBModel.swift; sourceTree = "<group>"; };
-		01C01E0A1BF33FAD00B1175A /* ProductFileCacheModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductFileCacheModel.swift; path = src/model/product/ProductFileCacheModel.swift; sourceTree = "<group>"; };
 		01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = src/controller/main/MainViewController.swift; sourceTree = "<group>"; };
 		01C29CFC1AB7D621008CBE96 /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
@@ -375,7 +373,6 @@
 			children = (
 				01806B8A1BA189BE005CBA7E /* ProductModel.swift */,
 				0192F7671BB3EFDD00CC6498 /* ProductVo.swift */,
-				01C01E0A1BF33FAD00B1175A /* ProductFileCacheModel.swift */,
 			);
 			name = product;
 			sourceTree = "<group>";
@@ -722,6 +719,18 @@
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = VNWAX3B458;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 0;
+							};
 							com.apple.Maps.iOS = {
 								enabled = 0;
 							};
@@ -890,7 +899,6 @@
 				01A859EF1BE85DEB009FECCA /* NSArray.swift in Sources */,
 				01A859E71BE85DEB009FECCA /* Bool.swift in Sources */,
 				01823A321ABBAC3600E70E74 /* HistoryViewController.swift in Sources */,
-				01C01E0B1BF33FAD00B1175A /* ProductFileCacheModel.swift in Sources */,
 				010E17CB1AC2F676008E2F69 /* HistoryChoiceOfProductView.swift in Sources */,
 				017AF5731AC3E17200757E50 /* AboutUsView.swift in Sources */,
 				01823A421ABBBE5E00E70E74 /* ProductListView.swift in Sources */,
@@ -1042,6 +1050,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "";
@@ -1067,6 +1076,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREFIX_HEADER = "";

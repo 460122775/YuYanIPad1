@@ -84,6 +84,7 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         self.view.subviews.map { $0.removeFromSuperview() }
         self.view.addSubview(self.navListView!)
         self.view.addSubview(self.configView!)
+        self.configView!.setViewByData()
     }
     
     func aboutUsBtnClick()

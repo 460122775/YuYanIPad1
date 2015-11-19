@@ -1,11 +1,13 @@
 PODS:
   - Alamofire (3.1.2)
   - CocoaAsyncSocket (7.4.2)
+  - Mapbox-iOS-SDK (2.1.2)
   - SQLite.swift (1.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - CocoaAsyncSocket
+  - Mapbox-iOS-SDK
   - SQLite.swift (from `https://github.com/stephencelis/SQLite.swift.git`)
 
 EXTERNAL SOURCES:
@@ -20,6 +22,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
   CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
+  Mapbox-iOS-SDK: f8a8fd3ccf918196d27a52ab1694414be20f2210
   SQLite.swift: 3bb75f5a650f08673276bc6d3fb1de1b542b8f4d
 
 COCOAPODS: 0.39.0

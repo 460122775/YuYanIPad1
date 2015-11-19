@@ -40,41 +40,23 @@ class CacheManageModel: NSObject
     func addCacheForProductFile(productName : String, data _data : NSData)
     {
         // Save ProductData into file.
-        _data.writeToFile(PATH_PRODUCT, atomically: false)
+        _data.writeToFile(PATH_PRODUCT + productName, atomically: false)
+        // Show if file is exist.
+//        let filemanager:NSFileManager = NSFileManager()
+//        let files = filemanager.enumeratorAtPath(PATH_PRODUCT)
+//        while let file = files?.nextObject() {
+//            print(file)
+//        }
         // Save Product data address into NSUserDefaults.
-        var cachedProductNameArr : NSMutableArray? = NSUserDefaults.standardUserDefaults().valueForKey(CACHEDPRODUCTNAME) as? NSMutableArray
-        if cachedProductNameArr == nil
-        {
-            cachedProductNameArr = NSMutableArray()
-        }
-        cachedProductNameArr?.addObject(productName)
-        NSUserDefaults.standardUserDefaults().setValue(cachedProductNameArr, forKey: CACHEDPRODUCTNAME)
-        NSUserDefaults.standardUserDefaults().synchronize()
+//        NSUserDefaults.standardUserDefaults().setValue(productName, forKey: CACHEDPRODUCTNAME + productName)
+//        NSUserDefaults.standardUserDefaults().synchronize()
         // Remove cache data beyond max count.
         
     }
     
     func getCacheForProductFile(productName : String) -> NSData?
     {
-        let cachedProductNameArr : NSMutableArray? = NSUserDefaults.standardUserDefaults().valueForKey(CACHEDPRODUCTNAME) as? NSMutableArray
-        if cachedProductNameArr == nil
-        {
-            return nil
-        }else{
-            for dataAddress in cachedProductNameArr!
-            {
-                if dataAddress as! String == productName
-                {
-                    let data : NSData? = NSData(contentsOfFile:"\(PATH_PRODUCT)\(productName)")
-                    if data == nil
-                    {
-                        cachedProductNameArr?.removeObject(dataAddress)
-                    }
-                    return data
-                }
-            }
-        }
-        return nil
+        return NSData(contentsOfFile:"\(PATH_PRODUCT)\(productName)")
     }
     
     func clearCacheForProductFile()
@@ -91,6 +73,21 @@ class CacheManageModel: NSObject
         }catch let error as NSError{
             LogModel.getInstance.insertLog("CacheManageModel clear cache for product file ERROR [\(error)].")
         }
+    }
+    
+    // Get size of cached product data file, and the unit is Byte.
+    func getCacheSizeForProductFile() -> Int64
+    {
+        if NSFileManager.defaultManager().fileExistsAtPath(PATH_PRODUCT)
+        {
+            let files = NSFileManager().enumeratorAtPath(PATH_PRODUCT)
+            while let file = files?.nextObject()
+            {
+                print("\(file)")
+            }
+            return NSFileManager.defaultManager().folderSizeAtPath(PATH_PRODUCT)
+        }
+        return 0;
     }
     
     func addCacheForPicture()
@@ -122,5 +119,31 @@ class CacheManageModel: NSObject
     {
         return 0
     }  
+}
+
+extension NSFileManager {
+    func fileSizeAtPath(path: String) -> Int64 {
+        do {
+            let fileAttributes = try attributesOfItemAtPath(path)
+            let fileSizeNumber = fileAttributes[NSFileSize]
+            let fileSize = fileSizeNumber?.longLongValue
+            return fileSize!
+        } catch {
+            print("error reading filesize, NSFileManager extension fileSizeAtPath")
+            return 0
+        }
+    }
     
+    func folderSizeAtPath(path: String) -> Int64 {
+        var size : Int64 = 0
+        do {
+            let files = try subpathsOfDirectoryAtPath(path)
+            for var i = 0; i < files.count; ++i {
+                size += fileSizeAtPath(path + files[i])
+            }
+        } catch {
+            print("error reading directory, NSFileManager extension folderSizeAtPath")
+        }
+        return size
+    }
 }

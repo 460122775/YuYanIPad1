@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Mapbox
 
 class ProductViewA: UIView
 {
@@ -25,4 +26,6 @@ class ProductViewA: UIView
     {
         super.init(coder: coder)
     }
+    
+    
 }

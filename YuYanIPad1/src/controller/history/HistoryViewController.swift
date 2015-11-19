@@ -23,6 +23,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var switchToolView : SwitchToolView?
     var cartoonBarView : CartoonBarView?
     var historyChoiceView : HistoryChoiceView?
+    var currentProductData : NSData?
     
     override func viewDidLoad()
     {
@@ -155,28 +156,29 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     // History result protocol.
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
-        let productData : NSData? = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
-        if productData != nil
+        currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+        if currentProductData != nil
         {
             LogModel.getInstance.insertLog("HistoryViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
         }else{
             LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-            let something : Manager = Manager.sharedInstance
-            print(something)
-            let url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
+            // Compose url.
+            var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
+            url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
+            url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
+            // Download data.
             Alamofire.request(.GET, url).responseData { response in
                 LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-                print(response.request)
-                print(response.response)
-                print(response.result)
                 if response.result.value == nil
                 {
                     // Tell reason to user.
                     
                     return
                 }
-                selectedProductDic.setObject(response.result.value!, forKey: "data")
+                // Cache data.
                 CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
+                // Draw product.
+                
             }
         }
     }
