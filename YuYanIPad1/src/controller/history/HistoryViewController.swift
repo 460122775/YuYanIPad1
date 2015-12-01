@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 
-class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryResultProtocol, HSDatePickerViewControllerDelegate
+class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryQueryLeftViewProtocol, HSDatePickerViewControllerDelegate
 {
     @IBOutlet var topTitleBarView: UIView!
     @IBOutlet var titleBarBgImg: UIImageView!
@@ -23,6 +23,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var switchToolView : SwitchToolView?
     var cartoonBarView : CartoonBarView?
     var historyChoiceView : HistoryChoiceView?
+    var currentProductDic : NSMutableDictionary?
     var currentProductData : NSData?
     
     override func viewDidLoad()
@@ -110,7 +111,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         if self.historyQueryLeftView == nil
         {
             self.historyQueryLeftView = (NSBundle.mainBundle().loadNibNamed("HistoryQueryLeftView", owner: self, options: nil) as NSArray).lastObject as? HistoryQueryLeftView
-            self.historyQueryLeftView?.historyResultProtocolDelegate = self
+            self.historyQueryLeftView?.historyQueryLeftViewProtocol = self
         }
         self.historyLeftView.addSubview(self.historyQueryLeftView!)
         self.historyQueryLeftView?.showQueryResult(selectProductConfigDir, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
@@ -153,13 +154,16 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.historyLeftView.addSubview(self.historyChoiceView!)
     }
     
-    // History result protocol.
+    // HistoryQueryLeftView Protocol.
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
+        currentProductDic = selectedProductDic
         currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
         if currentProductData != nil
         {
             LogModel.getInstance.insertLog("HistoryViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
+            // Draw product.
+            self.drawProduct(self.currentProductData!)
         }else{
             LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
             // Compose url.
@@ -169,7 +173,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             // Download data.
             Alamofire.request(.GET, url).responseData { response in
                 LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-                if response.result.value == nil
+                if response.result.value == nil || response.result.value?.length <= 48
                 {
                     // Tell reason to user.
                     
@@ -177,9 +181,43 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 }
                 // Cache data.
                 CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
-                // Draw product.
-                
+                self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+                if self.currentProductData == nil
+                {
+                    // Cache failed, maybe the reason of uncompress failed.
+                    // Tell reason to user.
+                    
+                    return
+                }else{
+                    // Draw product.
+                    self.drawProduct(self.currentProductData!)
+                }
             }
+        }
+    }
+    
+    func drawProduct(data : NSData)
+    {
+        // Init left view by data.
+        self.historyQueryLeftView?.setProductLeftViewByData(data)
+        // Init top bar by data.
+        titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
+            + ProductInfoModel.getDataTimeString(data) + "  "
+        if currentProductDic != nil && currentProductDic!.objectForKey("type") != nil
+        {
+            let type : Int64 = Int64((currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
+            if type == ProductType_Z || type == ProductType_V || type == ProductType_W
+            {
+                titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
+            }
+        }
+    }
+    
+    func initProductInfoByData()
+    {
+        if currentProductData != nil
+        {
+            self.historyQueryLeftView?.setProductLeftViewByData(currentProductData!)
         }
     }
     

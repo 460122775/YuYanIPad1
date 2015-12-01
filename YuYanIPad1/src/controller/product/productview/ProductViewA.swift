@@ -10,22 +10,25 @@ import Foundation
 import UIKit
 import Mapbox
 
-class ProductViewA: UIView
+class ProductViewA: UIView, MGLMapViewDelegate
 {
-    override init(frame: CGRect)
-    {
-        super.init(frame:frame)
-//        NSNotificationCenter.defaultCenter().addObserver(
-//            self,
-//            selector: "batteryLevelChanged:",
-//            name: UIDeviceBatteryLevelDidChangeNotification,
-//            object: nil)
-    }
+    @IBOutlet var mapView: MGLMapView!
     
     required init?(coder : NSCoder)
     {
         super.init(coder: coder)
     }
     
-    
+    override func drawRect(rect: CGRect)
+    {
+        self.mapView.styleURL = NSURL(string: "mapbox://styles/daiyachen/cih5ysabn0035bnm5ahtdnokf")
+        self.mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.mapView.allowsRotating = false
+
+        // set the map's center coordinate
+        self.mapView.setCenterCoordinate(
+            CLLocationCoordinate2D(latitude: 30.67, longitude: 104.06),
+            zoomLevel: 12, animated: false)
+        self.mapView.delegate = self
+    }
 }

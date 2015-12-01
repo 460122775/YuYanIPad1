@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SSZipArchive
 
 class CacheManageModel: NSObject
 {
@@ -37,10 +38,23 @@ class CacheManageModel: NSObject
         dateformatter?.dateFormat = "YYYYMMDDHHmmssSSSS"
     }
     
-    func addCacheForProductFile(productName : String, data _data : NSData)
+    func addCacheForProductFile(var productName : String, data _data : NSData)
     {
         // Save ProductData into file.
-        _data.writeToFile(PATH_PRODUCT + productName, atomically: false)
+        if _data.length == 0
+        {
+            return
+        }else if _data.length > 48 && productName.lowercaseString.hasSuffix(".zdb"){
+            productName = productName.stringByReplacingOccurrencesOfString(".zdb", withString: "")
+            try! _data.subdataWithRange(NSMakeRange(48, (_data.length) - 48)).gunzippedData().writeToFile(PATH_PRODUCT + productName, atomically: false)
+        }else if productName.lowercaseString.hasSuffix(".zip"){
+            _data.writeToFile(PATH_PRODUCT + productName, atomically: false)
+            // Unzip
+            SSZipArchive.unzipFileAtPath(PATH_PRODUCT + productName, toDestination: PATH_PRODUCT)
+            try! NSFileManager.defaultManager().removeItemAtPath(PATH_PRODUCT + productName)
+        }else{
+            _data.writeToFile(PATH_PRODUCT + productName, atomically: false)
+        }
         // Show if file is exist.
 //        let filemanager:NSFileManager = NSFileManager()
 //        let files = filemanager.enumeratorAtPath(PATH_PRODUCT)
@@ -54,8 +68,11 @@ class CacheManageModel: NSObject
         
     }
     
-    func getCacheForProductFile(productName : String) -> NSData?
+    func getCacheForProductFile(var productName : String) -> NSData?
     {
+        // Get product data file which has already decompressed.
+        productName = productName.stringByReplacingOccurrencesOfString(".zdb", withString: "")
+        productName = productName.stringByReplacingOccurrencesOfString(".zip", withString: "")
         return NSData(contentsOfFile:"\(PATH_PRODUCT)\(productName)")
     }
     

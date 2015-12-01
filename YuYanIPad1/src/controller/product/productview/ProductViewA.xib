@@ -15,11 +15,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                     <animations/>
                 </imageView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA">
-                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
-                    <animations/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywE-aY-3UD" customClass="ColorBarHorizontalView" customModule="YuYanIPad1" customModuleProvider="target">
                     <rect key="frame" x="250" y="700" width="676" height="48"/>
                     <subviews>
@@ -39,6 +34,11 @@
                         <constraint firstAttribute="width" constant="676" id="yXV-gs-w2d"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" customClass="MGLMapView">
+                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -54,6 +54,9 @@
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="mapView" destination="X0C-JG-BJA" id="WWO-5v-Yog"/>
+            </connections>
             <point key="canvasLocation" x="523" y="342"/>
         </view>
     </objects>

@@ -10,6 +10,7 @@
 #define YuYanIPad1_Bridging_Header_h
 
 #import "HSDatePickerViewController.h"
+//  #import "ProductCompressModel.h"
 //  #import "FMDB.h"
 #import <sqlite3.h>
 //  #import "ASINetworkQueue.h"

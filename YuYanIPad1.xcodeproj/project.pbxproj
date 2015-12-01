@@ -15,6 +15,7 @@
 		0156A7471BE9D4E3008E41D1 /* LoginResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0156A7461BE9D4E3008E41D1 /* LoginResultView.swift */; };
 		0156A7491BE9D508008E41D1 /* LoginResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0156A7481BE9D508008E41D1 /* LoginResultView.xib */; };
 		015AF5241AB80F83007A913F /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015AF5261AB80F83007A913F /* MainViewController.xib */; };
+		016E7F931C04381E0044C4FE /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 016E7F8F1C0431EE0044C4FE /* libz.tbd */; };
 		016F567B1AC3041E008D8615 /* FriendListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016F567A1AC3041E008D8615 /* FriendListView.swift */; };
 		016F567D1AC3043B008D8615 /* FriendListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016F567C1AC3043B008D8615 /* FriendListView.xib */; };
 		016F567F1AC3050C008D8615 /* ChatMainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 016F567E1AC3050C008D8615 /* ChatMainView.xib */; };
@@ -84,11 +85,16 @@
 		01A859F01BE85DEB009FECCA /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E21BE85DEB009FECCA /* NSDate.swift */; };
 		01A859F11BE85DEB009FECCA /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E31BE85DEB009FECCA /* Range.swift */; };
 		01A859F31BE85DEB009FECCA /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859E51BE85DEB009FECCA /* String.swift */; };
+		01A98B5D1C02BC090099F39C /* DBInitTables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A98B5C1C02BC090099F39C /* DBInitTables.swift */; };
+		01A98B5F1C02BDAA0099F39C /* DBInitData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A98B5E1C02BDAA0099F39C /* DBInitData.swift */; };
+		01B3BD6E1C057EEB00C89160 /* NSData+GZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B3BD6D1C057EEB00C89160 /* NSData+GZIP.swift */; };
 		01C01E091BF2E55500B1175A /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E081BF2E55500B1175A /* DBModel.swift */; };
 		01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */; };
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
 		01C29D021AB7D9C4008CBE96 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */; };
+		01C3C65E1BFF0F5E00B474C1 /* ProductInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3C65D1BFF0F5E00B474C1 /* ProductInfoModel.swift */; };
+		01C3C6601BFF13B200B474C1 /* ProductTypeDefine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3C65F1BFF13B200B474C1 /* ProductTypeDefine.swift */; };
 		01E101701BF41F0600ABB6BD /* CacheManageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */; };
 		01E405721BEB2D6200C68C21 /* HSDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */; };
 		01E405731BEB2D6200C68C21 /* HSDatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */; };
@@ -121,6 +127,10 @@
 		0156A7461BE9D4E3008E41D1 /* LoginResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginResultView.swift; path = src/controller/setting/subview/login/LoginResultView.swift; sourceTree = "<group>"; };
 		0156A7481BE9D508008E41D1 /* LoginResultView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginResultView.xib; path = src/controller/setting/subview/login/LoginResultView.xib; sourceTree = "<group>"; };
 		015AF5251AB80F83007A913F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController.xib; sourceTree = "<group>"; };
+		016E7F8F1C0431EE0044C4FE /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		016E7F951C0438910044C4FE /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include.h; path = src/model/otherAPI/zlib/include.h; sourceTree = "<group>"; };
+		016E7F961C0438910044C4FE /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = src/model/otherAPI/zlib/module.modulemap; sourceTree = "<group>"; };
+		016E7F9B1C044C010044C4FE /* dylib1.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; name = dylib1.o; path = usr/lib/dylib1.o; sourceTree = SDKROOT; };
 		016F567A1AC3041E008D8615 /* FriendListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendListView.swift; path = src/controller/chat/subview/FriendListView.swift; sourceTree = "<group>"; };
 		016F567C1AC3043B008D8615 /* FriendListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FriendListView.xib; path = src/controller/chat/subview/FriendListView.xib; sourceTree = "<group>"; };
 		016F567E1AC3050C008D8615 /* ChatMainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChatMainView.xib; path = src/controller/chat/subview/ChatMainView.xib; sourceTree = "<group>"; };
@@ -190,11 +200,16 @@
 		01A859E21BE85DEB009FECCA /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSDate.swift; path = src/model/otherAPI/ExSwift/NSDate.swift; sourceTree = "<group>"; };
 		01A859E31BE85DEB009FECCA /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Range.swift; path = src/model/otherAPI/ExSwift/Range.swift; sourceTree = "<group>"; };
 		01A859E51BE85DEB009FECCA /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = src/model/otherAPI/ExSwift/String.swift; sourceTree = "<group>"; };
+		01A98B5C1C02BC090099F39C /* DBInitTables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBInitTables.swift; path = src/model/database/DBInitTables.swift; sourceTree = "<group>"; };
+		01A98B5E1C02BDAA0099F39C /* DBInitData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBInitData.swift; path = src/model/database/DBInitData.swift; sourceTree = "<group>"; };
+		01B3BD6D1C057EEB00C89160 /* NSData+GZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+GZIP.swift"; path = "src/model/otherAPI/zlib/NSData+GZIP.swift"; sourceTree = "<group>"; };
 		01C01E081BF2E55500B1175A /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBModel.swift; path = src/model/database/DBModel.swift; sourceTree = "<group>"; };
 		01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = src/controller/main/MainViewController.swift; sourceTree = "<group>"; };
 		01C29CFC1AB7D621008CBE96 /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
 		01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = src/controller/app/LaunchScreen.xib; sourceTree = "<group>"; };
+		01C3C65D1BFF0F5E00B474C1 /* ProductInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductInfoModel.swift; path = src/model/product/ProductInfoModel.swift; sourceTree = "<group>"; };
+		01C3C65F1BFF13B200B474C1 /* ProductTypeDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductTypeDefine.swift; path = src/model/product/ProductTypeDefine.swift; sourceTree = "<group>"; };
 		01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManageModel.swift; path = src/model/cache/CacheManageModel.swift; sourceTree = "<group>"; };
 		01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSDatePickerViewController.h; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.h; sourceTree = "<group>"; };
 		01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSDatePickerViewController.m; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.m; sourceTree = "<group>"; };
@@ -211,6 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				016E7F931C04381E0044C4FE /* libz.tbd in Frameworks */,
 				AABEDF1B9E1B820A2EB7B54F /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +319,16 @@
 			name = SwiftNotice;
 			sourceTree = "<group>";
 		};
+		016E7F941C0438770044C4FE /* zlib */ = {
+			isa = PBXGroup;
+			children = (
+				01B3BD6D1C057EEB00C89160 /* NSData+GZIP.swift */,
+				016E7F951C0438910044C4FE /* include.h */,
+				016E7F961C0438910044C4FE /* module.modulemap */,
+			);
+			name = zlib;
+			sourceTree = "<group>";
+		};
 		0170B23B1BC66BB0009E2845 /* timechooser */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,6 +399,8 @@
 			children = (
 				01806B8A1BA189BE005CBA7E /* ProductModel.swift */,
 				0192F7671BB3EFDD00CC6498 /* ProductVo.swift */,
+				01C3C65D1BFF0F5E00B474C1 /* ProductInfoModel.swift */,
+				01C3C65F1BFF13B200B474C1 /* ProductTypeDefine.swift */,
 			);
 			name = product;
 			sourceTree = "<group>";
@@ -380,6 +408,7 @@
 		018236A91BA0255F0006B930 /* otherAPI */ = {
 			isa = PBXGroup;
 			children = (
+				016E7F941C0438770044C4FE /* zlib */,
 				01E4056E1BEB2D4100C68C21 /* HSDatePickerViewController */,
 				0156A7411BE8AA87008E41D1 /* SwiftNotice */,
 				01A859D61BE85DB4009FECCA /* ExSwift */,
@@ -564,6 +593,8 @@
 			isa = PBXGroup;
 			children = (
 				01C01E081BF2E55500B1175A /* DBModel.swift */,
+				01A98B5C1C02BC090099F39C /* DBInitTables.swift */,
+				01A98B5E1C02BDAA0099F39C /* DBInitData.swift */,
 			);
 			name = database;
 			sourceTree = "<group>";
@@ -649,6 +680,8 @@
 		16A8CC8C05F7F9E822E341E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				016E7F9B1C044C010044C4FE /* dylib1.o */,
+				016E7F8F1C0431EE0044C4FE /* libz.tbd */,
 				6AAA00BD685CCC948FB539A8 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -735,7 +768,7 @@
 								enabled = 0;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -881,6 +914,7 @@
 				01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */,
 				018236B91BA026880006B930 /* UserModel.swift in Sources */,
 				016FFD331AC24AB100596975 /* ProductLeftView.swift in Sources */,
+				01A98B5D1C02BC090099F39C /* DBInitTables.swift in Sources */,
 				017AF57D1AC3E1EC00757E50 /* VersionView.swift in Sources */,
 				016FFD3B1AC2643F00596975 /* HistoryChoiceView.swift in Sources */,
 				0156A7431BE8AAA0008E41D1 /* SwiftNotice.swift in Sources */,
@@ -905,6 +939,7 @@
 				01A859EA1BE85DEB009FECCA /* Double.swift in Sources */,
 				0170B23E1BC66BFB009E2845 /* TimeChooserViewController.swift in Sources */,
 				01823A3E1ABBAD6E00E70E74 /* SettingViewController.swift in Sources */,
+				01A98B5F1C02BDAA0099F39C /* DBInitData.swift in Sources */,
 				01A514411BD0CF550042BD82 /* LogModel.swift in Sources */,
 				017AF5821AC3E22900757E50 /* LoginView.swift in Sources */,
 				01C01E091BF2E55500B1175A /* DBModel.swift in Sources */,
@@ -912,12 +947,15 @@
 				01A859F31BE85DEB009FECCA /* String.swift in Sources */,
 				0170B23F1BC66BFB009E2845 /* DVDatePickerTableViewCell.swift in Sources */,
 				0156A7451BE8B1D1008E41D1 /* UserVo.swift in Sources */,
+				01C3C65E1BFF0F5E00B474C1 /* ProductInfoModel.swift in Sources */,
 				017AF5841AC3E24800757E50 /* LawView.swift in Sources */,
+				01B3BD6E1C057EEB00C89160 /* NSData+GZIP.swift in Sources */,
 				017AC39B1BC8AF5D0092ABB1 /* SocketConst.swift in Sources */,
 				0192F7651BB3EEF800CC6498 /* PageVo.swift in Sources */,
 				016FFD391AC2642900596975 /* HistoryResultView.swift in Sources */,
 				01823A4E1ABBC17300E70E74 /* SwitchToolView.swift in Sources */,
 				017AF5801AC3E20700757E50 /* ConfigView.swift in Sources */,
+				01C3C6601BFF13B200B474C1 /* ProductTypeDefine.swift in Sources */,
 				01A859F01BE85DEB009FECCA /* NSDate.swift in Sources */,
 				01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */,
 			);
@@ -1053,6 +1091,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1065,6 +1104,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdyw.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_INCLUDE_PATHS = YuYanIPad1/src/model/otherAPI/zlib;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "YuYanIPad1/YuYanIPad1-Bridging-Header.h";
 			};
@@ -1079,6 +1119,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1091,6 +1132,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdyw.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_INCLUDE_PATHS = YuYanIPad1/src/model/otherAPI/zlib;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "YuYanIPad1/YuYanIPad1-Bridging-Header.h";
 			};

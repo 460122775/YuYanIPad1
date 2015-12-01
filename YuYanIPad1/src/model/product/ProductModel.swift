@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite
 
 class ProductModel : NSObject {
     
@@ -22,6 +23,56 @@ class ProductModel : NSObject {
             static let instance : ProductModel = ProductModel()
         }
         return Static.instance
+    }
+    
+    internal func selectProductConfigFromLocal()
+    {
+        if NSUserDefaults.standardUserDefaults().objectForKey(INITDATABASE) != nil
+        {
+            do{
+                var _productConfigDicTemp : NSMutableDictionary? = nil
+                self._productConfigArr.removeAllObjects()
+                let db = try Connection("\(PATH_DATABASE)\(DATABASE_NAME)")
+                let productConfig = Table("product_config")
+                for config in try db.prepare(productConfig)
+                {
+                    _productConfigDicTemp = NSMutableDictionary()
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("id")]), forKey: "id")
+                    _productConfigDicTemp?.setValue(config[Expression<String?>("ename")], forKey: "ename")
+                    _productConfigDicTemp?.setValue(config[Expression<String?>("cname")], forKey: "cname")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("type")]), forKey: "type")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadQuery")]), forKey: "enableIPadQuery")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadMovie")]), forKey: "enableIPadMovie")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadCut")]), forKey: "enableIPadCut")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("typeOfCut")]), forKey: "typeOfCut")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("typeOfMultiLayer")]), forKey: "typeOfMultiLayer")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("productOrder")]), forKey: "productOrder")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("level")]), forKey: "level")
+                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("colorId")]), forKey: "colorId")
+                    _productConfigDicTemp?.setValue(config[Expression<String?>("colorFile")], forKey: "colorFile")
+                    self._productConfigArr.addObject(_productConfigDicTemp!)
+                }
+                LogModel.getInstance.insertLog("Get product config count : \(self._productConfigArr.count)")
+                ProductModel.getInstance.initProductByProductConfig()
+                NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCTCONFIG)\(SELECT)\(SUCCESS)", object: self._productConfigArr)
+            }catch let error as NSError{
+                LogModel.getInstance.insertLog("Database Error. [err:\(error)]")
+            }
+        }
+        return
+        let url = NSURL(string: "\(URL_Server)/ios/selectProductConfigForQuery")
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url!, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            let productConfigDir : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            self._productConfigArr = productConfigDir.objectForKey("list") as! NSMutableArray
+            LogModel.getInstance.insertLog("Get product config count : \(self._productConfigArr.count)")
+            ProductModel.getInstance.initProductByProductConfig()
+            NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCTCONFIG)\(SELECT)\(SUCCESS)", object: self._productConfigArr)
+        })
+        task.resume()
     }
     
     internal func selectProductConfig()

@@ -53,4 +53,15 @@ class ProductLeftView: UIView
             self.addSubview(self.productInfoView!)
         }
     }
+    
+    func setProductLeftViewByData(data : NSData)
+    {
+        if self.segmentControl.selectedSegmentIndex == 1
+        {
+            if self.productInfoView != nil
+            {
+                self.productInfoView?.setViewValueByData(data)
+            }
+        }
+    }
 }

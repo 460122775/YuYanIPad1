@@ -25,8 +25,10 @@ class MainViewController : UIViewController
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.currentBtnClick(currentBtn)
+        // Init Database.
+        DBModel.initDB()
         // Get Product Config.
-        ProductModel.getInstance.selectProductConfig()
+        ProductModel.getInstance.selectProductConfigFromLocal()
         // Add Listener.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectSuccess:", name: "\(SOCKET)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectFail:", name: "\(SOCKET)\(FAIL)", object: nil)

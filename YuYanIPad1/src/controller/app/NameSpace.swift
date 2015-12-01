@@ -17,6 +17,9 @@ var IP_PT : String = "\(IP_Server)"
 var PORT_PT : UInt16 = 8112
 
 var PATH_PRODUCT : String = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first! + "/produtFile/"
+var PATH_DATABASE : String = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first! + "/"
+
+var DATABASE_NAME : String = "yy.sqlite3"
 
 var HeartPkgCycle : NSTimeInterval = 4.0
 var MAX_PRODUCTCACHE : Int = 30
@@ -26,6 +29,7 @@ var CurrentUserVo : UserVo?
 var ZeroValue : UInt32 = 0
 var BYTE_ZERO : UInt8 = 0
 
+let INITDATABASE : String = "InitDatabase"
 let SOCKET : String = "Socket"
 let LOGIN : String = "Login"
     let CURRENTUSERINFO : String = "CurrentUserInfo"

@@ -9,15 +9,18 @@
 import Foundation
 import UIKit
 
-//protocol HistoryQueryLeftViewProtocol
-//{
-//    func selectedProductControl(selectedProductDic : NSMutableDictionary)
-//}
+protocol HistoryQueryLeftViewProtocol
+{
+    func initProductInfoByData()
+    func chooseProductControl()
+    func returnBackToChoice()
+    func selectedProductControl(selectedProductDic : NSMutableDictionary)
+}
 
 class HistoryQueryLeftView : UIView, HistoryResultProtocol
 {
     @IBOutlet var segmentControl: UISegmentedControl!
-    var historyResultProtocolDelegate : HistoryResultProtocol?
+    var historyQueryLeftViewProtocol : HistoryQueryLeftViewProtocol?
 
     override init(frame: CGRect)
     {
@@ -58,6 +61,7 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
                 self.historyResultView?.removeFromSuperview()
             }
             self.addSubview(self.productInfoView!)
+            self.historyQueryLeftViewProtocol?.initProductInfoByData()
         }
     }
     
@@ -68,29 +72,39 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         self.historyResultView?.changResultTitle(selectProductConfigDir, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
     }
     
+    func setProductLeftViewByData(data : NSData)
+    {
+        if self.segmentControl.selectedSegmentIndex == 1
+        {
+            if self.productInfoView != nil
+            {
+                self.productInfoView?.setViewValueByData(data)
+            }
+        }
+    }
+    
     // History Result Protocol.
     func chooseProductControl()
     {
-        if historyResultProtocolDelegate != nil
+        if historyQueryLeftViewProtocol != nil
         {
-            historyResultProtocolDelegate?.chooseProductControl()
+            historyQueryLeftViewProtocol?.chooseProductControl()
         }
     }
     
     func returnBackToChoice()
     {
-        if historyResultProtocolDelegate != nil
+        if historyQueryLeftViewProtocol != nil
         {
-            historyResultProtocolDelegate?.returnBackToChoice()
+            historyQueryLeftViewProtocol?.returnBackToChoice()
         }
     }
     
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
-        if historyResultProtocolDelegate != nil
+        if historyQueryLeftViewProtocol != nil
         {
-            historyResultProtocolDelegate?.selectedProductControl(selectedProductDic)
+            historyQueryLeftViewProtocol?.selectedProductControl(selectedProductDic)
         }
-
     }
 }

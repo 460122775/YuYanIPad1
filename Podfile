@@ -1,4 +1,5 @@
 use_frameworks! # Add this if you are targeting iOS 8+ or using Swift
+pod 'Mapbox-iOS-SDK'
 pod 'CocoaAsyncSocket'
 # pod 'FMDB'
 # pod 'ArcGIS-Runtime-SDK-iOS'
@@ -7,8 +8,8 @@ pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
 # pod 'YYHRequest'
 # pod 'ASIHTTPRequest'
 pod 'Alamofire'
+pod 'SSZipArchive'
 
-pod 'Mapbox-iOS-SDK'
 # disable bitcode in every sub-target
 post_install do |installer|
     installer.pods_project.targets.each do |target|

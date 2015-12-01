@@ -14,39 +14,76 @@ class DBModel: NSObject
     class func initDB()
     {
         do{
+            try NSFileManager.defaultManager().createDirectoryAtPath(PATH_DATABASE, withIntermediateDirectories: true, attributes: nil)
+            let db = try Connection("\(PATH_DATABASE)\(DATABASE_NAME)")
+            
+            // Load config from UserDefaults.
+            // If NOT nil, then load configs from local db.
+            if NSUserDefaults.standardUserDefaults().objectForKey(INITDATABASE) != nil
+            {
+                print("Database init complete.")
+                // Check update.
+                
+                // If find updates, then do update operate.
+                
+            }else{// If nil, then init db and data.
+                // Init color_info table & data.
+                try db.execute(DBInitTables.initColorInfoTables())
+                try db.execute(DBInitData.initColorInfoData())
+                
+                // Init system_info table & data.
+                try db.execute(DBInitTables.initSystemInfoTable())
+                try db.execute(DBInitData.initSystemInfoData())
+                
+                // Init product_config data.
+                try db.execute(DBInitTables.initProductConfigTable())
+                try db.execute(DBInitData.initProductConfigData())
+                
+                // Modify Userdefaults.
+                NSUserDefaults.standardUserDefaults().setObject(INITDATABASE, forKey: INITDATABASE)
+            }
+        }catch let error as NSError{
+            LogModel.getInstance.insertLog("Database Error. [err:\(error)]")
+        }
+    }
+    
+    class func createTables()
+    {
+        do{
             let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first!
             let db = try Connection("\(path)/db/yy.sqlite3")
-            
             // Init color_info table.
             let colorTable = Table("color_info")
-            try db.run(colorTable.create { t in
-                t.column(Expression<Int64>("colorId"), primaryKey: true)
-                t.column(Expression<String?>("fileName"))
-                t.column(Expression<Int64>("colorType"))
-                t.column(Expression<Int64>("productType"), unique: true)
-                t.column(Expression<String?>("scaleStr"))
-                t.column(Expression<String?>("unitStr"))
-                t.column(Expression<String?>("rgbnStr"))
-                t.column(Expression<Int64>("enable"))
-            })
+            try db.run(colorTable.create
+                { t in
+                    t.column(Expression<Int64>("colorId"), primaryKey: true)
+                    t.column(Expression<String?>("fileName"))
+                    t.column(Expression<Int64>("colorType"))
+                    t.column(Expression<Int64>("productType"), unique: true)
+                    t.column(Expression<String?>("scaleStr"))
+                    t.column(Expression<String?>("unitStr"))
+                    t.column(Expression<String?>("rgbnStr"))
+                    t.column(Expression<Int64>("enable"))
+                })
             
             // Init product_config table.
             let productConfigTable = Table("product_config")
-            try db.run(productConfigTable.create { t in
-                t.column(Expression<Int64>("id"), primaryKey: true)
-                t.column(Expression<String?>("ename"))
-                t.column(Expression<String?>("cname"))
-                t.column(Expression<Int64>("type"), unique: true)
-                t.column(Expression<Int64>("enableIPadQuery"))
-                t.column(Expression<Int64>("enableIPadMovie"))
-                t.column(Expression<Int64>("enableIPadCut"))
-                t.column(Expression<Int64>("typeOfCut"))
-                t.column(Expression<Int64>("typeOfMultiLayer"))
-                t.column(Expression<Int64>("productOrder"))
-                t.column(Expression<Int64>("level"))
-                t.column(Expression<Int64>("colorId"))
-                t.column(Expression<String?>("colorFile"))
-            })
+            try db.run(productConfigTable.create
+                { t in
+                    t.column(Expression<Int64>("id"), primaryKey: true)
+                    t.column(Expression<String?>("ename"))
+                    t.column(Expression<String?>("cname"))
+                    t.column(Expression<Int64>("type"), unique: true)
+                    t.column(Expression<Int64>("enableIPadQuery"))
+                    t.column(Expression<Int64>("enableIPadMovie"))
+                    t.column(Expression<Int64>("enableIPadCut"))
+                    t.column(Expression<Int64>("typeOfCut"))
+                    t.column(Expression<Int64>("typeOfMultiLayer"))
+                    t.column(Expression<Int64>("productOrder"))
+                    t.column(Expression<Int64>("level"))
+                    t.column(Expression<Int64>("colorId"))
+                    t.column(Expression<String?>("colorFile"))
+                })
         }catch let error as NSError{
             LogModel.getInstance.insertLog("Database Error. [err:\(error)]")
         }

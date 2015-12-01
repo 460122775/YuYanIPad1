@@ -65,6 +65,8 @@ class ProductViewController : UIViewController
             }, completion: { (Bool) -> Void in
                 self.titleBarBgImg.frame.size = CGSizeMake(464, 48)
             })
+            // Set product left view by data.
+//            self.productLeftView.setProductLeftViewByData()
         }else{
             self.titleBarBgImg.frame.size = CGSizeMake(704, 48)
             UIView.animateWithDuration(0.6, animations: { () -> Void in
