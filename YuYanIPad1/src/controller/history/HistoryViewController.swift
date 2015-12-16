@@ -54,9 +54,9 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     override func viewWillAppear(animated: Bool)
     {
-        if ProductModel.getInstance.isGetProductConfigArr() == false
+        if ProductUtilModel.getInstance.isGetProductConfigArr() == false
         {
-            ProductModel.getInstance.selectProductConfig()
+            ProductUtilModel.getInstance.selectProductConfig()
         }
     }
     
@@ -203,14 +203,17 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         // Init top bar by data.
         titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
             + ProductInfoModel.getDataTimeString(data) + "  "
-        if currentProductDic != nil && currentProductDic!.objectForKey("type") != nil
+        if currentProductDic == nil || currentProductDic!.objectForKey("type") == nil
         {
-            let type : Int64 = Int64((currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
-            if type == ProductType_Z || type == ProductType_V || type == ProductType_W
-            {
-                titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
-            }
+            return
         }
+        let type : Int64 = Int64((currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
+        if type == ProductType_Z || type == ProductType_V || type == ProductType_W
+        {
+            titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
+        }
+        // Draw Color.
+        self.productViewA?.drawProductImg(self.currentProductDic)
     }
     
     func initProductInfoByData()

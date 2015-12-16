@@ -9,6 +9,7 @@ pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
 # pod 'ASIHTTPRequest'
 pod 'Alamofire'
 pod 'SSZipArchive'
+pod 'ShareSDK3'
 
 # disable bitcode in every sub-target
 post_install do |installer|

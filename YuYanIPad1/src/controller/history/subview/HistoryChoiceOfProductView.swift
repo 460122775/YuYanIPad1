@@ -21,7 +21,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
     
     var delegate : HistoryChoiceOfProductProtocol?
     var _productConfigArr : NSMutableArray?
-    var _selectProductConfigDic : NSMutableDictionary?
+    var _selectProductConfigDic : NSMutableDictionary!
     let ProductTableCellIndentifier : String = "ProductTableCellIndentifier"
     
     override func drawRect(rect : CGRect)
@@ -34,7 +34,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
         self.productTableView.layoutMargins = UIEdgeInsetsZero
         self.productTableView.separatorInset = UIEdgeInsetsZero
         // Get product table view data & reset the view.
-        if ProductModel.getInstance.getProductConfigArr().count == 0
+        if ProductUtilModel.getInstance.getProductConfigArr().count == 0
         {
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
@@ -48,7 +48,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
     
     func setViewByProductConfig(notification : NSNotification?)
     {
-        _productConfigArr = ProductModel.getInstance.getProductConfigArr()
+        _productConfigArr = ProductUtilModel.getInstance.getProductConfigArr()
         if _productConfigArr == nil || _productConfigArr!.count == 0
         {
             return

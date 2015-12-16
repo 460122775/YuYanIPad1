@@ -28,7 +28,7 @@ class MainViewController : UIViewController
         // Init Database.
         DBModel.initDB()
         // Get Product Config.
-        ProductModel.getInstance.selectProductConfigFromLocal()
+        ProductUtilModel.getInstance.selectProductConfigFromLocal()
         // Add Listener.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectSuccess:", name: "\(SOCKET)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectFail:", name: "\(SOCKET)\(FAIL)", object: nil)
@@ -56,7 +56,7 @@ class MainViewController : UIViewController
     
     func getProductTypeListControl(notification : NSNotification)
     {
-        ProductModel.getInstance.productTypeListReceived(productListData: notification.object as? NSData)
+        ProductUtilModel.getInstance.productTypeListReceived(productListData: notification.object as? NSData)
     }
     
     func loginSuccessControl()

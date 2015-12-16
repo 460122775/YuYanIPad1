@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="YuYanIPad1" customModuleProvider="target">
@@ -26,10 +26,8 @@
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPC-82-ADN">
                             <rect key="frame" x="-79" y="8" width="936" height="748"/>
-                            <animations/>
                         </imageView>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gys-cH-mRq" userLabel="navBar">
@@ -37,7 +35,6 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMz-iS-m1E" userLabel="currentBtn">
                             <rect key="frame" x="0.0" y="0.0" width="88" height="100"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="FTE-nS-5wR"/>
                                 <constraint firstAttribute="width" constant="88" id="g0g-8H-0iq"/>
@@ -60,7 +57,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MK2-CN-v2i" userLabel="historyBtn">
                             <rect key="frame" x="0.0" y="100" width="88" height="100"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="100" id="7Eh-ho-lCw"/>
                                 <constraint firstAttribute="width" constant="88" id="ZtI-7b-PNd"/>
@@ -91,9 +87,8 @@
                                 <action selector="historyBtnClick:" destination="-1" eventType="touchUpInside" id="3yc-GG-FC3"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="chatBtn">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="chatBtn">
                             <rect key="frame" x="0.0" y="200" width="88" height="100"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="88" id="8Wn-lt-1b6"/>
                                 <constraint firstAttribute="height" constant="100" id="SVy-Sh-Ffo"/>
@@ -126,14 +121,13 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ltf-ja-eIH" userLabel="thresholdBtn">
                             <rect key="frame" x="0.0" y="300" width="88" height="100"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="88" id="Ca1-h0-l1M"/>
                                 <constraint firstAttribute="height" constant="100" id="GAP-sc-Ojp"/>
                             </constraints>
                             <state key="normal" backgroundImage="navbar_btn_warning_normal">
                                 <attributedString key="attributedTitle">
-                                    <fragment content="预警">
+                                    <fragment content="日志">
                                         <attributes>
                                             <font key="NSFont" size="14" name="STHeitiSC-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
@@ -150,7 +144,6 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3kW-SU-GaW" userLabel="settingBtn">
                             <rect key="frame" x="0.0" y="648" width="88" height="100"/>
-                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="88" id="LAE-IB-TuW"/>
                                 <constraint firstAttribute="height" constant="100" id="dBo-L5-kxM"/>
@@ -182,7 +175,6 @@
                             </connections>
                         </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" red="0.015686274509803921" green="0.69803921568627447" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="ltf-ja-eIH" firstAttribute="leading" secondItem="gys-cH-mRq" secondAttribute="leading" id="1Nb-8e-Bbt"/>
@@ -200,7 +192,6 @@
                     </constraints>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="IEA-Jj-Ijb" firstAttribute="top" secondItem="BuD-WI-j8H" secondAttribute="top" constant="20" id="0oB-zh-4XD"/>

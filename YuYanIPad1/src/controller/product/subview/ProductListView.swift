@@ -41,12 +41,30 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     
     internal func getProductTypeListControl()
     {
-        productArr = ProductModel.getInstance.getProductList()
+        productArr = ProductUtilModel.getInstance.getProductList()
         if productArr!.count == 0
         {
             return
         }
         self.productListTableView.reloadData()
+    }
+    
+    func setProductAddress(productEname : String, productAddress : String)
+    {
+        if self.productArr == nil
+        {
+            return
+        }else{
+            var _productDic : NSMutableDictionary?
+            for(var i : Int = 0; i < productArr?.count; i++)
+            {
+                 _productDic = (productArr?.objectAtIndex(i) as? NSMutableDictionary)!
+                if _productDic?.objectForKey("ename") as! String == productEname
+                {
+                    _productDic?.setObject(productAddress, forKey: "name")
+                }
+            }
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -110,6 +128,12 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         cell.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
         cell.textLabel?.textColor = UIColor.blackColor()
         LogModel.getInstance.insertLog("用户点击了：" + (_selectProductConfigDic!.objectForKey("cname") as! String) + "（" + (_selectProductConfigDic!.objectForKey("ename") as! String) + "）")
+        if (_selectProductConfigDic!.objectForKey("name") as! String).lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0
+        {
+            SwiftNotice.showText("未收集到该产品!")
+        }else{
+            SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
+        }
 //        self.delegate?.getSelectedProduct(
 //            (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
 //        )

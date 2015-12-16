@@ -40,6 +40,7 @@ let INSERT : String = "Insert"
 let DELETE : String = "Delete"
 let UPDATE : String = "Update"
 let SELECT : String = "Select"
+let RECEIVE : String = "Receive"
 
 let PRODUCTCONFIG : String = "ProductConfig"
 let HISTORYPRODUCT : String = "HistoryProduct"

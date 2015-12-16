@@ -38,6 +38,7 @@ class ProductViewController : UIViewController
         self.cartoonBarView = (NSBundle.mainBundle().loadNibNamed("CartoonBarView", owner: self, options: nil) as NSArray).lastObject as? CartoonBarView
         self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
         self.productContainerView.addSubview(self.cartoonBarView!)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveProduct:", name: "\(RECEIVE)\(PRODUCT)", object: nil)
     }
     
     override func viewWillAppear(animated: Bool)
@@ -89,6 +90,19 @@ class ProductViewController : UIViewController
     @IBAction func camaraBtnClick(sender: UIButton)
     {
         sender.selected = !sender.selected
+    }
+    
+    func receiveProduct(notificaiton : NSNotification)
+    {
+        var _nameArrTemp : [String]? = (String.init(data: notificaiton.object as! NSData, encoding: NSUTF8StringEncoding)?.componentsSeparatedByString("\\"))!
+        if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
+        {
+            _nameArrTemp![(_nameArrTemp?.count)! - 1] = _nameArrTemp![(_nameArrTemp?.count)! - 1].stringByReplacingOccurrencesOfString("\0", withString: "")
+            let productFilePosStr : String = "\(_nameArrTemp![(_nameArrTemp?.count)! - 3])\\\(_nameArrTemp![(_nameArrTemp?.count)! - 2])\\\(_nameArrTemp![(_nameArrTemp?.count)! - 1])"
+            SwiftNotice.showText("收到产品［\(productFilePosStr)］")
+            self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productFilePosStr)
+            LogModel.getInstance.insertLog("Receive product[\(productFilePosStr)].")
+        }
     }
     
     override func didReceiveMemoryWarning()

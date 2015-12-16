@@ -50,7 +50,7 @@ class HistoryChoiceView : UIView
     override func drawRect(rect : CGRect)
     {
         super.drawRect(rect)
-        if ProductModel.getInstance.getProductConfigArr().count == 0
+        if ProductUtilModel.getInstance.getProductConfigArr().count == 0
         {
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
@@ -58,22 +58,22 @@ class HistoryChoiceView : UIView
                 name: "\(PRODUCTCONFIG)\(SELECT)\(SUCCESS)",
                 object: nil)
         }else{
-            if ProductModel.getInstance.isGetProductConfigArr() == false
+            if ProductUtilModel.getInstance.isGetProductConfigArr() == false
             {
                 return
             }
-            self._selectProductConfigDir = ProductModel.getInstance.getProductConfigArr().objectAtIndex(0) as? NSMutableDictionary
+            self._selectProductConfigDir = ProductUtilModel.getInstance.getProductConfigArr().objectAtIndex(0) as? NSMutableDictionary
             setProductBtnByVo(self._selectProductConfigDir)
         }
     }
     
     func setViewByProductConfig(notification : NSNotification?)
     {
-        if ProductModel.getInstance.isGetProductConfigArr() == false
+        if ProductUtilModel.getInstance.isGetProductConfigArr() == false
         {
             return
         }
-        self._selectProductConfigDir = ProductModel.getInstance.getProductConfigArr().objectAtIndex(0) as? NSMutableDictionary
+        self._selectProductConfigDir = ProductUtilModel.getInstance.getProductConfigArr().objectAtIndex(0) as? NSMutableDictionary
         if notification == nil
         {
             setProductBtnByVo(self._selectProductConfigDir)
@@ -153,7 +153,7 @@ class HistoryChoiceView : UIView
             delegate?.historyQueryControl(self._selectProductConfigDir!, startTimeStr: (startTimeBtn.titleLabel?.text)!, endTimeStr: (endTimeBtn.titleLabel?.text)!) 
         }
         // Get Data.
-        ProductModel.getInstance.getHistoryData(
+        ProductUtilModel.getInstance.getHistoryData(
             self.startTime!.timeIntervalSince1970,
             endTime: self.endTime!.timeIntervalSince1970,
             productType: Int32((self._selectProductConfigDir!.objectForKey("type")?.integerValue)!),

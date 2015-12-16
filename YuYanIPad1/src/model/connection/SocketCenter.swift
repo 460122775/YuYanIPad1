@@ -175,7 +175,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
                 break
             
             case SOCKETCONST_NET_DATA_TYPE_PTTPUT_GEN_RESULT:
-                LogModel.getInstance.insertLog("Receive product [\(String.init(data: _packageData.subdataWithRange(NSMakeRange(20, _packageData.length - 20 - 4)), encoding: NSUTF8StringEncoding))].")
+                NSNotificationCenter.defaultCenter().postNotificationName("\(RECEIVE)\(PRODUCT)", object: _packageData.subdataWithRange(NSMakeRange(20, _packageData.length - 20 - 4)))
                 break
             
             default:

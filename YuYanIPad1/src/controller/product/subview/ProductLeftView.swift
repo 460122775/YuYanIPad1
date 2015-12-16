@@ -64,4 +64,14 @@ class ProductLeftView: UIView
             }
         }
     }
+    
+    func setProductAddress(productEname : String, productAddress : String)
+    {
+        if self.productListView == nil
+        {
+            return
+        }else{
+            self.productListView!.setProductAddress(productEname, productAddress: productAddress)
+        }
+    }
 }

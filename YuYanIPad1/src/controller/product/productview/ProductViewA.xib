@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIView"/>
@@ -11,7 +12,16 @@
             <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maps2" translatesAutoresizingMaskIntoConstraints="NO" id="cYo-WG-Fo2">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" customClass="MGLMapView">
+                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYc-AG-raW" userLabel="productImg">
+                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+                    <animations/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cYo-WG-Fo2" userLabel="distanceCircleImg">
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                     <animations/>
                 </imageView>
@@ -22,7 +32,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="676" height="48"/>
                             <animations/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="clabel_nobg" translatesAutoresizingMaskIntoConstraints="NO" id="YWl-rf-5ep">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWl-rf-5ep">
                             <rect key="frame" x="0.0" y="0.0" width="676" height="48"/>
                             <animations/>
                         </imageView>
@@ -34,19 +44,28 @@
                         <constraint firstAttribute="width" constant="676" id="yXV-gs-w2d"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" customClass="MGLMapView">
-                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
-                    <animations/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="cYo-WG-Fo2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="05o-Ee-Bjo"/>
+                <constraint firstItem="cYo-WG-Fo2" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="234:187" id="2b5-ny-ZxW"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="89c-Vo-4wr"/>
+                <constraint firstItem="cYo-WG-Fo2" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="G9T-wD-gKW"/>
                 <constraint firstAttribute="bottom" secondItem="ywE-aY-3UD" secondAttribute="bottom" id="J5a-gh-HA9"/>
                 <constraint firstItem="cYo-WG-Fo2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y5g-ff-tBO"/>
                 <constraint firstAttribute="trailing" secondItem="cYo-WG-Fo2" secondAttribute="trailing" id="b1L-Ob-aZy"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="234:187" id="h7y-tH-pqB"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="bottom" secondItem="ywE-aY-3UD" secondAttribute="bottom" id="hfJ-PY-OmL"/>
+                <constraint firstItem="EYc-AG-raW" firstAttribute="top" secondItem="cYo-WG-Fo2" secondAttribute="top" id="kha-fL-JP0"/>
+                <constraint firstItem="EYc-AG-raW" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="maB-nY-ToU"/>
+                <constraint firstItem="EYc-AG-raW" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="n1S-gz-Hab"/>
+                <constraint firstItem="cYo-WG-Fo2" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="oRU-Uc-2U3"/>
+                <constraint firstItem="EYc-AG-raW" firstAttribute="leading" secondItem="X0C-JG-BJA" secondAttribute="leading" id="qWm-tk-H7C"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="trailing" secondItem="cYo-WG-Fo2" secondAttribute="trailing" id="rIe-Va-GwD"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="wzz-fA-ZQa"/>
+                <constraint firstItem="EYc-AG-raW" firstAttribute="top" secondItem="X0C-JG-BJA" secondAttribute="top" id="xnK-Pw-x3n"/>
+                <constraint firstItem="EYc-AG-raW" firstAttribute="leading" secondItem="cYo-WG-Fo2" secondAttribute="leading" id="yTf-Lj-0n5"/>
                 <constraint firstAttribute="bottom" secondItem="cYo-WG-Fo2" secondAttribute="bottom" id="yzv-q3-aZx"/>
                 <constraint firstAttribute="trailing" secondItem="ywE-aY-3UD" secondAttribute="trailing" constant="10" id="zAI-rm-YmB"/>
             </constraints>
@@ -55,14 +74,15 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="colorImgView" destination="YWl-rf-5ep" id="Gkj-KE-BeI"/>
+                <outlet property="distanceCircleImgView" destination="cYo-WG-Fo2" id="wXx-XE-8Qe"/>
                 <outlet property="mapView" destination="X0C-JG-BJA" id="WWO-5v-Yog"/>
+                <outlet property="productImgVIew" destination="EYc-AG-raW" id="Y7i-YH-BWg"/>
             </connections>
             <point key="canvasLocation" x="523" y="342"/>
         </view>
     </objects>
     <resources>
-        <image name="clabel_nobg" width="1354" height="96"/>
         <image name="map_lable_bg" width="677" height="48"/>
-        <image name="maps2" width="3128" height="3128"/>
     </resources>
 </document>
