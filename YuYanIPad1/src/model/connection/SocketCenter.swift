@@ -34,6 +34,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     var service : NSNetService?
     var gcdSocket : GCDAsyncSocket!
+    var appIsActive : Bool = true
     
     class var getInstance : SocketCenter
     {
@@ -48,15 +49,26 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     **/
     func socket(socket : GCDAsyncSocket, didConnectToHost host:String, port p:UInt16)
     {
+        connectCount = 1
         LogModel.getInstance.insertLog("Socket Connect Success !!!")
         NSNotificationCenter.defaultCenter().postNotificationName("\(SOCKET)\(SUCCESS)", object: nil)
     }
     
+    var connectCount : UInt32 = 0
     func socketDidDisconnect(sock: GCDAsyncSocket!, withError err: NSError!)
     {
         heartJumpTimer?.invalidate()
-        LogModel.getInstance.insertLog("Socket Connect Failed !!![\(err)]")
+        LogModel.getInstance.insertLog("Socket Connect Close !!![\(err)]")
         NSNotificationCenter.defaultCenter().postNotificationName("\(SOCKET)\(FAIL)", object: nil)
+        if appIsActive == true
+        {
+            connectCount++
+            if connectCount >= 3
+            {
+                return
+            }
+            SocketCenter.getInstance.conntcpclient()
+        }
     }
     
     private var bufferByteArray : NSMutableData = NSMutableData()
@@ -118,18 +130,34 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     internal func conntcpclient()
     {
+        appIsActive = true
         if gcdSocket == nil
         {
             gcdSocket = GCDAsyncSocket(delegate: self, delegateQueue: dispatch_get_main_queue())
             if gcdSocket == nil
             {
                 return
+            }else{
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "closeSocket", name: "\(APP_STOP)", object: nil)
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "conntcpclient", name: "\(APP_ACTIVE)", object: nil)
             }
         }
         do{
-            try self.gcdSocket.connectToHost(IP_PT, onPort: PORT_PT, withTimeout: 10)
+            if gcdSocket.isDisconnected == true
+            {
+                try self.gcdSocket.connectToHost(IP_PT, onPort: PORT_PT, withTimeout: 10)
+            }
         }catch let error as NSError{
             LogModel.getInstance.insertLog("SocketCenter Connect Socket FAIL [err:\(error)]")
+        }
+    }
+    
+    internal func closeSocket()
+    {
+        appIsActive = false
+        if gcdSocket != nil && gcdSocket.isConnected
+        {
+            gcdSocket.disconnect()
         }
     }
     

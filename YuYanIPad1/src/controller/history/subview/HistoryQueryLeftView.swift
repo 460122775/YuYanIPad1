@@ -61,7 +61,10 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
                 self.historyResultView?.removeFromSuperview()
             }
             self.addSubview(self.productInfoView!)
-            self.historyQueryLeftViewProtocol?.initProductInfoByData()
+            if self.historyQueryLeftViewProtocol != nil
+            {
+                self.historyQueryLeftViewProtocol?.initProductInfoByData()
+            }
         }
     }
     

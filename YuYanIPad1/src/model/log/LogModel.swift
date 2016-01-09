@@ -24,7 +24,15 @@ class LogModel : NSObject {
     func insertLog(logContent : String?)
     {
         print(">>>>>> \(logContent)")
+        if !ISDEBUGMODE
+        {
+            return
+        }
         logContentArr.insertObject(logContent!, atIndex: 0)
+        if logContentArr.count > 30
+        {
+            logContentArr.removeLastObject()
+        }
     }
     
     func getLogContent() -> NSMutableArray

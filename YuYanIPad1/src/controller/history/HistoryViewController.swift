@@ -130,7 +130,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     }
     
     var datePickerController : HSDatePickerViewController?
-    func chooseTimeControl()
+    func timeBtnClick()
     {
         if datePickerController == nil
         {
@@ -176,7 +176,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 if response.result.value == nil || response.result.value?.length <= 48
                 {
                     // Tell reason to user.
-                    
+                    SwiftNotice.showNoticeWithText(NoticeType.error, text: "数据文件下载失败，请检查网络后重试！", autoClear: true, autoClearTime: 3)
                     return
                 }
                 // Cache data.
@@ -186,7 +186,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 {
                     // Cache failed, maybe the reason of uncompress failed.
                     // Tell reason to user.
-                    
+                    SwiftNotice.showNoticeWithText(NoticeType.error, text: "数据格式解压失败，或不支持此格式！", autoClear: true, autoClearTime: 3)
                     return
                 }else{
                     // Draw product.
@@ -213,7 +213,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
         }
         // Draw Color.
-        self.productViewA?.drawProductImg(self.currentProductDic)
+        self.productViewA?.drawProductImg(self.currentProductDic, data: data)
+        self.switchToolView?.setCurrentProductDic(self.currentProductDic!)
     }
     
     func initProductInfoByData()
@@ -228,6 +229,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     func hsDatePickerPickedDate(date: NSDate!)
     {
         print("\(date)")
+        self.historyChoiceView!.setDateTime(date)
     }
     
     func hsDatePickerDidDismissWithQuitMethod(method: HSDatePickerQuitMethod)

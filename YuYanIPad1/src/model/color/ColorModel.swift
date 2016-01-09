@@ -141,16 +141,17 @@ class ColorModel: NSObject {
         UIGraphicsEndImageContext()
         // Create colorArray.
         let colorDataArray : NSMutableArray = NSMutableArray()
+        var colorDataTempArray : NSArray? = nil
         for (var i : Int = 0; i < rgbnArr.count / 4; i++)
         {
             // Create color array of 256 length.
             for (var j : Int32 = 0; j < rgbnArr[i * 4 + 3].intValue; j++)
             {
-                colorDataArray.addObject(NSArray(object:[
-                    rgbnArr[i * 4 + 0].floatValue / 256.0,
-                    rgbnArr[i * 4 + 1].floatValue / 256.0,
-                    rgbnArr[i * 4 + 2].floatValue / 256.0
-                ]))
+                colorDataTempArray = NSArray(objects:
+                    NSNumber(float: rgbnArr[i * 4 + 0].floatValue / 256.0),
+                    NSNumber(float: rgbnArr[i * 4 + 1].floatValue / 256.0),
+                    NSNumber(float: rgbnArr[i * 4 + 2].floatValue / 256.0)
+                )
             }
         }
         return (colorImg, colorDataArray)

@@ -25,6 +25,9 @@
 #ifndef _HEADER_FLBaseFileHead_20080906
 #define _HEADER_FLBaseFileHead_20080906
 
+#define ProductType_R 3
+#define ProductType_V 4
+#define ProductType_W 5
 
 #pragma pack(1)
 

@@ -14,9 +14,7 @@
 
 @required
 
--(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data;
-
--(void)getProductInfo:(UIView *) productInfoView TitleLabel:(UILabel*)titleLabel Data:(NSData *) data;
+-(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray;
 
 @end
 
@@ -34,13 +32,13 @@
     float _det;
     float _detM;    // Real distance of each pix.
     float rad360;
-    
     tagRealFile fileHeadStruct;
 }
 
 @property (nonatomic, assign) int zoomValue;
 @property (nonatomic, assign) int centX;
 @property (nonatomic, assign) int centY;
+@property (nonatomic, assign) int productType;
 
 - (void) drawDistanceCircle:(UIImageView *) productImgView;
 - (void) constNeedCal:(UIImageView *) productImgView;

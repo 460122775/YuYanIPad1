@@ -8,8 +8,8 @@
 
 import Foundation
 
-var IP_Server : String = "192.168.137.1" // 192.168.191.1
-var PORT_SERVER : Int = 8080 // 9090
+var IP_Server : String = "192.168.199.6"
+var PORT_SERVER : Int = 9090 // 8080
 var URL_Server : String = "http://\(IP_Server):\(PORT_SERVER)/XYSystem"
 var URL_DATA : String = "http://\(IP_Server):\(PORT_SERVER)/data"
 
@@ -23,6 +23,7 @@ var DATABASE_NAME : String = "yy.sqlite3"
 
 var HeartPkgCycle : NSTimeInterval = 4.0
 var MAX_PRODUCTCACHE : Int = 30
+var ISDEBUGMODE : Bool = true
 
 var CurrentUserVo : UserVo?
 
@@ -35,6 +36,8 @@ let LOGIN : String = "Login"
     let CURRENTUSERINFO : String = "CurrentUserInfo"
 let SUCCESS : String = "Success"
 let FAIL : String = "Fail"
+let APP_ACTIVE : String = "app_active"
+let APP_STOP : String = "app_stop"
 
 let INSERT : String = "Insert"
 let DELETE : String = "Delete"
@@ -46,7 +49,7 @@ let PRODUCTCONFIG : String = "ProductConfig"
 let HISTORYPRODUCT : String = "HistoryProduct"
 let PRODUCT : String = "Product"
 let PRODUCTTYPELIST : String = "ProductTypeList"
-
+    let LEVEL_FIRSTCLASS : Int64 = 0
 let SYSTEMCONFIG : String = "SystemConfig"
 let ABOUTUS : String = "AboutUs"
 let LAWINFO : String = "LawInfo"

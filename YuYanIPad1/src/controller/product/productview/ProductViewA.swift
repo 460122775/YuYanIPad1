@@ -19,6 +19,10 @@ class ProductViewA: UIView, MGLMapViewDelegate
     
     var currentProductDic : NSMutableDictionary?
     var currentColorDataArray : NSMutableArray?
+    var currentProductModel : ProductModel?
+    var currentProductData : NSData?
+    var radarPointX : Int32 = 0
+    var radarPointY : Int32 = 0
     
     required init?(coder : NSCoder)
     {
@@ -37,9 +41,11 @@ class ProductViewA: UIView, MGLMapViewDelegate
             zoomLevel: 12, animated: false)
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
+        radarPointX = Int32(self.productImgVIew.frame.width) / 2
+        radarPointY = Int32(self.productImgVIew.frame.height) / 2
     }
     
-    func drawProductImg(_productDic : NSMutableDictionary?)
+    func drawProductImg(_productDic : NSMutableDictionary?, data : NSData)
     {
         if _productDic == nil
         {
@@ -62,11 +68,25 @@ class ProductViewA: UIView, MGLMapViewDelegate
         // Draw Product data.
         if currentColorDataArray == nil || currentColorDataArray?.count == 0
         {
+            SwiftNotice.showNoticeWithText(NoticeType.error, text: "该产品的色标配置出错，无法显示图像！", autoClear: true, autoClearTime: 3)
             return
         }
-        SwiftNotice.showText("\(currentProductDic?.objectForKey("name") as! String)")
+//        SwiftNotice.showText("\(currentProductDic?.objectForKey("name") as! String)")
+        // Draw Product Data.
+        if currentProductModel == nil || currentProductModel?.productType != (_productDic?.objectForKey("type") as! NSNumber).intValue
+        {
+            currentProductModel = ProductFactory.getModelByType((_productDic?.objectForKey("type") as! NSNumber).longLongValue)
+        }
+        // Not Support.
+        if currentProductModel == nil
+        {
+            SwiftNotice.showNoticeWithText(NoticeType.error, text: "对不起，暂时不支持此产品！", autoClear: true, autoClearTime: 3)
+        }else{
+            currentProductModel?.centX = radarPointX
+            currentProductModel?.centY = radarPointY
+            currentProductModel?.getImageData(self.productImgVIew, andData: data, colorArray: self.currentColorDataArray)
+        }
     }
-    
     
     // -- MGLMapViewDelegate
     func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool

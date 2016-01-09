@@ -14,7 +14,7 @@ protocol HistoryChoiceProtocol
 {
     func historyQueryControl(selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     func chooseProductControl()
-    func chooseTimeControl()
+    func timeBtnClick()
 }
 
 class HistoryChoiceView : UIView
@@ -65,6 +65,7 @@ class HistoryChoiceView : UIView
             self._selectProductConfigDir = ProductUtilModel.getInstance.getProductConfigArr().objectAtIndex(0) as? NSMutableDictionary
             setProductBtnByVo(self._selectProductConfigDir)
         }
+        self.preciseTimeBtnClick(self.preciseTimeBtn_halfAnHour)
     }
     
     func setViewByProductConfig(notification : NSNotification?)
@@ -101,24 +102,24 @@ class HistoryChoiceView : UIView
     
     @IBAction func preciseTimeBtnClick(sender: UIButton)
     {
-        self.startTime = NSDate()
+        self.endTime = NSDate()
         if sender == preciseTimeBtn_halfAnHour
         {
-            self.endTime = self.startTime?.dateByAddingTimeInterval(0.5 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-0.5 * 60 * 60)
         }else if sender == preciseTimeBtn_oneHour{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(1 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-1 * 60 * 60)
         }else if sender == preciseTimeBtn_twoHour{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(2 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-2 * 60 * 60)
         }else if sender == preciseTimeBtn_fourHour{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(4 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-4 * 60 * 60)
         }else if sender == preciseTimeBtn_eightHour{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(8 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-8 * 60 * 60)
         }else if sender == preciseTimeBtn_sixHour{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(6 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-6 * 60 * 60)
         }else if sender == preciseTimeBtn_twelveHour{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(12 * 60 * 60)
+            self.startTime = self.startTime?.dateByAddingTimeInterval(-12 * 60 * 60)
         }else if sender == preciseTimeBtn_oneDay{
-            self.endTime = self.startTime?.dateByAddingTimeInterval(24 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-24 * 60 * 60)
         }
         startTimeBtn.setTitle(self.dateFormatter!.stringFromDate(self.startTime!), forState: UIControlState.Normal)
         endTimeBtn.setTitle(self.dateFormatter!.stringFromDate(self.endTime!), forState: UIControlState.Normal)
@@ -128,7 +129,9 @@ class HistoryChoiceView : UIView
     {
         if delegate != nil
         {
-            delegate?.chooseTimeControl()
+            startTimeBtn.tag = 1
+            endTimeBtn.tag = 0
+            delegate?.timeBtnClick()
         }
     }
     
@@ -136,7 +139,23 @@ class HistoryChoiceView : UIView
     {
         if delegate != nil
         {
-            delegate?.chooseTimeControl()
+            startTimeBtn.tag = 0
+            endTimeBtn.tag = 1
+            delegate?.timeBtnClick()
+        }
+    }
+    
+    func setDateTime(date : NSDate)
+    {
+        if startTimeBtn.tag == 1
+        {
+            self.startTime = date
+            startTimeBtn.tag = 0
+            startTimeBtn.setTitle(self.dateFormatter!.stringFromDate(self.startTime!), forState: UIControlState.Normal)
+        }else if endTimeBtn.tag == 1{
+            self.endTime = date
+            endTimeBtn.tag = 0
+            endTimeBtn.setTitle(self.dateFormatter!.stringFromDate(self.endTime!), forState: UIControlState.Normal)
         }
     }
     

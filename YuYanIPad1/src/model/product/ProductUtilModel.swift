@@ -140,6 +140,7 @@ class ProductUtilModel : NSObject {
                     _productDic.setValue(_productTypeList.objectAtIndex(i), forKey: "type")
                     _productDic.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
                     _productDic.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
+                    _productDic.setValue(_productConfigDic.objectForKey("level"), forKey: "level")
                     _productDic.setValue("", forKey: "name")
                     _productArr.addObject(_productDic)
                     break
@@ -160,8 +161,8 @@ class ProductUtilModel : NSObject {
         _pageVo.currentPage = _currentPage
         let _productVo : ProductVo = ProductVo()
         _productVo.type = _productType
-        let urlStr : NSString = "\(URL_Server)/ios/selectProductByTypeInPeriod?startTime=\(Int64(1442815200))&endTime=\(Int64(1442822400))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
-//        let urlStr : NSString = "\(URL_Server)/ios/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+//        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1442815200))&endTime=\(Int64(1442822400))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
         LogModel.getInstance.insertLog("\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
@@ -171,8 +172,62 @@ class ProductUtilModel : NSObject {
             }
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 //            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
-            NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: resultDic)
+            NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
         })
         task.resume()
+    }
+    
+    internal func productNameToDicControl(productNameStr : String) -> NSMutableDictionary?
+    {
+        // Reset productArr by new product type.
+        if _productTypeList.count == 0 || _productConfigArr.count == 0
+        {
+            return nil
+        }
+        let productNameArr : [String] = productNameStr.componentsSeparatedByString("\\")
+        if productNameArr.count >= 3
+        {
+            var _productDic : NSMutableDictionary?
+            var _productConfigDic : NSMutableDictionary
+            for var i = 0; i < _productConfigArr.count; i++
+            {
+                _productConfigDic = (_productConfigArr.objectAtIndex(i) as? NSMutableDictionary)!
+                if _productConfigDic.valueForKey("ename") as! String == productNameArr[productNameArr.count - 2]
+                {
+                    _productDic = NSMutableDictionary()
+                    _productDic!.setValue(_productConfigDic.objectForKey("type"), forKey: "type")
+                    _productDic!.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
+                    _productDic!.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
+                    _productDic!.setValue(_productConfigDic.objectForKey("level"), forKey: "level")
+                    _productDic!.setValue(productNameStr, forKey: "pos_file")
+                    _productDic!.setValue(productNameArr[productNameArr.count - 1], forKey: "name")
+                    _productDic!.setValue((productNameArr[productNameArr.count - 1] as NSString).substringWithRange(NSRange(location: 23, length: 3)), forKey: "scan_mode")
+                    _productDic!.setValue((_productConfigDic.objectForKey("type") as! NSNumber).stringValue + "-"
+                        + productNameArr[productNameArr.count - 1].componentsSeparatedByString("_")[2], forKey: "mcode")
+                    _productArr.addObject(_productDic!)
+                    break
+                }
+            }
+            return _productDic
+        }else{
+            return nil
+        }
+    }
+    
+    internal func getDateTimeFormatStringFromAddress(pos_file : String) -> String?
+    {
+        let productNameArr : [String] = pos_file.componentsSeparatedByString("\\")
+        if productNameArr.count >= 3
+        {
+            let nameStr = productNameArr[3] as NSString
+            return  nameStr.substringWithRange(NSMakeRange(0, 4)) + "-" +
+                    nameStr.substringWithRange(NSMakeRange(4, 2)) + "-" +
+                    nameStr.substringWithRange(NSMakeRange(6, 2)) + "  " +
+                    nameStr.substringWithRange(NSMakeRange(9, 2)) + ":" +
+                    nameStr.substringWithRange(NSMakeRange(11, 2)) + ":" +
+                    nameStr.substringWithRange(NSMakeRange(13, 2))
+        }else{
+            return nil
+        }
     }
 }

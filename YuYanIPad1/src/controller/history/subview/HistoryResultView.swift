@@ -66,6 +66,11 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         }else{
             // Show result data.
             resultArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
+            // Tell user the result.
+            if resultArr == nil || resultArr?.count == 0
+            {
+                return
+            }
             // Must reload data in main queue, or maybe crashed.
             dispatch_async(dispatch_get_main_queue(), {
                 self.resultTableView.reloadData()
@@ -78,6 +83,9 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         if delegate != nil
         {
             delegate?.returnBackToChoice()
+            resultArr = nil
+            currentPageVo = nil
+            _selectedProductDic = nil
         }
     }
     
@@ -144,7 +152,7 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         cell.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
         cell.textLabel?.textColor = UIColor.blackColor()
         cell.detailTextLabel?.textColor = UIColor.grayColor()
-        _selectedProductDic = (resultArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
+        _selectedProductDic = NSMutableDictionary(dictionary: (resultArr?.objectAtIndex(indexPath.row as Int) as? NSDictionary)!)
         self.delegate?.selectedProductControl(_selectedProductDic!)
     }
 }

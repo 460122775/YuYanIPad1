@@ -9,7 +9,7 @@
 #import "ProductModel.h"
 
 @implementation ProductModel
-@synthesize zoomValue, centX, centY;
+@synthesize zoomValue, centX, centY, productType;
 
 -(id)init
 {
@@ -23,47 +23,48 @@
     return self;
 }
 
-//- (void) constNeedCal:(UIImageView*) productImgView
-//{
-//    iRadius = productImgView.frame.size.height / 2.0 * self.zoomValue;
-//    rad360 = fileHeadStruct.obserSec.iRadialNum[0] / 360.0;
-//    switch (fileHeadStruct.obserSec.batch.wavForm[0]) {
-//        case '0':
-//            _det = fileHeadStruct.obserSec.usRefBinNumber[0] / iRadius;
-//            _detM = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0] / iRadius;
-//            ikuchang = fileHeadStruct.obserSec.iRefBinLen[0] / 1000;
-//            maxDistance = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0];
-//            sizeofRadial = fileHeadStruct.obserSec.usRefBinNumber[0] + 64;
-//            break;
-//        case '1':
-//            _det = fileHeadStruct.obserSec.batch.usDopBinNumber[0] / iRadius;
-//            _detM = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0] / iRadius;
-//            ikuchang = fileHeadStruct.obserSec.iDopBinLen[0] / 1000;
-//            maxDistance = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0];
-//            sizeofRadial = fileHeadStruct.obserSec.batch.usDopBinNumber[0] + 64;
-//            break;
-//        default:
-//            if (self.productInfo.productType == ProductType_V || self.productInfo.productType == ProductType_W)
-//            {
-//                _det = fileHeadStruct.obserSec.batch.usDopBinNumber[0] / iRadius;
-//                _detM = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0] / iRadius;
-//                ikuchang = fileHeadStruct.obserSec.iDopBinLen[0] / 1000;
-//                maxDistance = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0];
-//                sizeofRadial = fileHeadStruct.obserSec.batch.usDopBinNumber[0] + 64;
-//            }else{
-//                _det = fileHeadStruct.obserSec.usRefBinNumber[0] / iRadius;
-//                _detM = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0] / iRadius;
-//                ikuchang = fileHeadStruct.obserSec.iRefBinLen[0] / 1000;
-//                maxDistance = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0];
-//                sizeofRadial = fileHeadStruct.obserSec.usRefBinNumber[0] + 64;
-//            }
-//            break;
-//    }
-//    
-//}
-
--(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data
+- (void) constNeedCal:(UIImageView*) productImgView
 {
+    iRadius = productImgView.frame.size.height / 2.0 * self.zoomValue;
+    rad360 = fileHeadStruct.obserSec.iRadialNum[0] / 360.0;
+    switch (fileHeadStruct.obserSec.batch.wavForm[0]) {
+        case '0':
+            _det = fileHeadStruct.obserSec.usRefBinNumber[0] / iRadius;
+            _detM = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0] / iRadius;
+            ikuchang = fileHeadStruct.obserSec.iRefBinLen[0];
+            maxDistance = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0];
+            sizeofRadial = fileHeadStruct.obserSec.usRefBinNumber[0] + 64;
+            break;
+        case '1':
+            _det = fileHeadStruct.obserSec.batch.usDopBinNumber[0] / iRadius;
+            _detM = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0] / iRadius;
+            ikuchang = fileHeadStruct.obserSec.iDopBinLen[0];
+            maxDistance = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0];
+            sizeofRadial = fileHeadStruct.obserSec.batch.usDopBinNumber[0] + 64;
+            break;
+        default:
+            if (self.productType == ProductType_V || self.productType == ProductType_W)
+            {
+                _det = fileHeadStruct.obserSec.batch.usDopBinNumber[0] / iRadius;
+                _detM = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0] / iRadius;
+                ikuchang = fileHeadStruct.obserSec.iDopBinLen[0];
+                maxDistance = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0];
+                sizeofRadial = fileHeadStruct.obserSec.batch.usDopBinNumber[0] + 64;
+            }else{
+                _det = fileHeadStruct.obserSec.usRefBinNumber[0] / iRadius;
+                _detM = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0] / iRadius;
+                ikuchang = fileHeadStruct.obserSec.iRefBinLen[0];
+                maxDistance = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0];
+                sizeofRadial = fileHeadStruct.obserSec.usRefBinNumber[0] + 64;
+            }
+            break;
+    }
+    
+}
+
+-(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
+{
+    [data getBytes:&fileHeadStruct range:NSMakeRange(0, sizeof(fileHeadStruct))];
     [self constNeedCal:productImgView];
 }
 
@@ -93,11 +94,6 @@
     }
     mapCircleImgView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-}
-
--(void)getProductInfo:(UIView *) productInfoView TitleLabel:(UILabel*)titleLabel Data:(NSData *) data
-{
-    
 }
 
 //- (CGPoint) getPointByPosition:(CLLocation*) location andFrame:(CGRect)frame

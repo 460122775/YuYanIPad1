@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
-class ProductViewController : UIViewController
+class ProductViewController : UIViewController, ProductLeftViewProtocol
 {
     @IBOutlet var topTitleBarView: UIView!
     @IBOutlet var titleBarBgImg: UIImageView!
@@ -20,6 +21,10 @@ class ProductViewController : UIViewController
     var productViewA : ProductViewA?
     var switchToolView : SwitchToolView?
     var cartoonBarView : CartoonBarView?
+    
+    var currentProductDic : NSMutableDictionary?
+    var currentProductData : NSData?
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -28,6 +33,7 @@ class ProductViewController : UIViewController
         // Init product view.
         self.productViewA = (NSBundle.mainBundle().loadNibNamed("ProductViewA", owner: self, options: nil) as NSArray).lastObject as? ProductViewA
         self.productViewA!.frame.origin = CGPointMake(0, 0)
+        self.productViewA?.userInteractionEnabled = true
         self.productContainerView.subviews.map { $0.removeFromSuperview() }
         self.productContainerView.addSubview(self.productViewA!)
         // Init tools of the switch at right bottom corner.
@@ -56,6 +62,7 @@ class ProductViewController : UIViewController
             {
                 self.productLeftView = (NSBundle.mainBundle().loadNibNamed("ProductLeftView", owner: self, options: nil) as NSArray).lastObject as? ProductLeftView
                 self.productLeftView?.frame.origin = CGPointMake(-240, 0)
+                self.productLeftView?.productLeftViewDelegate = self
                 self.view.addSubview(self.productLeftView!)
             }
             self.productLeftView!.segmentControlChanged(self.productLeftView!.segmentControl)
@@ -94,6 +101,10 @@ class ProductViewController : UIViewController
     
     func receiveProduct(notificaiton : NSNotification)
     {
+        if self.productLeftView == nil
+        {
+            return
+        }
         var _nameArrTemp : [String]? = (String.init(data: notificaiton.object as! NSData, encoding: NSUTF8StringEncoding)?.componentsSeparatedByString("\\"))!
         if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
         {
@@ -102,6 +113,77 @@ class ProductViewController : UIViewController
             SwiftNotice.showText("收到产品［\(productFilePosStr)］")
             self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productFilePosStr)
             LogModel.getInstance.insertLog("Receive product[\(productFilePosStr)].")
+        }
+    }
+    
+    // HistoryQueryLeftView Protocol.
+    func selectedProductControl(selectedProductDic: NSMutableDictionary)
+    {
+        currentProductDic = selectedProductDic
+        currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+        if currentProductData != nil
+        {
+            LogModel.getInstance.insertLog("HistoryViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
+            // Draw product.
+            self.drawProduct(self.currentProductData!)
+        }else{
+            LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+            // Compose url.
+            var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
+            url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
+            url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
+            // Download data.
+            Alamofire.request(.GET, url).responseData { response in
+                LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                if response.result.value == nil || response.result.value?.length <= 48
+                {
+                    // Tell reason to user.
+                    SwiftNotice.showNoticeWithText(NoticeType.error, text: "数据文件下载失败，请检查网络后重试！", autoClear: true, autoClearTime: 3)
+                    return
+                }
+                // Cache data.
+                CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
+                self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+                if self.currentProductData == nil
+                {
+                    // Cache failed, maybe the reason of uncompress failed.
+                    // Tell reason to user.
+                    SwiftNotice.showNoticeWithText(NoticeType.error, text: "数据格式解压失败，或不支持此格式！", autoClear: true, autoClearTime: 3)
+                    return
+                }else{
+                    // Draw product.
+                    self.drawProduct(self.currentProductData!)
+                }
+            }
+        }
+    }
+    
+    func drawProduct(data : NSData)
+    {
+        // Init left view by data.
+        self.productLeftView?.setProductLeftViewByData(data)
+        // Init top bar by data.
+        titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
+            + ProductInfoModel.getDataTimeString(data) + "  "
+        if currentProductDic == nil || currentProductDic!.objectForKey("type") == nil
+        {
+            return
+        }
+        let type : Int64 = Int64((currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
+        if type == ProductType_Z || type == ProductType_V || type == ProductType_W
+        {
+            titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
+        }
+        // Draw Color.
+        self.productViewA?.drawProductImg(self.currentProductDic, data: data)
+        self.switchToolView?.setCurrentProductDic(self.currentProductDic!)
+    }
+    
+    func initProductInfoByData()
+    {
+        if currentProductData != nil
+        {
+            self.productLeftView?.setProductLeftViewByData(currentProductData!)
         }
     }
     

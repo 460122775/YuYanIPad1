@@ -6,7 +6,7 @@
 //  Copyright © 2015 cdyw. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 let ProductType_Z : Int64 = 3
 let ProductType_V : Int64 = 4

@@ -16,4 +16,6 @@
     
 }
 
+-(id)initWithProductType:(int) _productType;
+
 @end

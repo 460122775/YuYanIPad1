@@ -36,6 +36,26 @@ class CartoonBarView: UIView
         self.buttonContainerView.layer.masksToBounds = true
     }
     
+    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool
+    {
+        if controlBtn.selected == true
+        {
+            if point.x > 0 && point.y > 0
+            {
+                return true
+            }else{
+                return false
+            }
+        }else{
+            if point.x > 546 && point.y > 0
+            {
+                return true
+            }else{
+                return false
+            }
+        }
+    }
+    
     @IBAction func controlBtnClick(sender: UIButton)
     {
         sender.selected = !sender.selected

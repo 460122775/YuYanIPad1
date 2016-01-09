@@ -31,7 +31,6 @@ class MainViewController : UIViewController
         ProductUtilModel.getInstance.selectProductConfigFromLocal()
         // Add Listener.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectSuccess:", name: "\(SOCKET)\(SUCCESS)", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectFail:", name: "\(SOCKET)\(FAIL)", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getProductTypeListControl:", name: "\(PRODUCTTYPELIST)\(SELECT)", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginSuccessControl", name: "\(LOGIN)\(SUCCESS)", object: nil)
         // Connect Socket.
@@ -41,17 +40,6 @@ class MainViewController : UIViewController
     func socketConnectSuccess(notification : NSNotification)
     {
         UserModel.getInstance.loginControl(nil, userPwd: nil)
-    }
-    
-    var connectCount : UInt32 = 0
-    func socketConnectFail(notification : NSNotification)
-    {
-        connectCount++
-        if connectCount == 11
-        {
-            return
-        }
-        SocketCenter.getInstance.conntcpclient()
     }
     
     func getProductTypeListControl(notification : NSNotification)

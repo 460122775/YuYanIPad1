@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+protocol ProductListProtocol
+{
+    func productSelectControl(productName : String)
+}
+
 class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
 {
     @IBOutlet var scanNameLabel: UILabel!
@@ -18,6 +23,7 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     var ProductListTableCellIndentifier : String = "ProductListTableCellIndentifier"
     var productArr : NSMutableArray?
     var _selectProductConfigDic : NSMutableDictionary?
+    var productListDelegate : ProductListProtocol?
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -133,9 +139,10 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
             SwiftNotice.showText("未收集到该产品!")
         }else{
             SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
+            if productListDelegate != nil
+            {
+                self.productListDelegate?.productSelectControl(_selectProductConfigDic!.objectForKey("name") as! String)
+            }
         }
-//        self.delegate?.getSelectedProduct(
-//            (productArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
-//        )
     }
 }

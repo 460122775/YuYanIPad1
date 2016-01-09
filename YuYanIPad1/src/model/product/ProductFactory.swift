@@ -10,13 +10,13 @@ import UIKit
 
 class ProductFactory: NSObject {
 
-    func getModelByType(productType : Int64) -> ProductModel?
+    static func getModelByType(productType : Int64) -> ProductModel?
     {
         switch productType
         {
-            case ProductType_Z : return RVWDrawData()
-            case ProductType_V : return RVWDrawData()
-            case ProductType_W : return RVWDrawData()
+            case ProductType_Z : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
+            case ProductType_V : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
+            case ProductType_W : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
             default: return nil;
         }
     }

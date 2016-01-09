@@ -1139,6 +1139,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
@@ -1167,6 +1168,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
