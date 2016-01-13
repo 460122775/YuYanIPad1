@@ -7,9 +7,11 @@
 //
 
 #import "ProductModel.h"
+#import "NameSpace.h"
+
 
 @implementation ProductModel
-@synthesize zoomValue, centX, centY, productType;
+@synthesize zoomValue, radarCoordinate, radarMerPosition, productType, radarPosition;
 
 -(id)init
 {
@@ -20,47 +22,87 @@
     labelWidth = 280;
     self.zoomValue = 1.0;
     _detM = 1;
+    iBinNumber = 0;
+    iRefBinLen = 0;
     return self;
 }
 
 - (void) constNeedCal:(UIImageView*) productImgView
 {
+    /****  Common sets ****/
+    radarCoordinate = CLLocationCoordinate2DMake(fileHeadStruct.addSec.LatitudeV / 360000.0, fileHeadStruct.addSec.LongitudeV / 360000.0);
+    self.radarMerPosition= CGPointMake(
+                                    0 + EquatorR * (radarCoordinate.longitude * M_PI / 180.0),
+                                    0 + EquatorR * log(tan(M_PI_4 + radarCoordinate.latitude * M_PI_2 / 180.0))
+                                     );
+    cosEle = cos(fileHeadStruct.obserSec.iElevation[0] / 100 * M_PI / 180.0);
+    /****  Radial product sets ****/
     iRadius = productImgView.frame.size.height / 2.0 * self.zoomValue;
     rad360 = fileHeadStruct.obserSec.iRadialNum[0] / 360.0;
-    switch (fileHeadStruct.obserSec.batch.wavForm[0]) {
+    switch (fileHeadStruct.obserSec.batch.wavForm[0])
+    {
         case '0':
-            _det = fileHeadStruct.obserSec.usRefBinNumber[0] / iRadius;
-            _detM = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0] / iRadius;
-            ikuchang = fileHeadStruct.obserSec.iRefBinLen[0];
-            maxDistance = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0];
-            sizeofRadial = fileHeadStruct.obserSec.usRefBinNumber[0] + 64;
+            iBinNumber = fileHeadStruct.obserSec.usRefBinNumber[0];
+            iRefBinLen = fileHeadStruct.obserSec.iRefBinLen[0];
             break;
         case '1':
-            _det = fileHeadStruct.obserSec.batch.usDopBinNumber[0] / iRadius;
-            _detM = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0] / iRadius;
-            ikuchang = fileHeadStruct.obserSec.iDopBinLen[0];
-            maxDistance = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0];
-            sizeofRadial = fileHeadStruct.obserSec.batch.usDopBinNumber[0] + 64;
+            iBinNumber = fileHeadStruct.obserSec.batch.usDopBinNumber[0];
+            iRefBinLen = fileHeadStruct.obserSec.iDopBinLen[0];
             break;
         default:
             if (self.productType == ProductType_V || self.productType == ProductType_W)
             {
-                _det = fileHeadStruct.obserSec.batch.usDopBinNumber[0] / iRadius;
-                _detM = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0] / iRadius;
-                ikuchang = fileHeadStruct.obserSec.iDopBinLen[0];
-                maxDistance = fileHeadStruct.obserSec.batch.usDopBinNumber[0] * fileHeadStruct.obserSec.iDopBinLen[0];
-                sizeofRadial = fileHeadStruct.obserSec.batch.usDopBinNumber[0] + 64;
+                iBinNumber = fileHeadStruct.obserSec.batch.usDopBinNumber[0];
+                iRefBinLen = fileHeadStruct.obserSec.iDopBinLen[0];
             }else{
-                _det = fileHeadStruct.obserSec.usRefBinNumber[0] / iRadius;
-                _detM = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0] / iRadius;
-                ikuchang = fileHeadStruct.obserSec.iRefBinLen[0];
-                maxDistance = fileHeadStruct.obserSec.usRefBinNumber[0] * fileHeadStruct.obserSec.iRefBinLen[0];
-                sizeofRadial = fileHeadStruct.obserSec.usRefBinNumber[0] + 64;
+                iBinNumber = fileHeadStruct.obserSec.usRefBinNumber[0];
+                iRefBinLen = fileHeadStruct.obserSec.iRefBinLen[0];
             }
             break;
     }
+    maxRadarDistance = iBinNumber * iRefBinLen;
+    int maxHorDistance = ceil(maxRadarDistance * cosEle / 1000.0);
+    // Mercator Coordinate of bounds.
+    topMerLatitude = EquatorR * log(tan(maxHorDistance * 1000 / (PolarR + (EquatorR - PolarR) * (90 - radarCoordinate.latitude) / 90.0) / 2
+    + radarCoordinate.latitude * M_PI_2 / 180.0 + M_PI_4));
+    leftMerLongitude = (maxHorDistance * 1000 * (-1) / (PolarR + (EquatorR - PolarR) * (1 - radarCoordinate.latitude/ 90.0))
+                              * cos(radarCoordinate.latitude * M_PI / 180.0) + radarCoordinate.longitude * M_PI / 180.0 )* EquatorR;
     
+    
+//    CLLocationCoordinate2D topCoordinate = [self getCoordinate:radarCoordinate andDistance:maxHorDistance andAngle:0];
+//    self.topMerPosition = [self transToMercatorPosition: topCoordinate];
+//    CLLocationCoordinate2D leftCoordinate = [self getCoordinate:radarCoordinate andDistance:maxHorDistance andAngle:270];
+//    self.leftMerPosition = [self transToMercatorPosition: leftCoordinate];
+    // Mercator Distance, radius.
+    double maxMerDistance = 0;
+    if (radarMerPosition.x - leftMerLongitude > topMerLatitude - radarMerPosition.y)
+    {
+        maxMerDistance = leftMerLongitude + (radarMerPosition.x - leftMerLongitude) * 2 - leftMerLongitude;
+    }else{
+        maxMerDistance = (topMerLatitude - radarMerPosition.y) * 2;
+    }
+    maxMerDistance = maxMerDistance / 2.0;
+    _det = iBinNumber / iRadius;
+    // Attention sequence.
+    _detM = maxMerDistance / iRadius;
+    sizeofRadial = iBinNumber + RadialHeadLength;
 }
+
+//-(CLLocationCoordinate2D)getCoordinate:(CLLocationCoordinate2D)coordinate andDistance:(double)distance andAngle:(double)angle
+//{
+//    return CLLocationCoordinate2DMake(
+//                                      distance * 1000 * cos(angle * M_PI / 180.0) / (PolarR + (EquatorR - PolarR) * (90 - coordinate.latitude) / 90.0) * 180 / M_PI + coordinate.latitude,
+//                                      distance * 1000 * sin(angle * M_PI / 180.0) / (PolarR + (EquatorR - PolarR) * (90 - coordinate.latitude) / 90.0) * cos(coordinate.latitude * M_PI / 180.0) * 180 / M_PI + coordinate.longitude
+//                                      );
+//}
+//
+//-(CGPoint)transToMercatorPosition:(CLLocationCoordinate2D)coordinate
+//{
+//    return CGPointMake(
+//                       0 + EquatorR * (coordinate.longitude * M_PI / 180 - 0),
+//                       0 + EquatorR * log(tan(M_PI_4 + coordinate.latitude * M_PI_2 / 180.0))
+//                       );
+//}
 
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
 {
@@ -76,24 +118,49 @@
     CGContextBeginPath(context);
     CGContextSetRGBStrokeColor(context, 170 / 256.0, 170 / 256.0, 170 / 256.0, 1.0);
     // Draw distance line.
-    int aaa = maxDistance / _detM * sqrt(2) / 2;
-    CGContextMoveToPoint(context, self.centX, self.centY - maxDistance / _detM);
-    CGContextAddLineToPoint(context, self.centX, self.centY + maxDistance / _detM);
-    CGContextMoveToPoint(context, self.centX + aaa, self.centY - aaa);
-    CGContextAddLineToPoint(context, self.centX - aaa, self.centY + aaa);
-    CGContextMoveToPoint(context, self.centX + maxDistance / _detM, self.centY);
-    CGContextAddLineToPoint(context, self.centX - maxDistance / _detM, self.centY);
-    CGContextMoveToPoint(context, self.centX + aaa, self.centY + aaa);
-    CGContextAddLineToPoint(context, self.centX - aaa, self.centY - aaa);
+    int aaa = maxRadarDistance / _detM * sqrt(2) / 2;
+    CGContextMoveToPoint(context, self.radarPosition.x, self.radarPosition.y - maxRadarDistance / _detM);
+    CGContextAddLineToPoint(context, self.radarPosition.x, self.radarPosition.y + maxRadarDistance / _detM);
+    CGContextMoveToPoint(context, self.radarPosition.x + aaa, self.radarPosition.y - aaa);
+    CGContextAddLineToPoint(context, self.radarPosition.x - aaa, self.radarPosition.y + aaa);
+    CGContextMoveToPoint(context, self.radarPosition.x + maxRadarDistance / _detM, self.radarPosition.y);
+    CGContextAddLineToPoint(context, self.radarPosition.x - maxRadarDistance / _detM, self.radarPosition.y);
+    CGContextMoveToPoint(context, self.radarPosition.x + aaa, self.radarPosition.y + aaa);
+    CGContextAddLineToPoint(context, self.radarPosition.x - aaa, self.radarPosition.y - aaa);
     CGContextStrokePath(context);
     // Draw circle line.
-    for (int i = 1; i <= maxDistance / 50000; i++)
+    for (int i = 1; i <= maxRadarDistance / 50000; i++)
     {
-        CGContextAddArc(context, self.centX, self.centY, (i * 50000) / _detM, 0, 2 * M_PI, 0);
+        CGContextAddArc(context, self.radarPosition.x, self.radarPosition.y, (i * 50000) / _detM, 0, 2 * M_PI, 0);
         CGContextDrawPath(context, kCGPathStroke);
     }
     mapCircleImgView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+}
+
+-(int) getProductRadiaOffset:(int)layer andType:(int) type
+{
+    switch (type) {
+        case ProductType_R:
+            return RadialHeadLength;
+            break;
+            
+        case ProductType_V:
+            return RadialHeadLength + fileHeadStruct.obserSec.usRefBinNumber[0];
+            break;
+        
+        case ProductType_W:
+            return RadialHeadLength + fileHeadStruct.obserSec.usRefBinNumber[0] + fileHeadStruct.obserSec.batch.usDopBinNumber[0];
+            break;
+            
+        case ProductType_HCL:
+            return RadialHeadLength + fileHeadStruct.obserSec.usRefBinNumber[0] + fileHeadStruct.obserSec.batch.usDopBinNumber[0] + fileHeadStruct.obserSec.batch.usDopBinNumber[0];
+            break;
+            
+        default:
+            return -1;
+            break;
+    }
 }
 
 //- (CGPoint) getPointByPosition:(CLLocation*) location andFrame:(CGRect)frame

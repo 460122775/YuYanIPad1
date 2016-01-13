@@ -21,8 +21,7 @@ class ProductViewA: UIView, MGLMapViewDelegate
     var currentColorDataArray : NSMutableArray?
     var currentProductModel : ProductModel?
     var currentProductData : NSData?
-    var radarPointX : Int32 = 0
-    var radarPointY : Int32 = 0
+    var radarPosition : CGPoint?
     
     required init?(coder : NSCoder)
     {
@@ -41,8 +40,7 @@ class ProductViewA: UIView, MGLMapViewDelegate
             zoomLevel: 12, animated: false)
         self.mapView.delegate = self
         self.mapView.showsUserLocation = true
-        radarPointX = Int32(self.productImgVIew.frame.width) / 2
-        radarPointY = Int32(self.productImgVIew.frame.height) / 2
+        radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
     }
     
     func drawProductImg(_productDic : NSMutableDictionary?, data : NSData)
@@ -82,8 +80,7 @@ class ProductViewA: UIView, MGLMapViewDelegate
         {
             SwiftNotice.showNoticeWithText(NoticeType.error, text: "对不起，暂时不支持此产品！", autoClear: true, autoClearTime: 3)
         }else{
-            currentProductModel?.centX = radarPointX
-            currentProductModel?.centY = radarPointY
+            currentProductModel?.radarPosition = radarPosition!
             currentProductModel?.getImageData(self.productImgVIew, andData: data, colorArray: self.currentColorDataArray)
         }
     }

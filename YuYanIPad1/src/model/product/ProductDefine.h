@@ -28,6 +28,7 @@
 #define ProductType_R 3
 #define ProductType_V 4
 #define ProductType_W 5
+#define ProductType_HCL 65
 
 #pragma pack(1)
 

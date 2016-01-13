@@ -152,6 +152,7 @@ class ColorModel: NSObject {
                     NSNumber(float: rgbnArr[i * 4 + 1].floatValue / 256.0),
                     NSNumber(float: rgbnArr[i * 4 + 2].floatValue / 256.0)
                 )
+                colorDataArray.addObject(colorDataTempArray!)
             }
         }
         return (colorImg, colorDataArray)

@@ -93,6 +93,7 @@
 		01ABAB941C18073300A0AC59 /* RVWDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ABAB931C18073300A0AC59 /* RVWDrawData.m */; };
 		01B3BD6E1C057EEB00C89160 /* NSData+GZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B3BD6D1C057EEB00C89160 /* NSData+GZIP.swift */; };
 		01C01E091BF2E55500B1175A /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E081BF2E55500B1175A /* DBModel.swift */; };
+		01C1AF821C41045400400D26 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1AF811C41045400400D26 /* MapModel.swift */; };
 		01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */; };
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
@@ -216,12 +217,14 @@
 		01ABAB931C18073300A0AC59 /* RVWDrawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RVWDrawData.m; path = src/model/product/products/rvw/RVWDrawData.m; sourceTree = "<group>"; };
 		01B3BD6D1C057EEB00C89160 /* NSData+GZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+GZIP.swift"; path = "src/model/otherAPI/zlib/NSData+GZIP.swift"; sourceTree = "<group>"; };
 		01C01E081BF2E55500B1175A /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBModel.swift; path = src/model/database/DBModel.swift; sourceTree = "<group>"; };
+		01C1AF811C41045400400D26 /* MapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapModel.swift; path = src/model/common/MapModel.swift; sourceTree = "<group>"; };
 		01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = src/controller/main/MainViewController.swift; sourceTree = "<group>"; };
 		01C29CFC1AB7D621008CBE96 /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
 		01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = src/controller/app/LaunchScreen.xib; sourceTree = "<group>"; };
 		01C3C65D1BFF0F5E00B474C1 /* ProductInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductInfoModel.swift; path = src/model/product/ProductInfoModel.swift; sourceTree = "<group>"; };
 		01C3C65F1BFF13B200B474C1 /* ProductTypeDefine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductTypeDefine.swift; path = src/model/product/ProductTypeDefine.swift; sourceTree = "<group>"; };
+		01DAD1F51C4485CD0007F35F /* NameSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NameSpace.h; path = src/model/common/NameSpace.h; sourceTree = "<group>"; };
 		01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManageModel.swift; path = src/model/cache/CacheManageModel.swift; sourceTree = "<group>"; };
 		01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSDatePickerViewController.h; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.h; sourceTree = "<group>"; };
 		01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSDatePickerViewController.m; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.m; sourceTree = "<group>"; };
@@ -528,6 +531,9 @@
 			children = (
 				012606B61BDA1AF5009BB949 /* YuYanIPad1-Bridging-Header.h */,
 				0192F7641BB3EEF800CC6498 /* PageVo.swift */,
+				01C1AF811C41045400400D26 /* MapModel.swift */,
+				01DAD1F51C4485CD0007F35F /* NameSpace.h */,
+				01806B891BA189A1005CBA7E /* product */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -602,7 +608,6 @@
 				01C01E071BF2E50400B1175A /* database */,
 				01A5143F1BD0CF2D0042BD82 /* log */,
 				0192F7661BB3EEFD00CC6498 /* common */,
-				01806B891BA189A1005CBA7E /* product */,
 				018236B71BA026540006B930 /* user */,
 				018236A91BA0255F0006B930 /* otherAPI */,
 			);
@@ -943,6 +948,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				019525021BEC476700041B30 /* HSDatePickerViewController.h in Sources */,
+				01C1AF821C41045400400D26 /* MapModel.swift in Sources */,
 				016F56811AC30534008D8615 /* ChatMainView.swift in Sources */,
 				016FFD311AC2483000596975 /* ScreenShotView.swift in Sources */,
 				01A859EB1BE85DEB009FECCA /* ExSwift.swift in Sources */,
