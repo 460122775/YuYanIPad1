@@ -12,7 +12,7 @@
 
 @protocol ProductDrawDataProtocol;
 
-@interface RVWDrawData : ProductRadialModel<ProductDrawDataProtocol>{
+@interface EBDrawData : ProductRadialModel<ProductDrawDataProtocol>{
     
 }
 

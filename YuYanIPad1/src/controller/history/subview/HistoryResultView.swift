@@ -152,6 +152,10 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         cell.contentView.backgroundColor = UIColor(red: 4/255.0, green: 178/255.0, blue: 217/255.0, alpha: 1)
         cell.textLabel?.textColor = UIColor.blackColor()
         cell.detailTextLabel?.textColor = UIColor.grayColor()
+        if resultArr == nil
+        {
+            return
+        }
         _selectedProductDic = NSMutableDictionary(dictionary: (resultArr?.objectAtIndex(indexPath.row as Int) as? NSDictionary)!)
         self.delegate?.selectedProductControl(_selectedProductDic!)
     }

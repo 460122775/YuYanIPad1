@@ -87,6 +87,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol
     @IBAction func positionBtnClick(sender: UIButton)
     {
         sender.selected = !sender.selected
+        self.productViewA!.setUserLocationVisible(sender.selected);
     }
 
     @IBAction func lineBtnClick(sender: UIButton)
@@ -96,7 +97,17 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol
     
     @IBAction func camaraBtnClick(sender: UIButton)
     {
-        sender.selected = !sender.selected
+        // Save product screen shot into photo album.
+        UIGraphicsBeginImageContext((self.productViewA?.mapView.bounds.size)!)
+        self.productViewA?.mapView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let imageTemp : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        UIImageWriteToSavedPhotosAlbum(imageTemp, nil, "screenShotsComplete", nil)
+    }
+    
+    func screenShotsComplete()
+    {
+        SwiftNotice.showNoticeWithText(NoticeType.success, text: "产品截图保存成功！", autoClear: true, autoClearTime: 3)
     }
     
     func receiveProduct(notificaiton : NSNotification)

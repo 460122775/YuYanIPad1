@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Mapbox
+
 
 class MapModel: NSObject {
 

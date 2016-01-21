@@ -91,6 +91,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     @IBAction func positionBtnClick(sender: UIButton)
     {
         sender.selected = !sender.selected
+        self.productViewA!.setUserLocationVisible(sender.selected);
     }
     
     @IBAction func lineBtnClick(sender: UIButton)
@@ -100,7 +101,12 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     @IBAction func camaraBtnClick(sender: UIButton)
     {
-        sender.selected = !sender.selected
+        // Save product screen shot into photo album.
+        UIGraphicsBeginImageContext((self.view?.bounds.size)!)
+        self.view?.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let imageTemp : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        UIImageWriteToSavedPhotosAlbum(imageTemp, nil, nil, nil)
     }
     
     // History Choice Protocol.

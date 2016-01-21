@@ -6,11 +6,12 @@
 //  Copyright (c) 2013 Yachen Dai. All rights reserved.
 //
 
-#import "RVWDrawData.h"
+#import "EBDrawData.h"
 #import "YuYanIpad1-Swift.h"
 #import "NameSpace.h"
 
-@implementation RVWDrawData
+@implementation EBDrawData
+@synthesize productType;
 
 -(id)init
 {
@@ -28,20 +29,19 @@
 - (void)initData:(NSData*) data withProductImgView:(UIImageView*) productImgView
 {
     [super initData:data withProductImgView:productImgView];
-    self.sizeofRadial = self.iBinNumber + RadialHeadLength;
+    self.sizeofRadial = self.fileHeadStruct.obserSec.usRefBinNumber[0] * sizeof(unsigned short) + RadialHeadLength;
 }
 
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray:(NSMutableArray *)_colorArray
 {
-//    DLog(@">>>>>>>>Start Draw Product.[%i]", data.length);
     if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
     [self initData:data withProductImgView: productImgView];
     [super getImageData:productImgView andData:data colorArray:_colorArray];
     UIGraphicsBeginImageContext(productImgView.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     NSArray *colorValueArray = nil;
-    unsigned char *charvalue = (unsigned char *)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct), data.length - sizeof(self.fileHeadStruct))] bytes];
-    uint value = 0;
+    unsigned short *ushortValue = (unsigned short*)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct), data.length - sizeof(self.fileHeadStruct))] bytes];
+    unsigned short value = 0;
     int seta = 0;
     int iRb = 0;
     float fAz = 0.0;
@@ -108,8 +108,16 @@
                 }
                 // Draw left half of product.
                 seta = fAz * 180 / M_PI * self.rad360;
-                value = charvalue[(self.sizeofRadial * seta + RadialHeadLength + iRb - 1)];
-                if (value > 1 && value < 255)
+                ushortValue = (unsigned short*)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct) + self.sizeofRadial * seta + RadialHeadLength + iRb * sizeof(unsigned short), sizeof(unsigned short))] bytes];
+                value = ushortValue[0];
+                if (value > 1)
+                {
+                    value = 2 + (value + self.height) / 100.0;
+                    if (value > 255) value = 255;
+                }else{
+                    value = 0;
+                }
+                if (value > 1 && value <= 210)
                 {
                     colorValueArray = (NSArray*)([_colorArray objectAtIndex:value]);
                     CGContextSetRGBFillColor(context,
@@ -124,8 +132,16 @@
                 {
                     // Draw right half of product.
                     seta = 359 - seta;
-                    value = charvalue[(self.sizeofRadial * seta + RadialHeadLength + iRb  - 1)];
-                    if (value > 1 && value < 255)
+                    ushortValue = (unsigned short*)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct) + self.sizeofRadial * seta + RadialHeadLength + iRb * sizeof(unsigned short), sizeof(unsigned short))] bytes];
+                    value = ushortValue[0];
+                    if (value > 1)
+                    {
+                        value = 2 + (value + self.height) / 100.0;
+                        if (value > 255) value = 255;
+                    }else{
+                        value = 0;
+                    }
+                    if (value > 1 && value <= 210)
                     {
                         colorValueArray = (NSArray*)([_colorArray objectAtIndex:value]);
                         CGContextSetRGBFillColor(context,

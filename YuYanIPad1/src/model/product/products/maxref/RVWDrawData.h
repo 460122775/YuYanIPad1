@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ProductRadialModel.h"
+#import "ProductModel.h"
 #import "ProductDefine.h"
 
 @protocol ProductDrawDataProtocol;
 
-@interface RVWDrawData : ProductRadialModel<ProductDrawDataProtocol>{
+@interface RVWDrawData : ProductModel<ProductDrawDataProtocol>{
     
 }
 

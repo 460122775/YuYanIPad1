@@ -161,8 +161,8 @@ class ProductUtilModel : NSObject {
         _pageVo.currentPage = _currentPage
         let _productVo : ProductVo = ProductVo()
         _productVo.type = _productType
-//        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1442815200))&endTime=\(Int64(1442822400))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
-        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1451578200))&endTime=\(Int64(1453255670))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+//        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
         LogModel.getInstance.insertLog("\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in

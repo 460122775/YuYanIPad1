@@ -17,6 +17,7 @@ class ProductFactory: NSObject {
             case ProductType_Z : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
             case ProductType_V : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
             case ProductType_W : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
+            case ProductType_EB : return EBDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue));
             default: return nil;
         }
     }

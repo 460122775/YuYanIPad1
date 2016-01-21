@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Mapbox
 
-class ProductViewA: UIView, MGLMapViewDelegate
+class ProductViewA: UIView, MGLMapViewDelegate, ProductModelProtocol
 {
     @IBOutlet var mapView: MGLMapView!
     @IBOutlet var productImgVIew: UIImageView!
@@ -39,7 +39,6 @@ class ProductViewA: UIView, MGLMapViewDelegate
             CLLocationCoordinate2D(latitude: 30.67, longitude: 104.06),
             zoomLevel: 12, animated: false)
         self.mapView.delegate = self
-        self.mapView.showsUserLocation = true
         radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
     }
     
@@ -53,24 +52,22 @@ class ProductViewA: UIView, MGLMapViewDelegate
         if currentProductDic == nil ||
             ((currentProductDic?.objectForKey("type") as! NSNumber).intValue != (_productDic?.objectForKey("type") as! NSNumber).intValue)
         {
-            let data =  ColorModel.drawColorImg((_productDic?.objectForKey("type") as! NSNumber).intValue, colorImgView: colorImgView)
-            self.colorImgView.image = data.image
+            let _data =  ColorModel.drawColorImg((_productDic?.objectForKey("type") as! NSNumber).intValue, colorImgView: colorImgView)
+            self.colorImgView.image = _data.image
             if currentColorDataArray != nil
             {
                 currentColorDataArray?.removeAllObjects()
             }
-            currentColorDataArray = data.colorDataArray
+            currentColorDataArray = _data.colorDataArray
+            if currentColorDataArray == nil || currentColorDataArray?.count == 0
+            {
+                SwiftNotice.showNoticeWithText(NoticeType.error, text: "该产品的色标配置出错，无法显示图像！", autoClear: true, autoClearTime: 3)
+                return
+            }
         }
         // Attention this line !!! 
         currentProductDic = _productDic
-        // Draw Product data.
-        if currentColorDataArray == nil || currentColorDataArray?.count == 0
-        {
-            SwiftNotice.showNoticeWithText(NoticeType.error, text: "该产品的色标配置出错，无法显示图像！", autoClear: true, autoClearTime: 3)
-            return
-        }
-//        SwiftNotice.showText("\(currentProductDic?.objectForKey("name") as! String)")
-        // Draw Product Data.
+        // Get current product model.
         if currentProductModel == nil || currentProductModel?.productType != (_productDic?.objectForKey("type") as! NSNumber).intValue
         {
             currentProductModel = ProductFactory.getModelByType((_productDic?.objectForKey("type") as! NSNumber).longLongValue)
@@ -80,11 +77,18 @@ class ProductViewA: UIView, MGLMapViewDelegate
         {
             SwiftNotice.showNoticeWithText(NoticeType.error, text: "对不起，暂时不支持此产品！", autoClear: true, autoClearTime: 3)
         }else{
+            currentProductModel?.productModelDelegate = self
+            currentProductModel?.clearContent()
             currentProductModel?.radarPosition = radarPosition!
             currentProductModel?.getImageData(self.productImgVIew, andData: data, colorArray: self.currentColorDataArray)
         }
     }
     
+    func setUserLocationVisible(visible : Bool)
+    {
+        self.mapView.showsUserLocation = visible
+    }
+
     // -- MGLMapViewDelegate
     func mapView(mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool
     {
@@ -94,5 +98,11 @@ class ProductViewA: UIView, MGLMapViewDelegate
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool)
     {
         
+    }
+    
+    // Product model Delegate.
+    func setMapCenter(centerCoordinate : CLLocationCoordinate2D)
+    {
+        self.mapView.setCenterCoordinate(centerCoordinate, zoomLevel: 10, animated: true)
     }
 }

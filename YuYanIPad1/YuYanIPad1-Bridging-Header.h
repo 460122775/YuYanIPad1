@@ -13,6 +13,7 @@
 #import "ProductModel.h"
 #import "ProductDefine.h"
 #import "RVWDrawData.h"
+#import "EBDrawData.h"
 #import <sqlite3.h>
 
 #endif 
