@@ -25,7 +25,6 @@
     return self;
 }
 
-
 - (void)initData:(NSData*) data withProductImgView:(UIImageView*) productImgView
 {
     [super initData:data withProductImgView:productImgView];
@@ -35,7 +34,6 @@
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray:(NSMutableArray *)_colorArray
 {
     if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
-    [self initData:data withProductImgView: productImgView];
     [super getImageData:productImgView andData:data colorArray:_colorArray];
     UIGraphicsBeginImageContext(productImgView.frame.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -49,12 +47,8 @@
     int xMax = self.radarPosition.x + (self.radarMerPosition.x - self.leftMerLongitude) / self._detM;
     int yMin = self.radarPosition.y - (self.topMerLatitude - self.radarMerPosition.y) / self._detM;
     int yMax = self.radarPosition.y + (self.topMerLatitude - self.radarMerPosition.y) / self._detM;
-    
     // Judge if it is in the productImgView`s Bounds.
-    if (yMin < 0)
-    {
-        yMin = 0;
-    }
+    if (yMin < 0) yMin = 0;
     if (yMax > productImgView.frame.size.height)
     {
         yMax = productImgView.frame.size.height;
@@ -67,15 +61,11 @@
         xMax = self.radarPosition.x;
     }
     // Judge if it is in the productImgView`s Bounds.
-    if (xMin < 0)
-    {
-        xMin = 0;
-    }
+    if (xMin < 0) xMin = 0;
     if (xMin >= productImgView.frame.size.width)
     {
         xMax = productImgView.frame.size.width - 1;
     }
-    
     CLLocationCoordinate2D radarCoordinate1 = CLLocationCoordinate2DMake(self.radarCoordinate.latitude * M_PI / 180, self.radarCoordinate.longitude * M_PI / 180);
     CLLocationCoordinate2D radarCoordinate2;
     float lat1_cos = cos(radarCoordinate1.latitude);
@@ -102,10 +92,7 @@
             if (iRb < self.iBinNumber)
             {
                 fAz = atan2(b_sin * lat2_cos,  lat1_cos * lat2_sin - lat1_sin * lat2_cos * b_cos);
-                if (fAz < 0)
-                {
-                    fAz += M_PI * 2;
-                }
+                if (fAz < 0) fAz += M_PI * 2;
                 // Draw left half of product.
                 seta = fAz * 180 / M_PI * self.rad360;
                 ushortValue = (unsigned short*)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct) + self.sizeofRadial * seta + RadialHeadLength + iRb * sizeof(unsigned short), sizeof(unsigned short))] bytes];
@@ -114,11 +101,6 @@
                 {
                     value = 2 + (value + self.height) / 100.0;
                     if (value > 255) value = 255;
-                }else{
-                    value = 0;
-                }
-                if (value > 1 && value <= 210)
-                {
                     colorValueArray = (NSArray*)([_colorArray objectAtIndex:value]);
                     CGContextSetRGBFillColor(context,
                                              [[NSNumber numberWithFloat:[colorValueArray[0] floatValue]] floatValue],
@@ -138,11 +120,6 @@
                     {
                         value = 2 + (value + self.height) / 100.0;
                         if (value > 255) value = 255;
-                    }else{
-                        value = 0;
-                    }
-                    if (value > 1 && value <= 210)
-                    {
                         colorValueArray = (NSArray*)([_colorArray objectAtIndex:value]);
                         CGContextSetRGBFillColor(context,
                                                  [[NSNumber numberWithFloat:[colorValueArray[0] floatValue]] floatValue],

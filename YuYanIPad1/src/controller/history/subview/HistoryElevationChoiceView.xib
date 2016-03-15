@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIView"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HistoryElevationChoiceView" customModule="YuYanIPad1" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="748"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="list_bg" translatesAutoresizingMaskIntoConstraints="NO" id="H8H-4H-tiY">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="748"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="仰角过滤" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQ6-fD-ztS">
+                    <rect key="frame" x="18" y="18" width="204" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="4lu-Ol-T44"/>
+                        <constraint firstAttribute="width" constant="204" id="pxX-tE-5Q7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.015686274510000001" green="0.69803921570000005" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mbq-Zr-h4F">
+                    <rect key="frame" x="15" y="692" width="210" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="210" id="IT2-rl-otV"/>
+                        <constraint firstAttribute="height" constant="40" id="KCp-J9-s1r"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <state key="normal" title="返回" backgroundImage="common_btn_type1_normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted" backgroundImage="common_btn_type1_pressed"/>
+                    <connections>
+                        <action selector="returnBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Gyo-gR-9wT"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" directionalLockEnabled="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" sectionIndexMinimumDisplayRowCount="9" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="40" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="53C-Rc-3xU">
+                    <rect key="frame" x="15" y="47" width="210" height="637"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="210" id="3yi-4S-q9D"/>
+                        <constraint firstAttribute="height" constant="637" id="4to-VM-zfo"/>
+                    </constraints>
+                    <color key="separatorColor" red="0.20392156859999999" green="0.2901960784" blue="0.34509803919999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="sectionIndexTrackingBackgroundColor" red="0.015686274510000001" green="0.69803921570000005" blue="0.85098039219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wQ6-fD-ztS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="18" id="4W0-y0-3zG"/>
+                <constraint firstItem="53C-Rc-3xU" firstAttribute="top" secondItem="wQ6-fD-ztS" secondAttribute="bottom" constant="8" id="INw-sa-IiY"/>
+                <constraint firstItem="wQ6-fD-ztS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="Z98-Dv-Fma"/>
+                <constraint firstItem="53C-Rc-3xU" firstAttribute="centerX" secondItem="wQ6-fD-ztS" secondAttribute="centerX" id="oYy-3b-G7l"/>
+                <constraint firstItem="Mbq-Zr-h4F" firstAttribute="top" secondItem="53C-Rc-3xU" secondAttribute="bottom" constant="8" id="urG-Si-bgY"/>
+                <constraint firstItem="Mbq-Zr-h4F" firstAttribute="centerX" secondItem="53C-Rc-3xU" secondAttribute="centerX" id="zcW-m2-fIp"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="elevationTableView" destination="53C-Rc-3xU" id="yao-G0-Ytq"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="common_btn_type1_normal" width="130" height="48"/>
+        <image name="common_btn_type1_pressed" width="130" height="48"/>
+        <image name="list_bg" width="240" height="748"/>
+    </resources>
+</document>

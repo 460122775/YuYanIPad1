@@ -53,8 +53,12 @@
     // Mercator Coordinate of bounds.
     self.topMerLatitude = EquatorR * log(tan(maxHorDistance * 1000 / (PolarR + (EquatorR - PolarR) * (90 - self.radarCoordinate.latitude) / 90.0) / 2
                                         + self.radarCoordinate.latitude * M_PI_2 / 180.0 + M_PI_4));
-    self.leftMerLongitude = (maxHorDistance * 1000 * (-1) / (PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude/ 90.0))
-                        * cos(self.radarCoordinate.latitude * M_PI / 180.0) + self.radarCoordinate.longitude * M_PI / 180.0 )* EquatorR;
+    self.leftMerLongitude = EquatorR * (((maxHorDistance * (-1000)) / ((PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude / 90.0)) * cos(self.radarCoordinate.latitude * M_PI / 180)) + self.radarCoordinate.longitude * M_PI / 180));
+//    float dx = (maxHorDistance * (-1000));
+//    float ec = (PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude / 90.0));
+//    float ed = (ec * cos(self.radarCoordinate.latitude * M_PI / 180));
+//    float BJD = (dx / ed  * 180.0 / M_PI + self.radarCoordinate.longitude);
+//    self.leftMerLongitude = EquatorR * (BJD * M_PI / 180);
     // Mercator Distance, radius.
     double maxMerDistance = 0;
     if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
@@ -89,7 +93,6 @@
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
 {
     [super getImageData:productImgView andData:data colorArray:_colorArray];
-    [super.productModelDelegate setMapCenter: self.radarCoordinate];
 }
 
 -(void)clearContent

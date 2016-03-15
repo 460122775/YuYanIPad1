@@ -11,7 +11,7 @@ import SQLite
 
 class ColorModel: NSObject {
     
-    class func getColorData(type : Int32) -> NSMutableDictionary?
+    class func getColorData(colorFile : String) -> NSMutableDictionary?
     {
         if NSUserDefaults.standardUserDefaults().objectForKey(INITDATABASE) != nil
         {
@@ -22,7 +22,7 @@ class ColorModel: NSObject {
                 let colorTable = Table("color_info")
                 // Fetch data from db.
                 for color in db.prepare(colorTable.filter(
-                    (Expression<Int64>("productType") == Int64(type)) && (Expression<Int64>("enable") == 1)).limit(1))
+                    (Expression<String?>("fileName") == colorFile) && (Expression<Int64>("enable") == 1)).limit(1))
                 {
                     colorDic = NSMutableDictionary()
                     colorDic!.setValue(NSNumber(longLong: color[Expression<Int64>("colorId")]), forKey: "colorId")
@@ -36,7 +36,7 @@ class ColorModel: NSObject {
                     return colorDic!
                 }
                 LogModel.getInstance.insertLog("Get color info from database : \(colorDic)")
-                return colorDic!
+                return nil
             }catch let error as NSError{
                 LogModel.getInstance.insertLog("ColorModel: Database Error. [err:\(error)]")
                 return nil
@@ -46,10 +46,10 @@ class ColorModel: NSObject {
         }
     }
     
-    class func drawColorImg(type : Int32, colorImgView : UIImageView) -> (image : UIImage?, colorDataArray : NSMutableArray?)
+    class func drawColorImg(colorFile : String, colorImgView : UIImageView) -> (image : UIImage?, colorDataArray : NSMutableArray?)
     {
         // Get color data.
-        let colorDic : NSMutableDictionary? = getColorData(type)
+        let colorDic : NSMutableDictionary? = getColorData(colorFile)
         var rgbnArr : [NSString] = (colorDic?.objectForKey("rgbnStr") as! NSString).componentsSeparatedByString(",")
         let scaleArr : [String] = (colorDic?.objectForKey("scaleStr") as! String).componentsSeparatedByString(",")
         let unitStr : String? = colorDic?.objectForKey("unitStr") as? String
@@ -87,7 +87,7 @@ class ColorModel: NSObject {
             {
                 // Draw color.
                 CGContextSetFillColorWithColor(context,
-                    UIColor(red:CGFloat(rgbnArr[4 + i * 4].floatValue / 256.0), green: CGFloat(rgbnArr[4 + i * 4 + 1].floatValue / 256.0), blue: CGFloat(rgbnArr[4 + i * 4 + 2].floatValue / 256.0), alpha: 1).CGColor)
+                    UIColor(red:CGFloat(rgbnArr[4 + i * 4].floatValue / 256.0), green: CGFloat(rgbnArr[4 + i * 4 + 1].floatValue / 256.0), blue: CGFloat(rgbnArr[4 + i * 4 + 2].floatValue / 256.0), alpha: 0.6).CGColor)
                 CGContextFillRect(context, CGRectMake(paddingLeft + 1 + CGFloat(i) * blockWidth, paddingTop + 1, blockWidth - 1, boundHeight - 9));
                 // Draw scale.
                 scaleArr[i].drawInRect(CGRectMake(2 + blockWidth * CGFloat(i), boundHeight + 3, blockWidth, 10), withAttributes: [
@@ -111,7 +111,7 @@ class ColorModel: NSObject {
             {
                 // Draw color.
                 CGContextSetFillColorWithColor(context,
-                    UIColor(red:CGFloat(rgbnArr[i * 4].floatValue / 256.0), green: CGFloat(rgbnArr[i * 4 + 1].floatValue / 256.0), blue: CGFloat(rgbnArr[i * 4 + 2].floatValue / 256.0), alpha: 1).CGColor)
+                    UIColor(red:CGFloat(rgbnArr[i * 4].floatValue / 256.0), green: CGFloat(rgbnArr[i * 4 + 1].floatValue / 256.0), blue: CGFloat(rgbnArr[i * 4 + 2].floatValue / 256.0), alpha: 0.6).CGColor)
                 CGContextFillRect(context, CGRectMake(paddingLeft + 1 + CGFloat(i) * blockWidth, paddingTop + 0.5, blockWidth - 1, boundHeight - 9));
                 // Draw scale.
                 scaleArr[i].drawInRect(CGRectMake(paddingLeft + blockWidth * CGFloat(i), boundHeight + 3, blockWidth, 10), withAttributes: [

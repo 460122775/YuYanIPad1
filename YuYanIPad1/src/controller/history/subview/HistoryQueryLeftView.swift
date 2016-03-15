@@ -15,6 +15,7 @@ protocol HistoryQueryLeftViewProtocol
     func chooseProductControl()
     func returnBackToChoice()
     func selectedProductControl(selectedProductDic : NSMutableDictionary)
+    func showElevationChoiceView()
 }
 
 class HistoryQueryLeftView : UIView, HistoryResultProtocol
@@ -25,7 +26,6 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
     override init(frame: CGRect)
     {
         super.init(frame:frame)
-        
     }
     
     required init?(coder : NSCoder)
@@ -86,6 +86,16 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         }
     }
     
+    func setProductViewByProductDic(productDic : NSMutableDictionary)
+    {
+        self.historyResultView?.setSelectedProductDic(productDic)
+    }
+    
+    func setElevationValue(elevationValue : Float32)
+    {
+        self.historyResultView?.setElevationValueBtnLb(elevationValue)
+    }
+    
     // History Result Protocol.
     func chooseProductControl()
     {
@@ -109,5 +119,10 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         {
             historyQueryLeftViewProtocol?.selectedProductControl(selectedProductDic)
         }
+    }
+    
+    func showElevationChoiceView()
+    {
+        self.historyQueryLeftViewProtocol!.showElevationChoiceView()
     }
 }

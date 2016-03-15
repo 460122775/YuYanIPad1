@@ -28,11 +28,11 @@ class LogModel : NSObject {
         {
             return
         }
-        logContentArr.insertObject(logContent!, atIndex: 0)
-        if logContentArr.count > 30
-        {
-            logContentArr.removeLastObject()
-        }
+//        logContentArr.insertObject(logContent!, atIndex: 0)
+//        if logContentArr.count > 30
+//        {
+//            logContentArr.removeLastObject()
+//        }
     }
     
     func getLogContent() -> NSMutableArray

@@ -1,37 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UIView"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ProductViewA" customModule="YuYanIPad1" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" customClass="MGLMapView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" userLabel="mapContainerView">
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYc-AG-raW" userLabel="productImg">
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCO-Em-Kjc" userLabel="ProductContainerView">
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
-                    <accessibility key="accessibilityConfiguration">
-                        <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
-                    </accessibility>
-                </imageView>
-                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cYo-WG-Fo2" userLabel="distanceCircleImg">
-                    <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
-                </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywE-aY-3UD" customClass="ColorBarHorizontalView" customModule="YuYanIPad1" customModuleProvider="target">
+                    <subviews>
+                        <imageView alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYc-AG-raW" userLabel="productImgView">
+                            <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+                            <accessibility key="accessibilityConfiguration">
+                                <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
+                            </accessibility>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cYo-WG-Fo2" userLabel="distanceCircleImgView">
+                            <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="EYc-AG-raW" firstAttribute="top" secondItem="cYo-WG-Fo2" secondAttribute="top" id="M3y-Nx-4bb"/>
+                        <constraint firstItem="EYc-AG-raW" firstAttribute="top" secondItem="nCO-Em-Kjc" secondAttribute="top" id="Uve-fG-Xh6"/>
+                        <constraint firstItem="EYc-AG-raW" firstAttribute="leading" secondItem="cYo-WG-Fo2" secondAttribute="leading" id="WO8-lR-XAn"/>
+                        <constraint firstItem="cYo-WG-Fo2" firstAttribute="height" secondItem="nCO-Em-Kjc" secondAttribute="height" id="Yvj-os-RKu"/>
+                        <constraint firstItem="EYc-AG-raW" firstAttribute="height" secondItem="nCO-Em-Kjc" secondAttribute="height" id="kMy-Yi-1dd"/>
+                        <constraint firstItem="cYo-WG-Fo2" firstAttribute="width" secondItem="nCO-Em-Kjc" secondAttribute="width" id="lH9-iF-sSH"/>
+                        <constraint firstItem="EYc-AG-raW" firstAttribute="width" secondItem="nCO-Em-Kjc" secondAttribute="width" id="rrl-aW-wbs"/>
+                        <constraint firstItem="EYc-AG-raW" firstAttribute="leading" secondItem="nCO-Em-Kjc" secondAttribute="leading" id="sGa-1g-neA"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ywE-aY-3UD" userLabel="colorContainerView" customClass="ColorBarHorizontalView" customModule="YuYanIPad1" customModuleProvider="target">
                     <rect key="frame" x="250" y="700" width="676" height="48"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map_lable_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Mhb-nW-SRg">
                             <rect key="frame" x="0.0" y="0.0" width="676" height="48"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWl-rf-5ep">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YWl-rf-5ep" userLabel="colorImgView">
                             <rect key="frame" x="0.0" y="0.0" width="676" height="48"/>
                         </imageView>
                     </subviews>
@@ -44,25 +60,16 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="cYo-WG-Fo2" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="05o-Ee-Bjo"/>
-                <constraint firstItem="cYo-WG-Fo2" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="234:187" id="2b5-ny-ZxW"/>
                 <constraint firstItem="X0C-JG-BJA" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="89c-Vo-4wr"/>
-                <constraint firstItem="cYo-WG-Fo2" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="G9T-wD-gKW"/>
+                <constraint firstItem="nCO-Em-Kjc" firstAttribute="width" secondItem="X0C-JG-BJA" secondAttribute="width" id="9iZ-LM-X5u"/>
                 <constraint firstAttribute="bottom" secondItem="ywE-aY-3UD" secondAttribute="bottom" id="J5a-gh-HA9"/>
-                <constraint firstItem="cYo-WG-Fo2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y5g-ff-tBO"/>
-                <constraint firstAttribute="trailing" secondItem="cYo-WG-Fo2" secondAttribute="trailing" id="b1L-Ob-aZy"/>
+                <constraint firstItem="nCO-Em-Kjc" firstAttribute="height" secondItem="X0C-JG-BJA" secondAttribute="height" id="Mor-wx-Py9"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="leading" secondItem="nCO-Em-Kjc" secondAttribute="leading" id="gj4-Xa-6Xb"/>
                 <constraint firstItem="X0C-JG-BJA" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="234:187" id="h7y-tH-pqB"/>
                 <constraint firstItem="X0C-JG-BJA" firstAttribute="bottom" secondItem="ywE-aY-3UD" secondAttribute="bottom" id="hfJ-PY-OmL"/>
-                <constraint firstItem="EYc-AG-raW" firstAttribute="top" secondItem="cYo-WG-Fo2" secondAttribute="top" id="kha-fL-JP0"/>
-                <constraint firstItem="EYc-AG-raW" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="maB-nY-ToU"/>
-                <constraint firstItem="EYc-AG-raW" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="n1S-gz-Hab"/>
-                <constraint firstItem="cYo-WG-Fo2" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="oRU-Uc-2U3"/>
-                <constraint firstItem="EYc-AG-raW" firstAttribute="leading" secondItem="X0C-JG-BJA" secondAttribute="leading" id="qWm-tk-H7C"/>
-                <constraint firstItem="X0C-JG-BJA" firstAttribute="trailing" secondItem="cYo-WG-Fo2" secondAttribute="trailing" id="rIe-Va-GwD"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="top" secondItem="nCO-Em-Kjc" secondAttribute="top" id="ts8-jq-uES"/>
                 <constraint firstItem="X0C-JG-BJA" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="wzz-fA-ZQa"/>
-                <constraint firstItem="EYc-AG-raW" firstAttribute="top" secondItem="X0C-JG-BJA" secondAttribute="top" id="xnK-Pw-x3n"/>
-                <constraint firstItem="EYc-AG-raW" firstAttribute="leading" secondItem="cYo-WG-Fo2" secondAttribute="leading" id="yTf-Lj-0n5"/>
-                <constraint firstAttribute="bottom" secondItem="cYo-WG-Fo2" secondAttribute="bottom" id="yzv-q3-aZx"/>
+                <constraint firstItem="X0C-JG-BJA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xQ7-My-2g2"/>
                 <constraint firstAttribute="trailing" secondItem="ywE-aY-3UD" secondAttribute="trailing" constant="10" id="zAI-rm-YmB"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -70,10 +77,12 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="colorImgView" destination="YWl-rf-5ep" id="Gkj-KE-BeI"/>
-                <outlet property="distanceCircleImgView" destination="cYo-WG-Fo2" id="wXx-XE-8Qe"/>
-                <outlet property="mapView" destination="X0C-JG-BJA" id="WWO-5v-Yog"/>
-                <outlet property="productImgVIew" destination="EYc-AG-raW" id="Y7i-YH-BWg"/>
+                <outlet property="colorContainerView" destination="ywE-aY-3UD" id="Ip2-Xa-D7Y"/>
+                <outlet property="colorImgView" destination="YWl-rf-5ep" id="AC5-sn-CRj"/>
+                <outlet property="distanceCircleImgView" destination="cYo-WG-Fo2" id="Sf8-Z6-J0d"/>
+                <outlet property="mapContainerView" destination="X0C-JG-BJA" id="fyW-OA-wWk"/>
+                <outlet property="productContainerView" destination="nCO-Em-Kjc" id="DE9-4H-njK"/>
+                <outlet property="productImgVIew" destination="EYc-AG-raW" id="0Qg-ks-SMT"/>
             </connections>
             <point key="canvasLocation" x="523" y="342"/>
         </view>

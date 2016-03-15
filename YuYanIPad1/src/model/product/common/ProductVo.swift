@@ -12,7 +12,7 @@ class ProductVo : NSObject {
     var id : Int32 = 0
     var name : String = ""
     var pos_file : String = ""
-    var file_size : Float32 = 0
+    var file_size : Int32 = 0
     var pos_picture : String = ""
     var type : Int32 = 0
     var time : Int32 = 0

@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+protocol CartoonBarDelegate
+{
+    // Press play btn.
+    func prepareCartoonData()
+    // Press progress btn.
+    func drawProductAtNo()
+}
+
 class CartoonBarView: UIView
 {
     @IBOutlet var multipleBackBtn: UIButton!
@@ -19,6 +27,9 @@ class CartoonBarView: UIView
     @IBOutlet var multiplePreBtn: UIButton!
     @IBOutlet var controlBtn: UIButton!
     @IBOutlet var buttonContainerView: UIView!
+    
+    var cartoonBarDelegate : CartoonBarDelegate?
+    var currentPage : Int32 = 1 // From 1..
     
     override init(frame: CGRect)
     {

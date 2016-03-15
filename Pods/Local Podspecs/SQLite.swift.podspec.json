@@ -24,5 +24,11 @@
   ],
   "private_header_files": "Source/Core/fts3_tokenizer.h",
   "exclude_files": "Source/Cipher/Cipher.swift",
-  "libraries": "sqlite3"
+  "libraries": "sqlite3",
+  "platforms": {
+    "osx": null,
+    "ios": null,
+    "tvos": null,
+    "watchos": null
+  }
 }

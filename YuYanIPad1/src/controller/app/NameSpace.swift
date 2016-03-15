@@ -32,10 +32,12 @@ var BYTE_ZERO : UInt8 = 0
 
 let INITDATABASE : String = "InitDatabase"
 let SOCKET : String = "Socket"
+let HTTP : String = "Http"
 let LOGIN : String = "Login"
     let CURRENTUSERINFO : String = "CurrentUserInfo"
 let SUCCESS : String = "Success"
 let FAIL : String = "Fail"
+let NODATA : String = "无符合条件的产品数据！"
 let APP_ACTIVE : String = "app_active"
 let APP_STOP : String = "app_stop"
 
@@ -47,6 +49,7 @@ let RECEIVE : String = "Receive"
 
 let PRODUCTCONFIG : String = "ProductConfig"
 let HISTORYPRODUCT : String = "HistoryProduct"
+let ELEVATIONLIST : String = "ElevationList"
 let PRODUCT : String = "Product"
 let PRODUCTTYPELIST : String = "ProductTypeList"
     let LEVEL_FIRSTCLASS : Int64 = 0

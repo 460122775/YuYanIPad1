@@ -176,14 +176,8 @@ class HistoryChoiceView : UIView
             self.startTime!.timeIntervalSince1970,
             endTime: self.endTime!.timeIntervalSince1970,
             productType: Int32((self._selectProductConfigDir!.objectForKey("type")?.integerValue)!),
-            currentPage: Int32.init(1)
+            currentPage: 1,
+            mcode: nil
         )
-//        ProductModel.getInstance.getHistoryData(
-//            self.startTime!.timeIntervalSince1970,
-//            endTime: self.endTime!.timeIntervalSince1970,
-//            productType: Int32((self._selectProductConfigDir!.objectForKey("type")?.integerValue)!,
-//            currentPage: Int32(1))
-//        )
     }
-    
 }

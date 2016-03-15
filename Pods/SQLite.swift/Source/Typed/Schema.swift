@@ -27,7 +27,7 @@ extension SchemaType {
     // MARK: - DROP TABLE / VIEW / VIRTUAL TABLE
 
     public func drop(ifExists ifExists: Bool = false) -> String {
-        return drop("TABLE", tableName(), ifExists)
+        return drop(Self.identifier, tableName(), ifExists)
     }
 
 }
@@ -181,12 +181,6 @@ extension View {
         ]
 
         return " ".join(clauses.flatMap { $0 }).asSQL()
-    }
-
-    // MARK: - DROP VIEW
-
-    public func drop(ifExists ifExists: Bool = false) -> String {
-        return drop("VIEW", tableName(), ifExists)
     }
 
 }

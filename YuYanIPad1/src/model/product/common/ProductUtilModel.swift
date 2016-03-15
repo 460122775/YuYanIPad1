@@ -16,6 +16,7 @@ class ProductUtilModel : NSObject {
     var _currentScanTime : String = ""
     var _productTypeList = []
     var _productArr : NSMutableArray = []
+    let dateFormatter = NSDateFormatter()
 
     class var getInstance : ProductUtilModel
     {
@@ -36,21 +37,24 @@ class ProductUtilModel : NSObject {
                 let productConfig = Table("product_config")
                 for config in db.prepare(productConfig)
                 {
-                    _productConfigDicTemp = NSMutableDictionary()
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("id")]), forKey: "id")
-                    _productConfigDicTemp?.setValue(config[Expression<String?>("ename")], forKey: "ename")
-                    _productConfigDicTemp?.setValue(config[Expression<String?>("cname")], forKey: "cname")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("type")]), forKey: "type")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadQuery")]), forKey: "enableIPadQuery")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadMovie")]), forKey: "enableIPadMovie")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadCut")]), forKey: "enableIPadCut")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("typeOfCut")]), forKey: "typeOfCut")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("typeOfMultiLayer")]), forKey: "typeOfMultiLayer")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("productOrder")]), forKey: "productOrder")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("level")]), forKey: "level")
-                    _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("colorId")]), forKey: "colorId")
-                    _productConfigDicTemp?.setValue(config[Expression<String?>("colorFile")], forKey: "colorFile")
-                    self._productConfigArr.addObject(_productConfigDicTemp!)
+                    if NSNumber(longLong: config[Expression<Int64>("enableIPadQuery")]) == 1
+                    {
+                        _productConfigDicTemp = NSMutableDictionary()
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("id")]), forKey: "id")
+                        _productConfigDicTemp?.setValue(config[Expression<String?>("ename")], forKey: "ename")
+                        _productConfigDicTemp?.setValue(config[Expression<String?>("cname")], forKey: "cname")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("type")]), forKey: "type")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadQuery")]), forKey: "enableIPadQuery")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadMovie")]), forKey: "enableIPadMovie")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("enableIPadCut")]), forKey: "enableIPadCut")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("typeOfCut")]), forKey: "typeOfCut")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("typeOfMultiLayer")]), forKey: "typeOfMultiLayer")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("productOrder")]), forKey: "productOrder")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("level")]), forKey: "level")
+                        _productConfigDicTemp?.setValue(NSNumber(longLong: config[Expression<Int64>("colorId")]), forKey: "colorId")
+                        _productConfigDicTemp?.setValue(config[Expression<String?>("colorFile")], forKey: "colorFile")
+                        self._productConfigArr.addObject(_productConfigDicTemp!)
+                    }
                 }
                 LogModel.getInstance.insertLog("Get product config count : \(self._productConfigArr.count)")
                 ProductUtilModel.getInstance.initProductByProductConfig()
@@ -140,6 +144,7 @@ class ProductUtilModel : NSObject {
                     _productDic.setValue(_productTypeList.objectAtIndex(i), forKey: "type")
                     _productDic.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
                     _productDic.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
+                    _productDic.setValue(_productConfigDic.objectForKey("colorFile") as! String, forKey: "colorFile")
                     _productDic.setValue(_productConfigDic.objectForKey("level"), forKey: "level")
                     _productDic.setValue("", forKey: "name")
                     _productArr.addObject(_productDic)
@@ -154,14 +159,39 @@ class ProductUtilModel : NSObject {
         return _productArr
     }
     
+    internal func getElevationData(startTime : NSTimeInterval, endTime _endTime: NSTimeInterval,
+        productType _productType : Int32)
+    {
+        let _productVo : ProductVo = ProductVo()
+        _productVo.type = _productType
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectElevationByTypeInPeriod?startTime=\(Int64(1451577600))&endTime=\(Int64(1451584800))&productVo=\(_productVo.getJsonStr())"
+        //        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            NSNotificationCenter.defaultCenter().postNotificationName("\(ELEVATIONLIST)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
     internal func getHistoryData(startTime : NSTimeInterval, endTime _endTime: NSTimeInterval,
-        productType _productType : Int32, currentPage _currentPage : Int32)
+        productType _productType : Int32, currentPage _currentPage : Int32, mcode _mcode : String?)
     {
         let _pageVo : PageVo = PageVo()
         _pageVo.currentPage = _currentPage
         let _productVo : ProductVo = ProductVo()
         _productVo.type = _productType
-        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1451578200))&endTime=\(Int64(1453255670))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+        if _mcode != nil
+        {
+            _productVo.mcode = _mcode!
+        }
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1451577600))&endTime=\(Int64(1451584800))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
 //        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
         LogModel.getInstance.insertLog("\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
@@ -173,6 +203,69 @@ class ProductUtilModel : NSObject {
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 //            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
             NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
+    internal func getDataByLayer(timeStr : String,
+        productType _productType : Int32, layer _layer : Int32)
+    {
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let time = dateFormatter.dateFromString(timeStr)!.timeIntervalSince1970
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectSameVolProduct?time=\(Int64(time))&type=\(_productType)&layer=\(_layer)"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
+                object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
+    internal func getNextDataByTime(timeStr : String,
+        productType _productType : Int32, mcodeString _mcodeStr : String?)
+    {
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let time = dateFormatter.dateFromString(timeStr)!.timeIntervalSince1970 + 1
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectSameMcodeProduct?time=\(Int64(time))&type=\(_productType)&count=\(-1)&mcode=\((_mcodeStr! as NSString))"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
+                object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
+    internal func getLastDataByTime(timeStr : String,
+        productType _productType : Int32, mcodeString _mcodeStr : String?)
+    {
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let time = dateFormatter.dateFromString(timeStr)!.timeIntervalSince1970 - 1
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectSameMcodeProduct?time=\(Int64(time))&type=\(_productType)&count=\(1)&mcode=\((_mcodeStr! as NSString))"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
+                object: NSMutableDictionary(dictionary: resultDic))
         })
         task.resume()
     }
@@ -198,7 +291,8 @@ class ProductUtilModel : NSObject {
                     _productDic!.setValue(_productConfigDic.objectForKey("type"), forKey: "type")
                     _productDic!.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
                     _productDic!.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
-                    _productDic!.setValue(_productConfigDic.objectForKey("level"), forKey: "level")
+                    _productDic!.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
+                    _productDic!.setValue(_productConfigDic.objectForKey("colorFile"), forKey: "colorFile")
                     _productDic!.setValue(productNameStr, forKey: "pos_file")
                     _productDic!.setValue(productNameArr[productNameArr.count - 1], forKey: "name")
                     _productDic!.setValue((productNameArr[productNameArr.count - 1] as NSString).substringWithRange(NSRange(location: 23, length: 3)), forKey: "scan_mode")

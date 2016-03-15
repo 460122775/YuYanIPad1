@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		010E17CB1AC2F676008E2F69 /* HistoryChoiceOfProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E17CA1AC2F676008E2F69 /* HistoryChoiceOfProductView.swift */; };
+		011CCFA01C8D4BE9005534B4 /* ProductViewA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 011CCF9F1C8D4BE9005534B4 /* ProductViewA.xib */; };
+		01210B601C8D7698001C8B80 /* HistoryElevationChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01210B5E1C8D7698001C8B80 /* HistoryElevationChoiceView.swift */; };
+		01210B611C8D7698001C8B80 /* HistoryElevationChoiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01210B5F1C8D7698001C8B80 /* HistoryElevationChoiceView.xib */; };
 		012606B81BDA1B0B009BB949 /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012606B71BDA1B0B009BB949 /* NameSpace.swift */; };
+		0129CA9C1C51CB2B00C58D4B /* CAPPIDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129CA9B1C51CB2B00C58D4B /* CAPPIDrawData.m */; };
+		0129CA9F1C51D64500C58D4B /* MAXREFDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129CA9E1C51D64500C58D4B /* MAXREFDrawData.m */; };
+		0129CAA21C51DC2A00C58D4B /* OHPDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129CAA11C51DC2A00C58D4B /* OHPDrawData.m */; };
+		0129CAA51C522E6E00C58D4B /* VILDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129CAA41C522E6E00C58D4B /* VILDrawData.m */; };
 		014AD6B31AB6F81900E078E2 /* YuYanIPad1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014AD6B21AB6F81900E078E2 /* YuYanIPad1Tests.swift */; };
 		0156A7431BE8AAA0008E41D1 /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0156A7421BE8AAA0008E41D1 /* SwiftNotice.swift */; };
 		0156A7451BE8B1D1008E41D1 /* UserVo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0156A7441BE8B1D1008E41D1 /* UserVo.swift */; };
@@ -63,7 +70,6 @@
 		01823A401ABBBB0800E70E74 /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01823A3F1ABBBB0800E70E74 /* ProductInfoView.swift */; };
 		01823A421ABBBE5E00E70E74 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01823A411ABBBE5E00E70E74 /* ProductListView.swift */; };
 		01823A441ABBBEF200E70E74 /* ProductLeftView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01823A431ABBBEF200E70E74 /* ProductLeftView.xib */; };
-		01823A491ABBC04600E70E74 /* ProductViewA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01823A481ABBC04600E70E74 /* ProductViewA.xib */; };
 		01823A4B1ABBC06000E70E74 /* ProductViewA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01823A4A1ABBC06000E70E74 /* ProductViewA.swift */; };
 		01823A4E1ABBC17300E70E74 /* SwitchToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01823A4D1ABBC17300E70E74 /* SwitchToolView.swift */; };
 		01823A501ABBC26600E70E74 /* SwitchToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01823A4F1ABBC26600E70E74 /* SwitchToolView.xib */; };
@@ -103,12 +109,17 @@
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
 		01C29D021AB7D9C4008CBE96 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */; };
+		01DB7D831C8D0AF30061475E /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D491C8D0AF30061475E /* libMapbox.a */; };
+		01DB7D841C8D0AF30061475E /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 01DB7D4A1C8D0AF30061475E /* Mapbox.bundle */; };
+		01DB7D861C8D0B6E0061475E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D851C8D0B6E0061475E /* CoreLocation.framework */; };
+		01DB7D881C8D0B790061475E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D871C8D0B790061475E /* QuartzCore.framework */; };
+		01DB7D8A1C8D0C020061475E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D891C8D0C020061475E /* libsqlite3.0.tbd */; };
 		01E101701BF41F0600ABB6BD /* CacheManageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */; };
 		01E405721BEB2D6200C68C21 /* HSDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */; };
 		01E405731BEB2D6200C68C21 /* HSDatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */; };
 		01FB3C3A1AB9664000C41264 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB3C391AB9664000C41264 /* ProductViewController.swift */; };
 		01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FB3C3D1AB980ED00C41264 /* ProductViewController.xib */; };
-		AABEDF1B9E1B820A2EB7B54F /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AAA00BD685CCC948FB539A8 /* Pods.framework */; };
+		E45F642DE11E1DF84BC7F823 /* Pods_YuYanIPad1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5E32FFA3DA0535C4834CE6C /* Pods_YuYanIPad1.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,8 +134,19 @@
 
 /* Begin PBXFileReference section */
 		010E17CA1AC2F676008E2F69 /* HistoryChoiceOfProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryChoiceOfProductView.swift; path = src/controller/history/subview/HistoryChoiceOfProductView.swift; sourceTree = "<group>"; };
+		011CCF9F1C8D4BE9005534B4 /* ProductViewA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductViewA.xib; path = src/controller/product/productview/ProductViewA.xib; sourceTree = "<group>"; };
+		01210B5E1C8D7698001C8B80 /* HistoryElevationChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryElevationChoiceView.swift; path = src/controller/history/subview/HistoryElevationChoiceView.swift; sourceTree = "<group>"; };
+		01210B5F1C8D7698001C8B80 /* HistoryElevationChoiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryElevationChoiceView.xib; path = src/controller/history/subview/HistoryElevationChoiceView.xib; sourceTree = "<group>"; };
 		012606B61BDA1AF5009BB949 /* YuYanIPad1-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YuYanIPad1-Bridging-Header.h"; sourceTree = "<group>"; };
 		012606B71BDA1B0B009BB949 /* NameSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NameSpace.swift; path = src/controller/app/NameSpace.swift; sourceTree = "<group>"; };
+		0129CA9A1C51CB2B00C58D4B /* CAPPIDrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPPIDrawData.h; path = src/model/product/products/cappi/CAPPIDrawData.h; sourceTree = "<group>"; };
+		0129CA9B1C51CB2B00C58D4B /* CAPPIDrawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CAPPIDrawData.m; path = src/model/product/products/cappi/CAPPIDrawData.m; sourceTree = "<group>"; };
+		0129CA9D1C51D64500C58D4B /* MAXREFDrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAXREFDrawData.h; path = src/model/product/products/maxref/MAXREFDrawData.h; sourceTree = "<group>"; };
+		0129CA9E1C51D64500C58D4B /* MAXREFDrawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAXREFDrawData.m; path = src/model/product/products/maxref/MAXREFDrawData.m; sourceTree = "<group>"; };
+		0129CAA01C51DC2A00C58D4B /* OHPDrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OHPDrawData.h; path = src/model/product/products/ohp/OHPDrawData.h; sourceTree = "<group>"; };
+		0129CAA11C51DC2A00C58D4B /* OHPDrawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OHPDrawData.m; path = src/model/product/products/ohp/OHPDrawData.m; sourceTree = "<group>"; };
+		0129CAA31C522E6E00C58D4B /* VILDrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VILDrawData.h; path = src/model/product/products/vil/VILDrawData.h; sourceTree = "<group>"; };
+		0129CAA41C522E6E00C58D4B /* VILDrawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VILDrawData.m; path = src/model/product/products/vil/VILDrawData.m; sourceTree = "<group>"; };
 		014AD6971AB6F81900E078E2 /* YuYanIPad1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YuYanIPad1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		014AD69B1AB6F81900E078E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		014AD6AC1AB6F81900E078E2 /* YuYanIPad1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YuYanIPad1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -186,7 +208,6 @@
 		01823A3F1ABBBB0800E70E74 /* ProductInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductInfoView.swift; path = src/controller/product/subview/ProductInfoView.swift; sourceTree = "<group>"; };
 		01823A411ABBBE5E00E70E74 /* ProductListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductListView.swift; path = src/controller/product/subview/ProductListView.swift; sourceTree = "<group>"; };
 		01823A431ABBBEF200E70E74 /* ProductLeftView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductLeftView.xib; path = src/controller/product/subview/ProductLeftView.xib; sourceTree = "<group>"; };
-		01823A481ABBC04600E70E74 /* ProductViewA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductViewA.xib; path = src/controller/product/productview/ProductViewA.xib; sourceTree = "<group>"; };
 		01823A4A1ABBC06000E70E74 /* ProductViewA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductViewA.swift; path = src/controller/product/productview/ProductViewA.swift; sourceTree = "<group>"; };
 		01823A4D1ABBC17300E70E74 /* SwitchToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwitchToolView.swift; path = src/controller/product/productview/tool/switch/SwitchToolView.swift; sourceTree = "<group>"; };
 		01823A4F1ABBC26600E70E74 /* SwitchToolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SwitchToolView.xib; path = src/controller/product/productview/tool/switch/SwitchToolView.xib; sourceTree = "<group>"; };
@@ -234,15 +255,77 @@
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
 		01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = src/controller/app/LaunchScreen.xib; sourceTree = "<group>"; };
 		01DAD1F51C4485CD0007F35F /* NameSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NameSpace.h; path = src/model/common/NameSpace.h; sourceTree = "<group>"; };
+		01DB7D491C8D0AF30061475E /* libMapbox.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMapbox.a; path = src/model/otherAPI/Mapbox_1.6.1/libMapbox.a; sourceTree = "<group>"; };
+		01DB7D4A1C8D0AF30061475E /* Mapbox.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Mapbox.bundle; path = src/model/otherAPI/Mapbox_1.6.1/Mapbox.bundle; sourceTree = "<group>"; };
+		01DB7D4B1C8D0AF30061475E /* Mapbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Mapbox.h; path = src/model/otherAPI/Mapbox_1.6.1/Mapbox.h; sourceTree = "<group>"; };
+		01DB7D4C1C8D0AF30061475E /* RMAbstractMercatorTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMAbstractMercatorTileSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMAbstractMercatorTileSource.h; sourceTree = "<group>"; };
+		01DB7D4D1C8D0AF30061475E /* RMAbstractWebMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMAbstractWebMapSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMAbstractWebMapSource.h; sourceTree = "<group>"; };
+		01DB7D4E1C8D0AF30061475E /* RMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMAnnotation.h; sourceTree = "<group>"; };
+		01DB7D4F1C8D0AF30061475E /* RMAttributionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMAttributionViewController.h; path = src/model/otherAPI/Mapbox_1.6.1/RMAttributionViewController.h; sourceTree = "<group>"; };
+		01DB7D501C8D0AF30061475E /* RMBingSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMBingSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMBingSource.h; sourceTree = "<group>"; };
+		01DB7D511C8D0AF30061475E /* RMCacheObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMCacheObject.h; path = src/model/otherAPI/Mapbox_1.6.1/RMCacheObject.h; sourceTree = "<group>"; };
+		01DB7D521C8D0AF30061475E /* RMCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMCircle.h; path = src/model/otherAPI/Mapbox_1.6.1/RMCircle.h; sourceTree = "<group>"; };
+		01DB7D531C8D0AF30061475E /* RMCircleAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMCircleAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMCircleAnnotation.h; sourceTree = "<group>"; };
+		01DB7D541C8D0AF30061475E /* RMCompositeSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMCompositeSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMCompositeSource.h; sourceTree = "<group>"; };
+		01DB7D551C8D0AF30061475E /* RMConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMConfiguration.h; path = src/model/otherAPI/Mapbox_1.6.1/RMConfiguration.h; sourceTree = "<group>"; };
+		01DB7D561C8D0AF30061475E /* RMCoordinateGridSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMCoordinateGridSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMCoordinateGridSource.h; sourceTree = "<group>"; };
+		01DB7D571C8D0AF30061475E /* RMDatabaseCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMDatabaseCache.h; path = src/model/otherAPI/Mapbox_1.6.1/RMDatabaseCache.h; sourceTree = "<group>"; };
+		01DB7D581C8D0AF30061475E /* RMDBMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMDBMapSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMDBMapSource.h; sourceTree = "<group>"; };
+		01DB7D591C8D0AF30061475E /* RMFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMFoundation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMFoundation.h; sourceTree = "<group>"; };
+		01DB7D5A1C8D0AF30061475E /* RMFractalTileProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMFractalTileProjection.h; path = src/model/otherAPI/Mapbox_1.6.1/RMFractalTileProjection.h; sourceTree = "<group>"; };
+		01DB7D5B1C8D0AF30061475E /* RMGenericMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMGenericMapSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMGenericMapSource.h; sourceTree = "<group>"; };
+		01DB7D5C1C8D0AF30061475E /* RMGlobalConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMGlobalConstants.h; path = src/model/otherAPI/Mapbox_1.6.1/RMGlobalConstants.h; sourceTree = "<group>"; };
+		01DB7D5D1C8D0AF30061475E /* RMGreatCircleAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMGreatCircleAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMGreatCircleAnnotation.h; sourceTree = "<group>"; };
+		01DB7D5E1C8D0AF30061475E /* RMInteractiveSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMInteractiveSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMInteractiveSource.h; sourceTree = "<group>"; };
+		01DB7D5F1C8D0AF30061475E /* RMLoadingTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMLoadingTileView.h; path = src/model/otherAPI/Mapbox_1.6.1/RMLoadingTileView.h; sourceTree = "<group>"; };
+		01DB7D601C8D0AF30061475E /* RMMapboxSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapboxSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapboxSource.h; sourceTree = "<group>"; };
+		01DB7D611C8D0AF30061475E /* RMMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapLayer.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapLayer.h; sourceTree = "<group>"; };
+		01DB7D621C8D0AF30061475E /* RMMapOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapOverlayView.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapOverlayView.h; sourceTree = "<group>"; };
+		01DB7D631C8D0AF30061475E /* RMMapQuestOpenAerialSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapQuestOpenAerialSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapQuestOpenAerialSource.h; sourceTree = "<group>"; };
+		01DB7D641C8D0AF30061475E /* RMMapQuestOSMSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapQuestOSMSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapQuestOSMSource.h; sourceTree = "<group>"; };
+		01DB7D651C8D0AF30061475E /* RMMapScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapScrollView.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapScrollView.h; sourceTree = "<group>"; };
+		01DB7D661C8D0AF30061475E /* RMMapTiledLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapTiledLayerView.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapTiledLayerView.h; sourceTree = "<group>"; };
+		01DB7D671C8D0AF30061475E /* RMMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapView.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapView.h; sourceTree = "<group>"; };
+		01DB7D681C8D0AF30061475E /* RMMapViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMapViewDelegate.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMapViewDelegate.h; sourceTree = "<group>"; };
+		01DB7D691C8D0AF30061475E /* RMMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMarker.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMarker.h; sourceTree = "<group>"; };
+		01DB7D6A1C8D0AF30061475E /* RMMBTilesSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMBTilesSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMBTilesSource.h; sourceTree = "<group>"; };
+		01DB7D6B1C8D0AF30061475E /* RMMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMMemoryCache.h; path = src/model/otherAPI/Mapbox_1.6.1/RMMemoryCache.h; sourceTree = "<group>"; };
+		01DB7D6C1C8D0AF30061475E /* RMNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMNotifications.h; path = src/model/otherAPI/Mapbox_1.6.1/RMNotifications.h; sourceTree = "<group>"; };
+		01DB7D6D1C8D0AF30061475E /* RMOpenCycleMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMOpenCycleMapSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMOpenCycleMapSource.h; sourceTree = "<group>"; };
+		01DB7D6E1C8D0AF30061475E /* RMOpenSeaMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMOpenSeaMapLayer.h; path = src/model/otherAPI/Mapbox_1.6.1/RMOpenSeaMapLayer.h; sourceTree = "<group>"; };
+		01DB7D6F1C8D0AF30061475E /* RMOpenSeaMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMOpenSeaMapSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMOpenSeaMapSource.h; sourceTree = "<group>"; };
+		01DB7D701C8D0AF30061475E /* RMOpenStreetMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMOpenStreetMapSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMOpenStreetMapSource.h; sourceTree = "<group>"; };
+		01DB7D711C8D0AF30061475E /* RMPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMPixel.h; path = src/model/otherAPI/Mapbox_1.6.1/RMPixel.h; sourceTree = "<group>"; };
+		01DB7D721C8D0AF30061475E /* RMPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMPointAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMPointAnnotation.h; sourceTree = "<group>"; };
+		01DB7D731C8D0AF30061475E /* RMPolygonAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMPolygonAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMPolygonAnnotation.h; sourceTree = "<group>"; };
+		01DB7D741C8D0AF30061475E /* RMPolylineAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMPolylineAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMPolylineAnnotation.h; sourceTree = "<group>"; };
+		01DB7D751C8D0AF30061475E /* RMProjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMProjection.h; path = src/model/otherAPI/Mapbox_1.6.1/RMProjection.h; sourceTree = "<group>"; };
+		01DB7D761C8D0AF30061475E /* RMQuadTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMQuadTree.h; path = src/model/otherAPI/Mapbox_1.6.1/RMQuadTree.h; sourceTree = "<group>"; };
+		01DB7D771C8D0AF30061475E /* RMShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMShape.h; path = src/model/otherAPI/Mapbox_1.6.1/RMShape.h; sourceTree = "<group>"; };
+		01DB7D781C8D0AF30061475E /* RMShapeAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMShapeAnnotation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMShapeAnnotation.h; sourceTree = "<group>"; };
+		01DB7D791C8D0AF30061475E /* RMStaticMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMStaticMapView.h; path = src/model/otherAPI/Mapbox_1.6.1/RMStaticMapView.h; sourceTree = "<group>"; };
+		01DB7D7A1C8D0AF30061475E /* RMTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTile.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTile.h; sourceTree = "<group>"; };
+		01DB7D7B1C8D0AF30061475E /* RMTileCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTileCache.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTileCache.h; sourceTree = "<group>"; };
+		01DB7D7C1C8D0AF30061475E /* RMTileCacheDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTileCacheDownloadOperation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTileCacheDownloadOperation.h; sourceTree = "<group>"; };
+		01DB7D7D1C8D0AF30061475E /* RMTileImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTileImage.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTileImage.h; sourceTree = "<group>"; };
+		01DB7D7E1C8D0AF30061475E /* RMTileMillSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTileMillSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTileMillSource.h; sourceTree = "<group>"; };
+		01DB7D7F1C8D0AF30061475E /* RMTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTileSource.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTileSource.h; sourceTree = "<group>"; };
+		01DB7D801C8D0AF30061475E /* RMTileSourcesContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMTileSourcesContainer.h; path = src/model/otherAPI/Mapbox_1.6.1/RMTileSourcesContainer.h; sourceTree = "<group>"; };
+		01DB7D811C8D0AF30061475E /* RMUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMUserLocation.h; path = src/model/otherAPI/Mapbox_1.6.1/RMUserLocation.h; sourceTree = "<group>"; };
+		01DB7D821C8D0AF30061475E /* RMUserTrackingBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RMUserTrackingBarButtonItem.h; path = src/model/otherAPI/Mapbox_1.6.1/RMUserTrackingBarButtonItem.h; sourceTree = "<group>"; };
+		01DB7D851C8D0B6E0061475E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		01DB7D871C8D0B790061475E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		01DB7D891C8D0C020061475E /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		01E1016F1BF41F0600ABB6BD /* CacheManageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManageModel.swift; path = src/model/cache/CacheManageModel.swift; sourceTree = "<group>"; };
 		01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HSDatePickerViewController.h; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.h; sourceTree = "<group>"; };
 		01E405701BEB2D6200C68C21 /* HSDatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HSDatePickerViewController.m; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.m; sourceTree = "<group>"; };
 		01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HSDatePickerViewController.xib; path = src/model/otherAPI/HSDatePickerViewController/HSDatePickerViewController.xib; sourceTree = "<group>"; };
 		01FB3C391AB9664000C41264 /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductViewController.swift; path = src/controller/product/ProductViewController.swift; sourceTree = "<group>"; };
 		01FB3C3D1AB980ED00C41264 /* ProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductViewController.xib; path = src/controller/product/ProductViewController.xib; sourceTree = "<group>"; };
-		090B6A2A28490095ADF73B13 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		59B86C76C4167FC687E2141F /* Pods-YuYanIPad1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuYanIPad1.release.xcconfig"; path = "Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1.release.xcconfig"; sourceTree = "<group>"; };
+		5B4F65B4D70F44B5D8A8CDB7 /* Pods-YuYanIPad1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuYanIPad1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1.debug.xcconfig"; sourceTree = "<group>"; };
 		6AAA00BD685CCC948FB539A8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA6DAD10F70F355474A6A539 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A5E32FFA3DA0535C4834CE6C /* Pods_YuYanIPad1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YuYanIPad1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,7 +334,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				016E7F931C04381E0044C4FE /* libz.tbd in Frameworks */,
-				AABEDF1B9E1B820A2EB7B54F /* Pods.framework in Frameworks */,
+				01DB7D8A1C8D0C020061475E /* libsqlite3.0.tbd in Frameworks */,
+				01DB7D881C8D0B790061475E /* QuartzCore.framework in Frameworks */,
+				01DB7D861C8D0B6E0061475E /* CoreLocation.framework in Frameworks */,
+				01DB7D831C8D0AF30061475E /* libMapbox.a in Frameworks */,
+				E45F642DE11E1DF84BC7F823 /* Pods_YuYanIPad1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +352,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0129CA991C51CB1800C58D4B /* cappi */ = {
+			isa = PBXGroup;
+			children = (
+				0129CA9A1C51CB2B00C58D4B /* CAPPIDrawData.h */,
+				0129CA9B1C51CB2B00C58D4B /* CAPPIDrawData.m */,
+			);
+			name = cappi;
+			sourceTree = "<group>";
+		};
 		014A88511ABA79A80090CA6F /* subview */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,8 +382,8 @@
 				014AD6991AB6F81900E078E2 /* YuYanIPad1 */,
 				014AD6AF1AB6F81900E078E2 /* YuYanIPad1Tests */,
 				014AD6981AB6F81900E078E2 /* Products */,
-				462794896C9CBF5B5D121CD3 /* Pods */,
 				16A8CC8C05F7F9E822E341E0 /* Frameworks */,
+				49F0E06601008006032221B8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -430,6 +526,7 @@
 		018236A91BA0255F0006B930 /* otherAPI */ = {
 			isa = PBXGroup;
 			children = (
+				01DB7D481C8D0AE10061475E /* Mapbox */,
 				016E7F941C0438770044C4FE /* zlib */,
 				01E4056E1BEB2D4100C68C21 /* HSDatePickerViewController */,
 				0156A7411BE8AA87008E41D1 /* SwiftNotice */,
@@ -469,6 +566,8 @@
 				016FFD361AC2622C00596975 /* HistoryQueryLeftView.xib */,
 				016FFD381AC2642900596975 /* HistoryResultView.swift */,
 				01823A221ABBAA8200E70E74 /* HistoryResultView.xib */,
+				01210B5E1C8D7698001C8B80 /* HistoryElevationChoiceView.swift */,
+				01210B5F1C8D7698001C8B80 /* HistoryElevationChoiceView.xib */,
 			);
 			name = subview;
 			sourceTree = "<group>";
@@ -511,7 +610,7 @@
 			children = (
 				01823A4C1ABBC12300E70E74 /* tool */,
 				01823A4A1ABBC06000E70E74 /* ProductViewA.swift */,
-				01823A481ABBC04600E70E74 /* ProductViewA.xib */,
+				011CCF9F1C8D4BE9005534B4 /* ProductViewA.xib */,
 			);
 			name = productview;
 			sourceTree = "<group>";
@@ -531,6 +630,8 @@
 		01875B171C4CE767006B2C64 /* maxref */ = {
 			isa = PBXGroup;
 			children = (
+				0129CA9D1C51D64500C58D4B /* MAXREFDrawData.h */,
+				0129CA9E1C51D64500C58D4B /* MAXREFDrawData.m */,
 			);
 			name = maxref;
 			sourceTree = "<group>";
@@ -538,6 +639,8 @@
 		01875B181C4CE770006B2C64 /* ohp */ = {
 			isa = PBXGroup;
 			children = (
+				0129CAA01C51DC2A00C58D4B /* OHPDrawData.h */,
+				0129CAA11C51DC2A00C58D4B /* OHPDrawData.m */,
 			);
 			name = ohp;
 			sourceTree = "<group>";
@@ -545,24 +648,19 @@
 		01875B191C4CE777006B2C64 /* vil */ = {
 			isa = PBXGroup;
 			children = (
+				0129CAA31C522E6E00C58D4B /* VILDrawData.h */,
+				0129CAA41C522E6E00C58D4B /* VILDrawData.m */,
 			);
 			name = vil;
 			sourceTree = "<group>";
 		};
-		01875B1A1C4CE780006B2C64 /* et */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = et;
-			sourceTree = "<group>";
-		};
-		01875B1B1C4CE795006B2C64 /* eb */ = {
+		01875B1B1C4CE795006B2C64 /* eteb */ = {
 			isa = PBXGroup;
 			children = (
 				01875B1C1C4CE83F006B2C64 /* EBDrawData.h */,
 				01875B1D1C4CE83F006B2C64 /* EBDrawData.m */,
 			);
-			name = eb;
+			name = eteb;
 			sourceTree = "<group>";
 		};
 		0192F7661BB3EEFD00CC6498 /* common */ = {
@@ -572,7 +670,6 @@
 				0192F7641BB3EEF800CC6498 /* PageVo.swift */,
 				01C1AF811C41045400400D26 /* MapModel.swift */,
 				01DAD1F51C4485CD0007F35F /* NameSpace.h */,
-				01806B891BA189A1005CBA7E /* product */,
 			);
 			name = common;
 			sourceTree = "<group>";
@@ -614,8 +711,8 @@
 		01ABAB8D1C18047200A0AC59 /* products */ = {
 			isa = PBXGroup;
 			children = (
-				01875B1B1C4CE795006B2C64 /* eb */,
-				01875B1A1C4CE780006B2C64 /* et */,
+				0129CA991C51CB1800C58D4B /* cappi */,
+				01875B1B1C4CE795006B2C64 /* eteb */,
 				01875B191C4CE777006B2C64 /* vil */,
 				01875B181C4CE770006B2C64 /* ohp */,
 				01875B171C4CE767006B2C64 /* maxref */,
@@ -651,6 +748,7 @@
 				01E1016E1BF41EBE00ABB6BD /* cache */,
 				01C01E071BF2E50400B1175A /* database */,
 				01A5143F1BD0CF2D0042BD82 /* log */,
+				01806B891BA189A1005CBA7E /* product */,
 				0192F7661BB3EEFD00CC6498 /* common */,
 				018236B71BA026540006B930 /* user */,
 				018236A91BA0255F0006B930 /* otherAPI */,
@@ -730,6 +828,71 @@
 			name = app;
 			sourceTree = "<group>";
 		};
+		01DB7D481C8D0AE10061475E /* Mapbox */ = {
+			isa = PBXGroup;
+			children = (
+				01DB7D491C8D0AF30061475E /* libMapbox.a */,
+				01DB7D4A1C8D0AF30061475E /* Mapbox.bundle */,
+				01DB7D4B1C8D0AF30061475E /* Mapbox.h */,
+				01DB7D4C1C8D0AF30061475E /* RMAbstractMercatorTileSource.h */,
+				01DB7D4D1C8D0AF30061475E /* RMAbstractWebMapSource.h */,
+				01DB7D4E1C8D0AF30061475E /* RMAnnotation.h */,
+				01DB7D4F1C8D0AF30061475E /* RMAttributionViewController.h */,
+				01DB7D501C8D0AF30061475E /* RMBingSource.h */,
+				01DB7D511C8D0AF30061475E /* RMCacheObject.h */,
+				01DB7D521C8D0AF30061475E /* RMCircle.h */,
+				01DB7D531C8D0AF30061475E /* RMCircleAnnotation.h */,
+				01DB7D541C8D0AF30061475E /* RMCompositeSource.h */,
+				01DB7D551C8D0AF30061475E /* RMConfiguration.h */,
+				01DB7D561C8D0AF30061475E /* RMCoordinateGridSource.h */,
+				01DB7D571C8D0AF30061475E /* RMDatabaseCache.h */,
+				01DB7D581C8D0AF30061475E /* RMDBMapSource.h */,
+				01DB7D591C8D0AF30061475E /* RMFoundation.h */,
+				01DB7D5A1C8D0AF30061475E /* RMFractalTileProjection.h */,
+				01DB7D5B1C8D0AF30061475E /* RMGenericMapSource.h */,
+				01DB7D5C1C8D0AF30061475E /* RMGlobalConstants.h */,
+				01DB7D5D1C8D0AF30061475E /* RMGreatCircleAnnotation.h */,
+				01DB7D5E1C8D0AF30061475E /* RMInteractiveSource.h */,
+				01DB7D5F1C8D0AF30061475E /* RMLoadingTileView.h */,
+				01DB7D601C8D0AF30061475E /* RMMapboxSource.h */,
+				01DB7D611C8D0AF30061475E /* RMMapLayer.h */,
+				01DB7D621C8D0AF30061475E /* RMMapOverlayView.h */,
+				01DB7D631C8D0AF30061475E /* RMMapQuestOpenAerialSource.h */,
+				01DB7D641C8D0AF30061475E /* RMMapQuestOSMSource.h */,
+				01DB7D651C8D0AF30061475E /* RMMapScrollView.h */,
+				01DB7D661C8D0AF30061475E /* RMMapTiledLayerView.h */,
+				01DB7D671C8D0AF30061475E /* RMMapView.h */,
+				01DB7D681C8D0AF30061475E /* RMMapViewDelegate.h */,
+				01DB7D691C8D0AF30061475E /* RMMarker.h */,
+				01DB7D6A1C8D0AF30061475E /* RMMBTilesSource.h */,
+				01DB7D6B1C8D0AF30061475E /* RMMemoryCache.h */,
+				01DB7D6C1C8D0AF30061475E /* RMNotifications.h */,
+				01DB7D6D1C8D0AF30061475E /* RMOpenCycleMapSource.h */,
+				01DB7D6E1C8D0AF30061475E /* RMOpenSeaMapLayer.h */,
+				01DB7D6F1C8D0AF30061475E /* RMOpenSeaMapSource.h */,
+				01DB7D701C8D0AF30061475E /* RMOpenStreetMapSource.h */,
+				01DB7D711C8D0AF30061475E /* RMPixel.h */,
+				01DB7D721C8D0AF30061475E /* RMPointAnnotation.h */,
+				01DB7D731C8D0AF30061475E /* RMPolygonAnnotation.h */,
+				01DB7D741C8D0AF30061475E /* RMPolylineAnnotation.h */,
+				01DB7D751C8D0AF30061475E /* RMProjection.h */,
+				01DB7D761C8D0AF30061475E /* RMQuadTree.h */,
+				01DB7D771C8D0AF30061475E /* RMShape.h */,
+				01DB7D781C8D0AF30061475E /* RMShapeAnnotation.h */,
+				01DB7D791C8D0AF30061475E /* RMStaticMapView.h */,
+				01DB7D7A1C8D0AF30061475E /* RMTile.h */,
+				01DB7D7B1C8D0AF30061475E /* RMTileCache.h */,
+				01DB7D7C1C8D0AF30061475E /* RMTileCacheDownloadOperation.h */,
+				01DB7D7D1C8D0AF30061475E /* RMTileImage.h */,
+				01DB7D7E1C8D0AF30061475E /* RMTileMillSource.h */,
+				01DB7D7F1C8D0AF30061475E /* RMTileSource.h */,
+				01DB7D801C8D0AF30061475E /* RMTileSourcesContainer.h */,
+				01DB7D811C8D0AF30061475E /* RMUserLocation.h */,
+				01DB7D821C8D0AF30061475E /* RMUserTrackingBarButtonItem.h */,
+			);
+			name = Mapbox;
+			sourceTree = "<group>";
+		};
 		01E1016E1BF41EBE00ABB6BD /* cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,18 +955,22 @@
 		16A8CC8C05F7F9E822E341E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01DB7D891C8D0C020061475E /* libsqlite3.0.tbd */,
+				01DB7D871C8D0B790061475E /* QuartzCore.framework */,
+				01DB7D851C8D0B6E0061475E /* CoreLocation.framework */,
 				016E7F9B1C044C010044C4FE /* dylib1.o */,
 				016E7F8F1C0431EE0044C4FE /* libz.tbd */,
 				6AAA00BD685CCC948FB539A8 /* Pods.framework */,
+				A5E32FFA3DA0535C4834CE6C /* Pods_YuYanIPad1.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		462794896C9CBF5B5D121CD3 /* Pods */ = {
+		49F0E06601008006032221B8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				090B6A2A28490095ADF73B13 /* Pods.debug.xcconfig */,
-				DA6DAD10F70F355474A6A539 /* Pods.release.xcconfig */,
+				5B4F65B4D70F44B5D8A8CDB7 /* Pods-YuYanIPad1.debug.xcconfig */,
+				59B86C76C4167FC687E2141F /* Pods-YuYanIPad1.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -815,12 +982,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 014AD6B61AB6F81900E078E2 /* Build configuration list for PBXNativeTarget "YuYanIPad1" */;
 			buildPhases = (
-				D029A49869032E8F02E03E5D /* Check Pods Manifest.lock */,
+				97DC29D42BE81559E79502EB /* Check Pods Manifest.lock */,
 				014AD6931AB6F81900E078E2 /* Sources */,
 				014AD6941AB6F81900E078E2 /* Frameworks */,
 				014AD6951AB6F81900E078E2 /* Resources */,
-				1F5996F22D70B780CBBF374E /* Embed Pods Frameworks */,
-				8EC86F22521046A2D592A370 /* Copy Pods Resources */,
+				E214D33B1465BFFF58CD1A19 /* Embed Pods Frameworks */,
+				70A3796EBD49EB0D1C859AA1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -934,7 +1101,6 @@
 				01823A1A1ABBA96400E70E74 /* ProductListView.xib in Resources */,
 				01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */,
 				017AF5901AC3E31900757E50 /* VersionView.xib in Resources */,
-				01823A491ABBC04600E70E74 /* ProductViewA.xib in Resources */,
 				01823A501ABBC26600E70E74 /* SwitchToolView.xib in Resources */,
 				01823A441ABBBEF200E70E74 /* ProductLeftView.xib in Resources */,
 				017AF58E1AC3E2F700757E50 /* LoginView.xib in Resources */,
@@ -942,8 +1108,11 @@
 				01823A381ABBACD700E70E74 /* HistoryViewController.xib in Resources */,
 				017AF58C1AC3E2D600757E50 /* LawView.xib in Resources */,
 				01823A1C1ABBA98400E70E74 /* ProductInfoView.xib in Resources */,
+				01DB7D841C8D0AF30061475E /* Mapbox.bundle in Resources */,
 				01823A211ABBAA6C00E70E74 /* HistoryChoiceView.xib in Resources */,
 				016F567D1AC3043B008D8615 /* FriendListView.xib in Resources */,
+				011CCFA01C8D4BE9005534B4 /* ProductViewA.xib in Resources */,
+				01210B611C8D7698001C8B80 /* HistoryElevationChoiceView.xib in Resources */,
 				015AF5241AB80F83007A913F /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -958,22 +1127,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1F5996F22D70B780CBBF374E /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8EC86F22521046A2D592A370 /* Copy Pods Resources */ = {
+		70A3796EBD49EB0D1C859AA1 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -985,10 +1139,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D029A49869032E8F02E03E5D /* Check Pods Manifest.lock */ = {
+		97DC29D42BE81559E79502EB /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1001,6 +1155,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E214D33B1465BFFF58CD1A19 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1020,6 +1189,7 @@
 				01823A581ABBF11F00E70E74 /* ColorBarHorizontalView.swift in Sources */,
 				01BCB8EB1C4DD63300BAB07A /* ProductUtilModel.swift in Sources */,
 				01BCB8EF1C4DD68B00BAB07A /* ProductRadialModel.m in Sources */,
+				0129CA9C1C51CB2B00C58D4B /* CAPPIDrawData.m in Sources */,
 				01E101701BF41F0600ABB6BD /* CacheManageModel.swift in Sources */,
 				01823A4B1ABBC06000E70E74 /* ProductViewA.swift in Sources */,
 				01823A401ABBBB0800E70E74 /* ProductInfoView.swift in Sources */,
@@ -1035,6 +1205,7 @@
 				019D8A4C1C11714600BA8E74 /* ColorModel.swift in Sources */,
 				016FFD3B1AC2643F00596975 /* HistoryChoiceView.swift in Sources */,
 				0156A7431BE8AAA0008E41D1 /* SwiftNotice.swift in Sources */,
+				0129CA9F1C51D64500C58D4B /* MAXREFDrawData.m in Sources */,
 				01BCB8F21C4DD6B400BAB07A /* ProductGirdModel.m in Sources */,
 				01A859EC1BE85DEB009FECCA /* Float.swift in Sources */,
 				018236B61BA026340006B930 /* SocketCenter.swift in Sources */,
@@ -1046,6 +1217,7 @@
 				016F567B1AC3041E008D8615 /* FriendListView.swift in Sources */,
 				01823A2F1ABBABF900E70E74 /* ChatViewController.swift in Sources */,
 				012606B81BDA1B0B009BB949 /* NameSpace.swift in Sources */,
+				0129CAA21C51DC2A00C58D4B /* OHPDrawData.m in Sources */,
 				017AF5711AC3E09700757E50 /* NavListView.swift in Sources */,
 				01A859EF1BE85DEB009FECCA /* NSArray.swift in Sources */,
 				01A859E71BE85DEB009FECCA /* Bool.swift in Sources */,
@@ -1062,6 +1234,7 @@
 				01A514411BD0CF550042BD82 /* LogModel.swift in Sources */,
 				017AF5821AC3E22900757E50 /* LoginView.swift in Sources */,
 				01C01E091BF2E55500B1175A /* DBModel.swift in Sources */,
+				01210B601C8D7698001C8B80 /* HistoryElevationChoiceView.swift in Sources */,
 				01ABAB941C18073300A0AC59 /* RVWDrawData.m in Sources */,
 				017AF57B1AC3E1C200757E50 /* ClauseView.swift in Sources */,
 				01A859F31BE85DEB009FECCA /* String.swift in Sources */,
@@ -1078,6 +1251,7 @@
 				01875B1E1C4CE83F006B2C64 /* EBDrawData.m in Sources */,
 				01A859F01BE85DEB009FECCA /* NSDate.swift in Sources */,
 				01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */,
+				0129CAA51C522E6E00C58D4B /* VILDrawData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,7 +1378,7 @@
 		};
 		014AD6B71AB6F81900E078E2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 090B6A2A28490095ADF73B13 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 5B4F65B4D70F44B5D8A8CDB7 /* Pods-YuYanIPad1.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1220,6 +1394,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/opencv3/3.0.0/lib,
+					"$(PROJECT_DIR)/YuYanIPad1/src/model/otherAPI/MapBox",
+					"$(PROJECT_DIR)/YuYanIPad1/src/model/otherAPI/Mapbox_1.6.1",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdyw.$(PRODUCT_NAME:rfc1034identifier)";
@@ -1233,7 +1409,7 @@
 		};
 		014AD6B81AB6F81900E078E2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DA6DAD10F70F355474A6A539 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 59B86C76C4167FC687E2141F /* Pods-YuYanIPad1.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1249,6 +1425,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/Cellar/opencv3/3.0.0/lib,
+					"$(PROJECT_DIR)/YuYanIPad1/src/model/otherAPI/MapBox",
+					"$(PROJECT_DIR)/YuYanIPad1/src/model/otherAPI/Mapbox_1.6.1",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cdyw.$(PRODUCT_NAME:rfc1034identifier)";

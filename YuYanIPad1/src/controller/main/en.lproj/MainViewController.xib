@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="YuYanIPad1" customModuleProvider="target">
@@ -25,7 +25,7 @@
                     <rect key="frame" x="88" y="20" width="936" height="748"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPC-82-ADN">
-                            <rect key="frame" x="-79" y="8" width="936" height="748"/>
+                            <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -87,7 +87,7 @@
                                 <action selector="historyBtnClick:" destination="-1" eventType="touchUpInside" id="3yc-GG-FC3"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="chatBtn">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="chatBtn">
                             <rect key="frame" x="0.0" y="200" width="88" height="100"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="88" id="8Wn-lt-1b6"/>
@@ -95,7 +95,7 @@
                             </constraints>
                             <state key="normal" backgroundImage="navbar_btn_chat_normal">
                                 <attributedString key="attributedTitle">
-                                    <fragment content="聊天">
+                                    <fragment content="会商聊天">
                                         <attributes>
                                             <font key="NSFont" size="14" name="STHeitiSC-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
@@ -119,7 +119,7 @@
                                 <action selector="chatBtnClick:" destination="-1" eventType="touchUpInside" id="gYg-jx-ipJ"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ltf-ja-eIH" userLabel="thresholdBtn">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ltf-ja-eIH" userLabel="thresholdBtn">
                             <rect key="frame" x="0.0" y="300" width="88" height="100"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="88" id="Ca1-h0-l1M"/>
@@ -127,7 +127,7 @@
                             </constraints>
                             <state key="normal" backgroundImage="navbar_btn_warning_normal">
                                 <attributedString key="attributedTitle">
-                                    <fragment content="日志">
+                                    <fragment content="气象预警">
                                         <attributes>
                                             <font key="NSFont" size="14" name="STHeitiSC-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>

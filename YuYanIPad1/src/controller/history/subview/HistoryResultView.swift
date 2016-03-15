@@ -14,20 +14,26 @@ protocol HistoryResultProtocol
     func chooseProductControl()
     func returnBackToChoice()
     func selectedProductControl(selectedProductDic : NSMutableDictionary)
+    func showElevationChoiceView()
 }
 
 class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
 {
     var delegate : HistoryResultProtocol?
+    var startTimeStr : String?
+    var endTimeStr : String?
     var currentPageVo : PageVo?
     var _selectedProductDic : NSMutableDictionary?
+    var currentProductConfigDic : NSMutableDictionary?
     var resultArr : NSMutableArray?
+    var ResultListTableCellIndentifier : String = "ResultListTableCellIndentifier"
+    var ELEVATIONCHOOSE_ALL : String = "全部"
     
     @IBOutlet var productTitleLabel: UILabel!
+    @IBOutlet var elevationChooseBtn: UIButton!
     @IBOutlet var startTimeLabel: UILabel!
     @IBOutlet var endTimeLabel: UILabel!
     @IBOutlet var resultTableView: UITableView!
-    var ResultListTableCellIndentifier : String = "ResultListTableCellIndentifier"
     
     required init?(coder : NSCoder)
     {
@@ -50,32 +56,75 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         self.resultTableView.separatorInset = UIEdgeInsetsZero
     }
     
-    func changResultTitle(selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
+    func changResultTitle(_currentProductConfigDic : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     {
-        productTitleLabel.text = (selectProductConfigDir.objectForKey("cname") as! String) + "（" + (selectProductConfigDir.objectForKey("ename") as! String) + "）"
+        self.currentProductConfigDic = _currentProductConfigDic
+        self.startTimeStr = startTimeStr
+        self.endTimeStr = endTimeStr
+        productTitleLabel.text = (_currentProductConfigDic.objectForKey("cname") as! String) + "（" + (_currentProductConfigDic.objectForKey("ename") as! String) + "）"
         startTimeLabel.text = "从 " + startTimeStr
         endTimeLabel.text = "到 " + endTimeStr
+        if (self.currentProductConfigDic!.valueForKey("level") as! NSNumber).intValue == 0
+        {
+            self.elevationChooseBtn.hidden = false
+            self.elevationChooseBtn.enabled = true
+            self.elevationChooseBtn.titleLabel?.text = ELEVATIONCHOOSE_ALL
+        }
+    }
+    
+    func setElevationValueBtnLb(elevationValue : Float32)
+    {
+        if elevationValue >= 0
+        {
+            self.elevationChooseBtn.setTitle(String(format: "%.2f°", elevationValue), forState: UIControlState.Normal)
+        }else{
+            self.elevationChooseBtn.setTitle(ELEVATIONCHOOSE_ALL, forState: UIControlState.Normal)
+        }
     }
     
     func setViewByHistoryProductData(notification : NSNotification?) -> Void
     {
+        self.elevationChooseBtn.hidden = true
+        self.elevationChooseBtn.enabled = false
         let resultStr : String = notification!.object?.valueForKey("result") as! String
         if resultStr == FAIL
         {
             // Tell reason of FAIL.
+            SwiftNotice.showNoticeWithText(NoticeType.error, text: "服务器查询失败，请联系管理员！", autoClear: true, autoClearTime: 2)
         }else{
             // Show result data.
             resultArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
             // Tell user the result.
             if resultArr == nil || resultArr?.count == 0
             {
+                SwiftNotice.showNoticeWithText(NoticeType.info, text: "当前条件下未查询到数据！", autoClear: true, autoClearTime: 2)
                 return
+            }
+            // Only for first class product.
+            if (self.currentProductConfigDic!.valueForKey("level") as! NSNumber).intValue == 0
+            {
+                self.elevationChooseBtn.hidden = false
+                self.elevationChooseBtn.enabled = true
             }
             // Must reload data in main queue, or maybe crashed.
             dispatch_async(dispatch_get_main_queue(), {
                 self.resultTableView.reloadData()
             });
         }
+    }
+    
+    func setSelectedProductDic(productDic : NSMutableDictionary)
+    {
+        _selectedProductDic = productDic
+        // Must reload data in main queue, or maybe crashed.
+        dispatch_async(dispatch_get_main_queue(), {
+            self.resultTableView.reloadData()
+        });
+    }
+    
+    @IBAction func elevationBtnClick(sender: UIButton)
+    {
+        self.delegate!.showElevationChoiceView()
     }
     
     @IBAction func returnBtnClick(sender: UIButton)

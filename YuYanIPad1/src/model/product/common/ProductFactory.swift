@@ -14,10 +14,15 @@ class ProductFactory: NSObject {
     {
         switch productType
         {
-            case ProductType_Z : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
-            case ProductType_V : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
-            case ProductType_W : return RVWDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue))
-            case ProductType_EB : return EBDrawData(productType: (NSNumber(longLong: ProductType_Z).intValue));
+            case ProductType_Z : return RVWDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_V : return RVWDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_W : return RVWDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_EB : return EBDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_ET : return EBDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_CAPPI: return CAPPIDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_MAXREF: return RVWDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_OHP: return OHPDrawData(productType: (NSNumber(longLong: productType).intValue))
+            case ProductType_VIL: return VILDrawData(productType: (NSNumber(longLong: productType).intValue))
             default: return nil;
         }
     }

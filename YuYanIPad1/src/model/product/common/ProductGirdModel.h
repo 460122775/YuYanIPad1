@@ -11,4 +11,7 @@
 
 @interface ProductGirdModel : ProductModel
 
+@property (nonatomic, assign) float windowSize; // Unit : km.
+@property (nonatomic, assign) int maxWindowCount;   // Count of windows
+
 @end

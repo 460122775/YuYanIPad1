@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+protocol SwitchToolDelegate
+{
+    func switchUpControl()
+    func switchDownControl()
+    func switchLeftControl()
+    func switchRightControl()
+}
+
 class SwitchToolView: UIView
 {
     @IBOutlet var switchControlBtn: UIButton!
@@ -21,8 +29,7 @@ class SwitchToolView: UIView
     @IBOutlet var buttonContainerV: UIView!
     @IBOutlet var buttonContainerH: UIView!
     
-    var _currentProductDic : NSMutableDictionary?
-    var productDicArr : NSMutableArray?
+    var switchToolDelegate : SwitchToolDelegate?
     
     override init(frame: CGRect)
     {
@@ -38,37 +45,6 @@ class SwitchToolView: UIView
     {
         self.buttonContainerV.layer.masksToBounds = true
         self.buttonContainerH.layer.masksToBounds = true
-    }
-    
-    func setCurrentProductDic(currentProductDic : NSMutableDictionary)
-    {
-        if currentProductDic.valueForKey("level") == nil
-        {
-            // Set Level for each Product.
-            if productDicArr == nil
-            {
-                productDicArr = ProductUtilModel.getInstance.getProductConfigArr()
-            }
-            for productConfig in productDicArr!
-            {
-                if  ((productConfig as! NSDictionary).valueForKey("type") as! NSNumber).longLongValue == (currentProductDic.valueForKey("type") as! NSNumber).longLongValue
-                {
-                    currentProductDic.setValue((productConfig as! NSDictionary).valueForKey("level"), forKey: "level")
-                    break
-                }
-            }
-        }
-        let level : Int64 = (currentProductDic.valueForKey("level") as! NSNumber).longLongValue
-        let scanMode : Int64 = (currentProductDic.valueForKey("scan_mode") as! NSNumber).longLongValue
-        // Is VOL.
-        if level == LEVEL_FIRSTCLASS && scanMode >= 0 && scanMode <= 9
-        {
-            self.setBtnVisible(false, hideVolBtn: false)
-            currentProductDic.setValue((currentProductDic.valueForKey("name") as! NSString).substringWithRange(NSRange(location: 16, length: 2)), forKey: "layer")
-        }else{
-            self.setBtnVisible(true, hideVolBtn: false)
-        }
-        _currentProductDic = currentProductDic
     }
     
     override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool
@@ -128,34 +104,21 @@ class SwitchToolView: UIView
     
     @IBAction func upBtnClick(sender: UIButton)
     {
-        if _currentProductDic == nil
-        {
-            return
-        }
-        
+        switchToolDelegate?.switchUpControl()
     }
     
     @IBAction func downBtnClick(sender: UIButton)
     {
-        if _currentProductDic == nil
-        {
-            return
-        }
+        switchToolDelegate?.switchDownControl()
     }
     
     @IBAction func leftBtnClick(sender: UIButton)
     {
-        if _currentProductDic == nil
-        {
-            return
-        }
+        switchToolDelegate?.switchLeftControl()
     }
     
     @IBAction func rightBtnClick(sender: UIButton)
     {
-        if _currentProductDic == nil
-        {
-            return
-        }
+        switchToolDelegate?.switchRightControl()
     }
 }
