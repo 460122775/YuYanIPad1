@@ -74,7 +74,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     private var bufferByteArray : NSMutableData = NSMutableData()
     func socket(sock: GCDAsyncSocket!, didReadData data: NSData!, withTag tag: Int)
     {
-        LogModel.getInstance.insertLog(">>>>>>>>>>>>>>>>>  Receive Data From PT [length:\(data.length)]")
+//        LogModel.getInstance.insertLog(">>>>>>>>>>>>>>>>>  Receive Data From PT [length:\(data.length)]")
         // Composite data.
         bufferByteArray.appendData(data)
         var offset : Int = 0
@@ -172,7 +172,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
                 break
             
             case SOCKETCONST_NET_TYPE_SC_STATE:
-                LogModel.getInstance.insertLog("Receive radar state from PT.")
+//                LogModel.getInstance.insertLog("Receive radar state from PT.")
                 break
             
             case SOCKETCONST_NET_TYPE_CS_LOGIN:

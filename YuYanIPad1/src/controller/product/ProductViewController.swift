@@ -86,17 +86,17 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             self.productLeftView!.segmentControlChanged(self.productLeftView!.segmentControl)
             UIView.animateWithDuration(0.6, animations: { () -> Void in
                 self.topTitleBarView.frame.origin = CGPointMake(240, 0)
-                self.topTitleBarView.frame.size = CGSizeMake(522, 48)
+                self.topTitleBarView.frame.size = CGSizeMake(580, 48)
                 self.productLeftView!.frame.origin = CGPointMake(0, 0)
             }, completion: { (Bool) -> Void in
-                self.titleBarBgImg.frame.size = CGSizeMake(464, 48)
+                self.titleBarBgImg.frame.size = CGSizeMake(522, 48)
             })
             // Set product left view by data.
 //            self.productLeftView.setProductLeftViewByData()
         }else{
-            self.titleBarBgImg.frame.size = CGSizeMake(704, 48)
+            self.titleBarBgImg.frame.size = CGSizeMake(762, 48)
             UIView.animateWithDuration(0.6, animations: { () -> Void in
-                self.topTitleBarView.frame = CGRectMake(0, 0, 762, 48)
+                self.topTitleBarView.frame = CGRectMake(0, 0, 820, 48)
                 self.productLeftView!.frame.origin = CGPointMake(-240, 0)
             })
         }
@@ -116,16 +116,21 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     @IBAction func camaraBtnClick(sender: UIButton)
     {
         // Save product screen shot into photo album.
-        UIGraphicsBeginImageContext((self.productViewA?.bounds.size)!)
-        self.productViewA?.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let imageTemp : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsBeginImageContextWithOptions((self.view.bounds.size), true, 0)
+        self.view.drawViewHierarchyInRect(self.view.bounds, afterScreenUpdates: true)
+        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        UIImageWriteToSavedPhotosAlbum(imageTemp, nil, "screenShotsComplete:", nil)
+        UIImageWriteToSavedPhotosAlbum(snapshot, self, "image:didFinishSavingWithError:contextInfo:", nil)
     }
     
-    func screenShotsComplete(picker : UIImagePickerController)
+    func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject)
     {
-        SwiftNotice.showText("产品截图已经保存到您的相册！")
+        if didFinishSavingWithError != nil
+        {
+            SwiftNotice.showText("产品截图保存失败！")
+            return
+        }
+        SwiftNotice.showText("产品截图已成功保存到您的相册！")
     }
     
     func receiveProduct(notificaiton : NSNotification)

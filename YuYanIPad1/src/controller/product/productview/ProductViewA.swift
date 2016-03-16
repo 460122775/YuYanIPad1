@@ -325,7 +325,6 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
     {
         var swLa : CLLocationDegrees = CLLocationDegrees(radarMerPos.y - productImgVIew.frame.size.height / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
         swLa = 180 / M_PI * (2 * atan(exp(swLa * M_PI / 180)) - M_PI / 2)
-        print(self.productImgVIew.frame.size)
         let swLo : CLLocationDegrees = CLLocationDegrees(radarMerPos.x - productImgVIew.frame.size.width / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
         var neLa : CLLocationDegrees = CLLocationDegrees(radarMerPos.y + productImgVIew.frame.size.height / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
         neLa = 180 / M_PI * (2 * atan(exp(neLa * M_PI / 180)) - M_PI / 2)

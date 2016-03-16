@@ -96,6 +96,11 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         self.historyResultView?.setElevationValueBtnLb(elevationValue)
     }
     
+    func setHistoryQueryResultArr(historyQueryResultArr : NSMutableArray?)
+    {
+        self.historyResultView!.setHistoryQueryResultArr(historyQueryResultArr)
+    }
+    
     // History Result Protocol.
     func chooseProductControl()
     {

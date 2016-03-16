@@ -46,14 +46,9 @@ class HistoryElevationChoiceView : UIView, UITableViewDelegate, UITableViewDataS
             object: nil)
     }
     
-    func setCurrentElevationValueByMcode(mcode : String?)
+    func setCurrentElevationValueByMcode(elevationValue : Float32)
     {
-        if mcode == nil
-        {
-            self.currentElevationValue = -1
-        }else{
-            self.currentElevationValue = Float32(mcode!.substringFromIndex((mcode!.rangeOfString("-")?.endIndex)!))!
-        }
+        self.currentElevationValue = elevationValue
     }
     
     func receiveElevationData(notification : NSNotification?) -> Void

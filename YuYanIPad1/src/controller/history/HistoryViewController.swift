@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 
-class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryQueryLeftViewProtocol, HSDatePickerViewControllerDelegate, SwitchToolDelegate, ProductViewADelegate, HistoryElevationChoiceProtocol
+class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryQueryLeftViewProtocol, HSDatePickerViewControllerDelegate, SwitchToolDelegate, ProductViewADelegate, HistoryElevationChoiceProtocol, CartoonBarDelegate
 {
     @IBOutlet var topTitleBarView: UIView!
     @IBOutlet var titleBarBgImg: UIImageView!
@@ -26,15 +26,16 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var historyElevationChoiceView : HistoryElevationChoiceView?
     
     var productConfigDicArr : NSMutableArray?
+    var queryResultArr : NSMutableArray?
     var currentProductDicArr : NSMutableArray?
     var currentProductDic : NSMutableDictionary?
     var currentProductConfigDic : NSMutableDictionary?
     var currentProductData : NSData?
+    var currentElevationValue : Float32 = -1
     var startTimeStr : String?
     var endTimeStr : String?
     var requestLayer : Int32 = -1
-    var switchFlag : Bool = true
-    var switchTimer:NSTimer!
+    var synFlag : Bool = true
     
     override func viewDidLoad()
     {
@@ -56,15 +57,13 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         // Init tools of the cartoon bar at right bottom corner.
         self.cartoonBarView = (NSBundle.mainBundle().loadNibNamed("CartoonBarView", owner: self, options: nil) as NSArray).lastObject as? CartoonBarView
         self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
+        self.cartoonBarView?.cartoonBarDelegate = self
         self.productContainerView.addSubview(self.cartoonBarView!)
         // Init main choice view.
         self.historyChoiceView = (NSBundle.mainBundle().loadNibNamed("HistoryChoiceView", owner: self, options: nil) as NSArray).lastObject as? HistoryChoiceView
         self.historyChoiceView!.frame.origin = CGPointMake(0, 0)
         self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
         self.historyChoiceView?.delegate = self
-        switchTimer = NSTimer.scheduledTimerWithTimeInterval(3,
-            target:self, selector:Selector("onSwitchTimer"),
-            userInfo:nil, repeats:false)
         // Init user location.
         self.productViewA!.setUserLocationVisible(true)
     }
@@ -81,12 +80,18 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             selector: "receiveDataFromHttp:",
             name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
             object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "receiveHistoryProductData:",
+            name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)",
+            object: nil)
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         // Remove Observer.
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: nil)
     }
     
     @IBAction func leftControlBtnClick(sender: UIButton)
@@ -96,15 +101,15 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         {
             UIView.animateWithDuration(1.0, animations: { () -> Void in
                 self.topTitleBarView.frame.origin = CGPointMake(240, 0)
-                self.topTitleBarView.frame.size = CGSizeMake(522, 48)
+                self.topTitleBarView.frame.size = CGSizeMake(580, 48)
                 self.historyLeftViewContainer.frame.origin = CGPointMake(0, 0)
                 }, completion: { (Bool) -> Void in
-                    self.titleBarBgImg.frame.size = CGSizeMake(464, 48)
+                    self.titleBarBgImg.frame.size = CGSizeMake(522, 48)
             })
         }else{
-            self.titleBarBgImg.frame.size = CGSizeMake(704, 48)
+            self.titleBarBgImg.frame.size = CGSizeMake(762, 48)
             UIView.animateWithDuration(1.0, animations: { () -> Void in
-                self.topTitleBarView.frame = CGRectMake(0, 0, 762, 48)
+                self.topTitleBarView.frame = CGRectMake(0, 0, 820, 48)
                 self.historyLeftViewContainer.frame.origin = CGPointMake(-240, 0)
             })
         }
@@ -124,16 +129,21 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     @IBAction func camaraBtnClick(sender: UIButton)
     {
         // Save product screen shot into photo album.
-        UIGraphicsBeginImageContext((self.view?.bounds.size)!)
-        self.view?.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let imageTemp : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsBeginImageContextWithOptions((self.view?.bounds.size)!, true, 0)
+        self.view?.drawViewHierarchyInRect((self.view?.bounds)!, afterScreenUpdates: true)
+        let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        UIImageWriteToSavedPhotosAlbum(imageTemp, nil, "screenShotsComplete", nil)
+        UIImageWriteToSavedPhotosAlbum(snapshot, self, "image:didFinishSavingWithError:contextInfo:", nil)
     }
     
-    func screenShotsComplete()
+    func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject)
     {
-        SwiftNotice.showText("产品截图已经保存到您的相册！")
+        if didFinishSavingWithError != nil
+        {
+            SwiftNotice.showText("产品截图保存失败！")
+            return
+        }
+        SwiftNotice.showText("产品截图已成功保存到您的相册！")
     }
     
     // History Choice Protocol.
@@ -162,6 +172,26 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             datePickerController?.delegate = self
         }
         self.presentViewController(datePickerController!, animated: true, completion: nil)
+    }
+    
+    func receiveHistoryProductData(notification : NSNotification?) -> Void
+    {
+        let resultStr : String = notification!.object?.valueForKey("result") as! String
+        if resultStr == FAIL
+        {
+            // Tell reason of FAIL.
+            SwiftNotice.showNoticeWithText(NoticeType.error, text: "服务器查询失败，请联系管理员！", autoClear: true, autoClearTime: 2)
+        }else{
+            // Show result data.
+            queryResultArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
+            // Tell user the result.
+            if queryResultArr == nil || queryResultArr?.count == 0
+            {
+                SwiftNotice.showNoticeWithText(NoticeType.info, text: "当前条件下未查询到数据！", autoClear: true, autoClearTime: 2)
+                return
+            }
+            self.historyQueryLeftView?.setHistoryQueryResultArr(queryResultArr)
+        }
     }
     
     // History Choice of Product Protocol.
@@ -256,7 +286,6 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
-        self.switchFlag = true
         currentProductDic = selectedProductDic
         self.analyseProduct()
         currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
@@ -295,11 +324,16 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 }
             }
         }
+        self.synFlag = true
     }
 
     var elevationView : HistoryElevationChoiceView?
     func showElevationChoiceView()
     {
+        if self.currentProductDic == nil
+        {
+            return
+        }
         self.historyQueryLeftView?.removeFromSuperview()
         if self.elevationView == nil
         {
@@ -307,12 +341,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             self.elevationView?.delegate = self
         }
         self.historyLeftViewContainer.addSubview(self.elevationView!)
-        if self.currentProductDic == nil
-        {
-            self.elevationView?.setCurrentElevationValueByMcode(nil)
-        }else{
-            self.elevationView?.setCurrentElevationValueByMcode(self.currentProductDic!.objectForKey("mcode") as? String)
-        }
+        self.elevationView?.setCurrentElevationValueByMcode(currentElevationValue)
         ProductUtilModel.getInstance.getElevationData(
             (self.historyChoiceView?.startTime?.timeIntervalSince1970)!,
             endTime: (self.historyChoiceView?.endTime?.timeIntervalSince1970)!,
@@ -323,6 +352,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     // HistoryElevationChoice View Protocol.
     func elevationChooseControl(elevationValue : Float32)
     {
+        currentElevationValue = elevationValue
         self.historyQueryLeftView?.setElevationValue(elevationValue)
         ProductUtilModel.getInstance.getHistoryData(
             (self.historyChoiceView?.startTime?.timeIntervalSince1970)!,
@@ -364,7 +394,6 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     // HSDatePickerViewControllerDelegate
     func hsDatePickerPickedDate(date: NSDate!)
     {
-        print("\(date)")
         self.historyChoiceView!.setDateTime(date)
     }
     
@@ -379,15 +408,9 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     }
     
     // SwitchTool Delegate.
-    func onSwitchTimer()
-    {
-        self.switchFlag = true
-        self.switchTimer.invalidate()
-    }
-    
     func switchUpControl()
     {
-        if !switchFlag || currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
@@ -395,7 +418,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         var layer = (currentProductDic!.objectForKey("layer") as! NSString).intValue
         if layer >= 0
         {
-            self.switchFlag = false
+            self.synFlag = false
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
@@ -420,13 +443,12 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 productType: (currentProductDic!.objectForKey("type") as! NSNumber).intValue,
                 layer: requestLayer
             )
-            self.switchTimer.fire()
         }
     }
     
     func switchDownControl()
     {
-        if !switchFlag || currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
@@ -434,9 +456,9 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         let layer = (currentProductDic!.objectForKey("layer") as! NSString).intValue
         if layer <= 0
         {
-            SwiftNotice.showText("当前已经是第低层了!")
+            SwiftNotice.showText("当前已经是最底层了!")
         }else{
-            self.switchFlag = false
+            self.synFlag = false
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
@@ -461,17 +483,16 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 productType: (currentProductDic!.objectForKey("type") as! NSNumber).intValue,
                 layer: requestLayer
             )
-            self.switchTimer.fire()
         }
     }
     
     func switchLeftControl()
     {
-        if !switchFlag || currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
-        switchFlag = false
+        synFlag = false
         if currentProductDicArr != nil && currentProductDicArr?.count > 0
         {
             currentProductDicArr = nil
@@ -481,16 +502,15 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             productType: (currentProductDic!.objectForKey("type") as! NSNumber).intValue,
             mcodeString: (currentProductDic!.objectForKey("mcode") as! NSString!) as String
         )
-        self.switchTimer.fire()
     }
     
     func switchRightControl()
     {
-        if !switchFlag || currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
-        switchFlag = false
+        synFlag = false
         if currentProductDicArr != nil && currentProductDicArr?.count > 0
         {
             currentProductDicArr = nil
@@ -500,18 +520,16 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             productType: (currentProductDic!.objectForKey("type") as! NSNumber).intValue,
             mcodeString: (currentProductDic!.objectForKey("mcode") as! NSString!) as String
         )
-        self.switchTimer.fire()
     }
     
     func receiveDataFromHttp(notification : NSNotification?) -> Void
     {
         let resultStr : String = notification!.object?.valueForKey("result") as! String
-        self.switchFlag = true
-        self.switchTimer.invalidate()
         if resultStr == FAIL
         {
             // Tell reason of FAIL.
             SwiftNotice.showText("服务端查询失败，请重试!")
+            self.synFlag = true
             return
         }
         // Show result data.
@@ -520,6 +538,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         if currentProductDicArr == nil || currentProductDicArr?.count == 0
         {
             SwiftNotice.showText(NODATA)
+            self.synFlag = true
             return
         }
         // Press up || down Btn.
@@ -541,6 +560,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                         // Not Found.
                     }else{
                         SwiftNotice.showText("当前已经是最高层了!")
+                        self.synFlag = true
                         return
                     }
                     self.selectedProductControl(currentProductDic!)
@@ -548,10 +568,36 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 }
             }
             SwiftNotice.showText(NODATA)
+            self.synFlag = true
             return
         }
         let _selectedProductDic = NSMutableDictionary(dictionary: currentProductDicArr?.objectAtIndex(0) as! NSDictionary)
         self.selectedProductControl(_selectedProductDic)
+    }
+    
+    // Cartoon Bar Delagate.
+    func prepareCartoonData()
+    {
+        if queryResultArr != nil
+        {
+            self.cartoonBarView?.playCartoon((queryResultArr?.count)!)
+        }
+    }
+    
+    func getLockFlag() -> Bool
+    {
+        return synFlag
+    }
+    
+    func drawProductAtNo(playIndex: Int)
+    {
+        print("Draw At \(playIndex)")
+        if queryResultArr != nil && queryResultArr!.count > 0 && playIndex <= queryResultArr?.count
+        {
+            self.synFlag = false
+            currentProductDic = NSMutableDictionary(dictionary: (queryResultArr?.objectAtIndex(playIndex - 1) as? NSMutableDictionary)!)
+            self.selectedProductControl(currentProductDic!)
+        }
     }
     
     override func didReceiveMemoryWarning()

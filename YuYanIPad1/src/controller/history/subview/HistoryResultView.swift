@@ -38,11 +38,6 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
     required init?(coder : NSCoder)
     {
         super.init(coder: coder)
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: "setViewByHistoryProductData:",
-            name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)",
-            object: nil)
     }
     
     override func drawRect(rect: CGRect)
@@ -82,24 +77,14 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    func setViewByHistoryProductData(notification : NSNotification?) -> Void
+    func setHistoryQueryResultArr(historyQueryResultArr : NSMutableArray?)
     {
-        self.elevationChooseBtn.hidden = true
-        self.elevationChooseBtn.enabled = false
-        let resultStr : String = notification!.object?.valueForKey("result") as! String
-        if resultStr == FAIL
+        resultArr = historyQueryResultArr
+        if resultArr == nil || resultArr?.count == 0
         {
-            // Tell reason of FAIL.
-            SwiftNotice.showNoticeWithText(NoticeType.error, text: "服务器查询失败，请联系管理员！", autoClear: true, autoClearTime: 2)
+            self.elevationChooseBtn.hidden = true
+            self.elevationChooseBtn.enabled = false
         }else{
-            // Show result data.
-            resultArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
-            // Tell user the result.
-            if resultArr == nil || resultArr?.count == 0
-            {
-                SwiftNotice.showNoticeWithText(NoticeType.info, text: "当前条件下未查询到数据！", autoClear: true, autoClearTime: 2)
-                return
-            }
             // Only for first class product.
             if (self.currentProductConfigDic!.valueForKey("level") as! NSNumber).intValue == 0
             {
@@ -119,7 +104,12 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         // Must reload data in main queue, or maybe crashed.
         dispatch_async(dispatch_get_main_queue(), {
             self.resultTableView.reloadData()
-        });
+        })
+    }
+    
+    func getQueryResultArr() -> NSMutableArray?
+    {
+        return resultArr
     }
     
     @IBAction func elevationBtnClick(sender: UIButton)
