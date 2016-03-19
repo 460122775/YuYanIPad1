@@ -20,6 +20,10 @@ var PATH_PRODUCT : String = NSSearchPathForDirectoriesInDomains(.DocumentDirecto
 var PATH_DATABASE : String = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first! + "/"
 
 var DATABASE_NAME : String = "yy.sqlite3"
+var RadarStatus : String = RADARSTATUS_ERROR
+    let RADARSTATUS_NORMAL : String = "0"
+    let RADARSTATUS_WARN : String = "1"
+    let RADARSTATUS_ERROR : String = "2"
 
 var HeartPkgCycle : NSTimeInterval = 4.0
 var MAX_PRODUCTCACHE : Int = 30
@@ -47,10 +51,12 @@ let UPDATE : String = "Update"
 let SELECT : String = "Select"
 let RECEIVE : String = "Receive"
 
+let RADARSTATUS : String = "RadarStatus"
 let PRODUCTCONFIG : String = "ProductConfig"
 let HISTORYPRODUCT : String = "HistoryProduct"
 let ELEVATIONLIST : String = "ElevationList"
 let PRODUCT : String = "Product"
+    let CARTOON : String = "Cartoon"
 let PRODUCTTYPELIST : String = "ProductTypeList"
     let LEVEL_FIRSTCLASS : Int64 = 0
 let SYSTEMCONFIG : String = "SystemConfig"

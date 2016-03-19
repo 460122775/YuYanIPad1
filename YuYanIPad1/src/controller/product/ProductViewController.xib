@@ -8,7 +8,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductViewController" customModule="YuYanIPad1" customModuleProvider="target">
             <connections>
                 <outlet property="leftControlBtn" destination="GkX-fQ-Bmf" id="zMD-bX-58U"/>
+                <outlet property="positionBtn" destination="mO1-c1-eRR" id="RsY-dH-m1z"/>
                 <outlet property="productContainerView" destination="mmb-6w-rQZ" id="8fT-Z5-NwD"/>
+                <outlet property="radarStatusBtn" destination="jTn-VV-IHK" id="rj3-2S-eHF"/>
                 <outlet property="titleBarBgImg" destination="ffV-JP-nzK" id="QWE-gw-Xo4"/>
                 <outlet property="titleLabel" destination="HnZ-9P-uLF" id="l5g-N3-BBf"/>
                 <outlet property="topTitleBarView" destination="oqI-n0-S0q" id="icb-7q-aTf"/>

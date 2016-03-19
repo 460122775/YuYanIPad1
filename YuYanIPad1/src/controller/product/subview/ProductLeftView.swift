@@ -87,6 +87,11 @@ class ProductLeftView: UIView, ProductListProtocol
         }
     }
     
+    func getSelectProductConfigForCartoon() -> NSMutableDictionary?
+    {
+        return self.productListView?.getSelectProductConfigForCartoon()
+    }
+    
     // ProductListProtocol
     func productSelectControl(productName: String)
     {

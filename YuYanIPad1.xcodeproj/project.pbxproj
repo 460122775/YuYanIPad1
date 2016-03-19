@@ -104,7 +104,6 @@
 		01BCB8EF1C4DD68B00BAB07A /* ProductRadialModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BCB8EE1C4DD68B00BAB07A /* ProductRadialModel.m */; };
 		01BCB8F21C4DD6B400BAB07A /* ProductGirdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BCB8F11C4DD6B400BAB07A /* ProductGirdModel.m */; };
 		01C01E091BF2E55500B1175A /* DBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C01E081BF2E55500B1175A /* DBModel.swift */; };
-		01C1AF821C41045400400D26 /* MapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C1AF811C41045400400D26 /* MapModel.swift */; };
 		01C29CF91AB7D5CA008CBE96 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */; };
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
@@ -249,7 +248,6 @@
 		01BCB8F01C4DD6B400BAB07A /* ProductGirdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProductGirdModel.h; path = src/model/product/common/ProductGirdModel.h; sourceTree = "<group>"; };
 		01BCB8F11C4DD6B400BAB07A /* ProductGirdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductGirdModel.m; path = src/model/product/common/ProductGirdModel.m; sourceTree = "<group>"; };
 		01C01E081BF2E55500B1175A /* DBModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DBModel.swift; path = src/model/database/DBModel.swift; sourceTree = "<group>"; };
-		01C1AF811C41045400400D26 /* MapModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapModel.swift; path = src/model/common/MapModel.swift; sourceTree = "<group>"; };
 		01C29CF71AB7D5CA008CBE96 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = src/controller/main/MainViewController.swift; sourceTree = "<group>"; };
 		01C29CFC1AB7D621008CBE96 /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
@@ -668,7 +666,6 @@
 			children = (
 				012606B61BDA1AF5009BB949 /* YuYanIPad1-Bridging-Header.h */,
 				0192F7641BB3EEF800CC6498 /* PageVo.swift */,
-				01C1AF811C41045400400D26 /* MapModel.swift */,
 				01DAD1F51C4485CD0007F35F /* NameSpace.h */,
 			);
 			name = common;
@@ -1181,7 +1178,6 @@
 			files = (
 				01BCB8EA1C4DD63300BAB07A /* ProductTypeDefine.swift in Sources */,
 				019525021BEC476700041B30 /* HSDatePickerViewController.h in Sources */,
-				01C1AF821C41045400400D26 /* MapModel.swift in Sources */,
 				016F56811AC30534008D8615 /* ChatMainView.swift in Sources */,
 				016FFD311AC2483000596975 /* ScreenShotView.swift in Sources */,
 				01A859EB1BE85DEB009FECCA /* ExSwift.swift in Sources */,

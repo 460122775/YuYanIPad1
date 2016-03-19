@@ -164,8 +164,8 @@ class ProductUtilModel : NSObject {
     {
         let _productVo : ProductVo = ProductVo()
         _productVo.type = _productType
-        let urlStr : NSString = "\(URL_Server)/ios/product/selectElevationByTypeInPeriod?startTime=\(Int64(1451577600))&endTime=\(Int64(1451584800))&productVo=\(_productVo.getJsonStr())"
-        //        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+//        let urlStr : NSString = "\(URL_Server)/ios/product/selectElevationByTypeInPeriod?startTime=\(Int64(1451577600))&endTime=\(Int64(1451584800))&productVo=\(_productVo.getJsonStr())"
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectElevationByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&productVo=\(_productVo.getJsonStr())"
         LogModel.getInstance.insertLog("\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
@@ -191,8 +191,8 @@ class ProductUtilModel : NSObject {
         {
             _productVo.mcode = _mcode!
         }
-        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1451577600))&endTime=\(Int64(1451584800))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
-//        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+//        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(1451577600))&endTime=\(Int64(1451584800))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectProductByTypeInPeriod?startTime=\(Int64(startTime))&endTime=\(Int64(_endTime))&pageVo=\(_pageVo.getJsonStr())&productVo=\(_productVo.getJsonStr())"
         LogModel.getInstance.insertLog("\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
@@ -265,6 +265,33 @@ class ProductUtilModel : NSObject {
             LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
             NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
+                object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
+    internal func getLastDataForCartoon(timeStr : String,
+        productType _productType : Int32, mcodeString _mcodeStr : String?)
+    {
+        var time = Int64(1)
+        if timeStr.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0
+        {
+            time = Int64(NSDate().timeIntervalSince1970) + Int64(1)
+        }else{
+            dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+            time = Int64(dateFormatter.dateFromString(timeStr)!.timeIntervalSince1970) + Int64(1)
+        }
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectSameMcodeProduct?time=\(Int64(time))&type=\(_productType)&count=\(8)&mcode=\((_mcodeStr! as NSString))"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            NSNotificationCenter.defaultCenter().postNotificationName("\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)",
                 object: NSMutableDictionary(dictionary: resultDic))
         })
         task.resume()

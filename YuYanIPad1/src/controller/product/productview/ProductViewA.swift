@@ -36,7 +36,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
     var radarPosition : CGPoint!
     
     var locationManager : CLLocationManager?
-    var currentLocation : CLLocation?
+    var currentLocation : CLLocationCoordinate2D?
     
     var pinchGesture : UIPinchGestureRecognizer?
     var panGesture : UIPanGestureRecognizer?
@@ -263,8 +263,10 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         self.productContainerView.userInteractionEnabled = true
     }
     
-    func setUserLocationVisible(visible : Bool)
+    var updateMapCenterByLocation : Bool = false
+    func setUserLocationVisible(visible : Bool, _updateMapCenterByLocation : Bool)
     {
+        updateMapCenterByLocation = _updateMapCenterByLocation
         if locationManager == nil
         {
             locationManager = CLLocationManager()
@@ -273,7 +275,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
             locationManager?.distanceFilter = 500
             locationManager?.requestWhenInUseAuthorization()
         }
-        if visible == true
+        if visible == true || updateMapCenterByLocation
         {
             locationManager?.startUpdatingLocation()
         }else{
@@ -285,18 +287,26 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         }
     }
     
+    func saveCurrentLocation()
+    {
+        currentLocation = self.mapView?.centerCoordinate
+    }
+    
+    func setMapCenerByCurrentLocation()
+    {
+        self.mapView?.setCenterCoordinate(currentLocation!, animated: false)
+    }
+    
     // CLLocationManagerDelegate.
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        if currentLocation == nil
+        currentLocation = locations[0].coordinate
+        if updateMapCenterByLocation == true
         {
-            currentLocation = locations[0]
-            self.mapView?.setCenterCoordinate((currentLocation?.coordinate)!, animated: true)
+            updateMapCenterByLocation = false
+            self.mapView?.setCenterCoordinate((currentLocation)!, animated: true)
             locationManager?.stopUpdatingLocation()
-            return
         }
-        currentLocation = locations[0]
-//        self.mapView?.setCenterCoordinate((currentLocation?.coordinate)!, animated: true)
     }
     
     func getMapCenterCoordinate(productModel : ProductModel?) -> CLLocationCoordinate2D

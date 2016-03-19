@@ -31,7 +31,7 @@ class CartoonBarView: UIView
     
     var cartoonBarDelegate : CartoonBarDelegate?
     var currentIndex : Int = 1 // From 1..
-    var cartoonTimer : NSTimer?
+    var cartoonTimer : NSTimer!
     var isPlaying : Bool = false
     var totalCount : Int = 0
     
@@ -81,8 +81,7 @@ class CartoonBarView: UIView
             return
         }
         self.totalCount = _totalCount
-        self.currentIndex = _currentIndex
-        self.cartoonBarDelegate?.drawProductAtNo(self.currentIndex)
+        self.currentIndex = _currentIndex - 1
         self.sliderBtnClick(self.sliderBtn)
     }
     
@@ -101,12 +100,12 @@ class CartoonBarView: UIView
         // Start playing...
         if sender.selected == false
         {
-            self.currentIndex = 1
+            self.currentIndex = 0
             self.totalCount = 0
-            self.setSliderXByIndex(self.currentIndex)
+            self.setSliderXByIndex(1)
             sender.selected = true
             self.buttonContainerView.frame = CGRectMake(546, 0, 0, 48)
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.buttonContainerView.frame = CGRectMake(0, 0, 546, 48)
             })
             self.sliderBtn.selected = true
@@ -114,7 +113,7 @@ class CartoonBarView: UIView
         // Stop playing...
         }else{
             sender.selected = false
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
                 self.buttonContainerView.frame = CGRectMake(546, 0, 0, 48)
             })
             self.sliderBtn.selected = false
@@ -134,7 +133,7 @@ class CartoonBarView: UIView
                 self.cartoonBarDelegate?.drawProductAtNo(self.currentIndex)
             }
             isDragging = false
-            if self.currentIndex == self.totalCount && self.cartoonTimer != nil
+            if self.currentIndex == self.totalCount
             {
                 self.sliderBtnClick(self.sliderBtn)
             }
@@ -144,23 +143,23 @@ class CartoonBarView: UIView
         // Playing...
         if sender.selected == false
         {
+            // If while it is the end -> replay.
+            if self.currentIndex == self.totalCount
+            {
+                sender.selected = true
+                self.playCartoon(self.totalCount)
+                return
+            }
             self.isPlaying = true
             self.multipleBackBtn.enabled = false
             self.backBtn.enabled = false
             self.multiplePreBtn.enabled = false
             self.preBtn.enabled = false
-            if cartoonTimer == nil
-            {
-                cartoonTimer = NSTimer.scheduledTimerWithTimeInterval( 2,
-                    target:self, selector : Selector("onCartoonTimer"),
-                    userInfo:nil, repeats : true)
-            }
-            cartoonTimer?.fire()
+            self.cartoonTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "onCartoonTimer:", userInfo: nil, repeats: true)
         }else{
             if cartoonTimer != nil
             {
-                cartoonTimer?.invalidate()
-                cartoonTimer = nil
+                cartoonTimer.invalidate()
             }
             self.isPlaying = false
             self.multipleBackBtn.enabled = true
@@ -190,7 +189,7 @@ class CartoonBarView: UIView
         }
     }
     
-    func onCartoonTimer()
+    func onCartoonTimer(timer : NSTimer)
     {
         // Stop while dragging slider.
         if isDragging == true

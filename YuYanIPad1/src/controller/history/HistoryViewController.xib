@@ -9,7 +9,9 @@
             <connections>
                 <outlet property="historyLeftViewContainer" destination="Nio-wc-Am6" id="z7L-ZM-Hss"/>
                 <outlet property="leftControlBtn" destination="YbO-W5-9l9" id="r2g-8E-SFr"/>
+                <outlet property="positionBtn" destination="Pf1-0V-wuM" id="E9f-EI-E5f"/>
                 <outlet property="productContainerView" destination="VyO-LM-tU4" id="rg3-JE-0fD"/>
+                <outlet property="radarStatusBtn" destination="bAv-pS-hnT" id="OWY-w0-2gz"/>
                 <outlet property="titleBarBgImg" destination="0yW-ph-yMw" id="JqM-i1-TsU"/>
                 <outlet property="titleLabel" destination="sTd-On-OEh" id="yTG-bz-TrM"/>
                 <outlet property="topTitleBarView" destination="Xdv-7c-4pD" id="nDw-DP-r6u"/>

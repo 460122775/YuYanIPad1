@@ -52,7 +52,29 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         {
             return
         }
-        self.productListTableView.reloadData()
+        // Must reload data in main queue, or maybe crashed.
+        dispatch_async(dispatch_get_main_queue(), {
+            self.productListTableView.reloadData()
+        });
+    }
+    
+    func getSelectProductConfigForCartoon() -> NSMutableDictionary?
+    {
+        if ProductUtilModel.getInstance.getProductList().count == 0
+        {
+            return nil
+        }else if productArr == nil{
+            productArr = ProductUtilModel.getInstance.getProductList()
+        }
+        if _selectProductConfigDic == nil
+        {
+            _selectProductConfigDic = (productArr?.objectAtIndex(0) as? NSMutableDictionary)!
+            // Must reload data in main queue, or maybe crashed.
+            dispatch_async(dispatch_get_main_queue(), {
+                self.productListTableView.reloadData()
+            });
+        }
+        return _selectProductConfigDic
     }
     
     func setProductAddress(productEname : String, productAddress : String)

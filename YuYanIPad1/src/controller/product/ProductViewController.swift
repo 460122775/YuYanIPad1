@@ -10,13 +10,15 @@ import Foundation
 import UIKit
 import Alamofire
 
-class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchToolDelegate, ProductViewADelegate, UIImagePickerControllerDelegate
+class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchToolDelegate, ProductViewADelegate, UIImagePickerControllerDelegate, CartoonBarDelegate
 {
     @IBOutlet var topTitleBarView: UIView!
     @IBOutlet var titleBarBgImg: UIImageView!
     @IBOutlet var productContainerView: UIView!
     @IBOutlet var leftControlBtn: UIButton!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var radarStatusBtn: UIButton!
+    @IBOutlet var positionBtn: UIButton!
     
     var productViewA : ProductViewA?
     var switchToolView : SwitchToolView?
@@ -24,9 +26,11 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     var productDicArr : NSMutableArray?
     var currentProductDicArr : NSMutableArray?
+    var cartoonPlayArr : NSMutableArray?
     var currentProductDic : NSMutableDictionary?
     var currentProductData : NSData?
     var requestLayer : Int32 = -1
+    var synFlag : Bool = true
     
     override func viewDidLoad()
     {
@@ -47,27 +51,54 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.productContainerView.addSubview(self.switchToolView!)
         // Init tools of the cartoon bar at right bottom corner.
         self.cartoonBarView = (NSBundle.mainBundle().loadNibNamed("CartoonBarView", owner: self, options: nil) as NSArray).lastObject as? CartoonBarView
+        self.cartoonBarView?.cartoonBarDelegate = self
         self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
         self.productContainerView.addSubview(self.cartoonBarView!)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveProduct:", name: "\(RECEIVE)\(PRODUCT)", object: nil)
         // Init user location.
-        self.productViewA!.setUserLocationVisible(true)
+        self.productViewA!.setUserLocationVisible(false, _updateMapCenterByLocation: true)
     }
     
     override func viewWillAppear(animated: Bool)
     {
         // Add Observer.
+        // Use for switchToolView.
         NSNotificationCenter.defaultCenter().addObserver(
             self,
             selector: "receiveDataFromHttp:",
             name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
             object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "receiveRadarStatus:",
+            name: "\(RECEIVE)\(RADARSTATUS)",
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "appActiveControl:",
+            name: "\(APP_ACTIVE)",
+            object: nil)
+        //Use for cartoon.
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "receiveCartoonDataFromHttp:",
+            name: "\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)",
+            object: nil)
+        // Init radar status.
+        self.receiveRadarStatus(nil)
+        // Reset Map center.
+        self.productViewA?.setMapCenerByCurrentLocation()
     }
     
     override func viewWillDisappear(animated: Bool)
     {
+        // Save Map center.
+        self.productViewA?.saveCurrentLocation()
         // Remove Observer.
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(RECEIVE)\(RADARSTATUS)", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(APP_ACTIVE)", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
     }
     
     var productLeftView : ProductLeftView?
@@ -105,7 +136,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     @IBAction func positionBtnClick(sender: UIButton)
     {
         sender.selected = !sender.selected
-        self.productViewA!.setUserLocationVisible(sender.selected);
+        self.productViewA!.setUserLocationVisible(sender.selected, _updateMapCenterByLocation: true);
     }
 
     @IBAction func lineBtnClick(sender: UIButton)
@@ -133,6 +164,23 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         SwiftNotice.showText("产品截图已成功保存到您的相册！")
     }
     
+    func appActiveControl(notificaiton : NSNotification?)
+    {
+        self.productViewA!.setUserLocationVisible(self.positionBtn.selected, _updateMapCenterByLocation: true)
+    }
+    
+    func receiveRadarStatus(notificaiton : NSNotification?)
+    {
+        if RadarStatus == RADARSTATUS_NORMAL
+        {
+            self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_normal"), forState: UIControlState.Normal)
+        }else if RadarStatus == RADARSTATUS_WARN{
+            self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_error"), forState: UIControlState.Normal)
+        }else if RadarStatus == RADARSTATUS_ERROR{
+            self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_off"), forState: UIControlState.Normal)
+        }
+    }
+    
     func receiveProduct(notificaiton : NSNotification)
     {
         if self.productLeftView == nil
@@ -144,7 +192,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         {
             _nameArrTemp![(_nameArrTemp?.count)! - 1] = _nameArrTemp![(_nameArrTemp?.count)! - 1].stringByReplacingOccurrencesOfString("\0", withString: "")
             let productFilePosStr : String = "\(_nameArrTemp![(_nameArrTemp?.count)! - 3])\\\(_nameArrTemp![(_nameArrTemp?.count)! - 2])\\\(_nameArrTemp![(_nameArrTemp?.count)! - 1])"
-            SwiftNotice.showText("收到产品［\(productFilePosStr)］")
+//            SwiftNotice.showText("收到产品［\(productFilePosStr)］")
             self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productFilePosStr)
             LogModel.getInstance.insertLog("Receive product[\(productFilePosStr)].")
         }
@@ -163,22 +211,24 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
         if currentProductData != nil
         {
-            LogModel.getInstance.insertLog("HistoryViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
+            LogModel.getInstance.insertLog("ProductViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
             // Draw product.
             self.drawProduct(self.currentProductData!)
+            self.synFlag = true
         }else{
-            LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+            LogModel.getInstance.insertLog("ProductViewController download selected data1:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
             // Compose url.
             var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
             url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
             url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
             // Download data.
             Alamofire.request(.GET, url).responseData { response in
-                LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                LogModel.getInstance.insertLog("ProductViewController downloaded selected data2:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
                 if response.result.value == nil || response.result.value?.length <= 48
                 {
                     // Tell reason to user.
                     SwiftNotice.showText("数据文件下载失败，请检查网络后重试！")
+                    self.synFlag = true
                     return
                 }
                 // Cache data.
@@ -189,10 +239,12 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
                     // Cache failed, maybe the reason of uncompress failed.
                     // Tell reason to user.
                     SwiftNotice.showText("数据格式解压失败，或不支持此格式！")
+                    self.synFlag = true
                     return
                 }else{
                     // Draw product.
                     self.drawProduct(self.currentProductData!)
+                    self.synFlag = true
                 }
             }
         }
@@ -200,7 +252,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func analyseProduct()
     {
-        if currentProductDic!.valueForKey("level") == nil
+        if currentProductDic!.valueForKey("level") == nil || currentProductDic!.valueForKey("colorFile") == nil
         {
             // Set Level for each Product.
             if productDicArr == nil
@@ -211,6 +263,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             {
                 if  ((productConfig as! NSDictionary).valueForKey("type") as! NSNumber).longLongValue == (currentProductDic!.valueForKey("type") as! NSNumber).longLongValue
                 {
+                    currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("colorFile"), forKey: "colorFile")
                     currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("level"), forKey: "level")
                     break
                 }
@@ -259,7 +312,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     // ProductViewA Delegate.
     func swipeUpControl()
     {
-        self.swipeUpControl()
+        self.switchUpControl()
     }
     
     func swipeDownControl()
@@ -274,13 +327,13 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func swipeRightControl()
     {
-        self.swipeRightControl()
+        self.switchRightControl()
     }
     
     // SwitchTool Delegate.
     func switchUpControl()
     {
-        if currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
@@ -288,6 +341,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         var layer = (currentProductDic!.objectForKey("layer") as! NSString).intValue
         if layer >= 0
         {
+            self.synFlag = false
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
@@ -317,7 +371,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func switchDownControl()
     {
-        if currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
@@ -325,8 +379,9 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         let layer = (currentProductDic!.objectForKey("layer") as! NSString).intValue
         if layer <= 0
         {
-            SwiftNotice.showText("当前已经是最低层了!")
+            SwiftNotice.showText("当前已经是最底层了!")
         }else{
+            self.synFlag = false
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
@@ -356,10 +411,11 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func switchLeftControl()
     {
-        if currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
+        self.synFlag = false
         if currentProductDicArr != nil && currentProductDicArr?.count > 0
         {
             currentProductDicArr = nil
@@ -373,10 +429,11 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func switchRightControl()
     {
-        if currentProductDic == nil
+        if !synFlag || currentProductDic == nil
         {
             return
         }
+        self.synFlag = false
         if currentProductDicArr != nil && currentProductDicArr?.count > 0
         {
             currentProductDicArr = nil
@@ -390,11 +447,14 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func receiveDataFromHttp(notification : NSNotification?) -> Void
     {
+        // Clear cartoon data.
+        cartoonPlayArr = nil
         let resultStr : String = notification!.object?.valueForKey("result") as! String
         if resultStr == FAIL
         {
             // Tell reason of FAIL.
             SwiftNotice.showText("服务端查询失败，请重试!")
+            self.synFlag = true
             return
         }
         // Show result data.
@@ -403,6 +463,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         if currentProductDicArr == nil || currentProductDicArr?.count == 0
         {
             SwiftNotice.showText(NODATA)
+            self.synFlag = true
             return
         }
         // Press up || down Btn.
@@ -431,14 +492,64 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
                 }
             }
             SwiftNotice.showText(NODATA)
+            self.synFlag = true
             return
         }
         let _selectedProductDic = NSMutableDictionary(dictionary: currentProductDicArr?.objectAtIndex(0) as! NSDictionary)
         self.selectedProductControl(_selectedProductDic)
     }
     
-    // CartoonBar Delegate.
+    func receiveCartoonDataFromHttp(notification : NSNotification?) -> Void
+    {
+        let resultStr : String = notification!.object?.valueForKey("result") as! String
+        if resultStr == FAIL
+        {
+            // Tell reason of FAIL.
+            SwiftNotice.showText("服务端查询失败，请重试!")
+            return
+        }
+        // Show result data.
+        cartoonPlayArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
+        // Tell user the result.
+        if cartoonPlayArr == nil || cartoonPlayArr?.count == 0
+        {
+            SwiftNotice.showText(NODATA)
+            return
+        }
+        // Press up || down Btn.
+        if cartoonPlayArr?.count > 1
+        {
+            self.cartoonBarView?.playCartoon((cartoonPlayArr?.count)!)
+        }
+    }
     
+    // Cartoon Bar Delagate.
+    func prepareCartoonData()
+    {
+        let _selectProductConfigDic = self.productLeftView?.getSelectProductConfigForCartoon()
+        if _selectProductConfigDic == nil
+        {
+            return
+        }
+        ProductUtilModel.getInstance.getLastDataForCartoon("", productType:
+            (_selectProductConfigDic!.objectForKey("type") as! NSString).intValue, mcodeString: "")
+    }
+    
+    func getLockFlag() -> Bool
+    {
+        return synFlag
+    }
+    
+    func drawProductAtNo(playIndex: Int)
+    {
+        print("Draw At \(playIndex)")
+        if cartoonPlayArr != nil && cartoonPlayArr!.count > 0 && playIndex <= cartoonPlayArr?.count
+        {
+            self.synFlag = false
+            currentProductDic = NSMutableDictionary(dictionary: (cartoonPlayArr?.objectAtIndex(playIndex - 1) as? NSMutableDictionary)!)
+            self.selectedProductControl(currentProductDic!)
+        }
+    }
     
     override func didReceiveMemoryWarning()
     {

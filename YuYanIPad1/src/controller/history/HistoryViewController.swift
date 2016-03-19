@@ -18,6 +18,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     @IBOutlet var historyLeftViewContainer: UIView!
     @IBOutlet var leftControlBtn: UIButton!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var radarStatusBtn: UIButton!
+    @IBOutlet var positionBtn: UIButton!
     
     var productViewA : ProductViewA?
     var switchToolView : SwitchToolView?
@@ -65,7 +67,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
         self.historyChoiceView?.delegate = self
         // Init user location.
-        self.productViewA!.setUserLocationVisible(true)
+        self.productViewA!.setUserLocationVisible(false, _updateMapCenterByLocation: true)
     }
     
     override func viewWillAppear(animated: Bool)
@@ -85,6 +87,18 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             selector: "receiveHistoryProductData:",
             name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)",
             object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "receiveRadarStatus:",
+            name: "\(RECEIVE)\(RADARSTATUS)",
+            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(
+            self,
+            selector: "appActiveControl:",
+            name: "\(APP_ACTIVE)",
+            object: nil)
+        // Init radar status.
+        self.receiveRadarStatus(nil)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -92,6 +106,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         // Remove Observer.
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(RECEIVE)\(RADARSTATUS)", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(APP_ACTIVE)", object: nil)
     }
     
     @IBAction func leftControlBtnClick(sender: UIButton)
@@ -118,7 +134,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     @IBAction func positionBtnClick(sender: UIButton)
     {
         sender.selected = !sender.selected
-        self.productViewA!.setUserLocationVisible(sender.selected);
+        self.productViewA!.setUserLocationVisible(sender.selected, _updateMapCenterByLocation: true);
     }
     
     @IBAction func lineBtnClick(sender: UIButton)
@@ -146,6 +162,23 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         SwiftNotice.showText("产品截图已成功保存到您的相册！")
     }
     
+    func receiveRadarStatus(notificaiton : NSNotification?)
+    {
+        if RadarStatus == RADARSTATUS_NORMAL
+        {
+            self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_normal"), forState: UIControlState.Normal)
+        }else if RadarStatus == RADARSTATUS_WARN{
+            self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_error"), forState: UIControlState.Normal)
+        }else if RadarStatus == RADARSTATUS_ERROR{
+            self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_off"), forState: UIControlState.Normal)
+        }
+    }
+    
+    func appActiveControl(notificaiton : NSNotification?)
+    {
+        self.productViewA!.setUserLocationVisible(self.positionBtn.selected, _updateMapCenterByLocation: true)
+    }
+    
     // History Choice Protocol.
     var historyQueryLeftView : HistoryQueryLeftView?
     func historyQueryControl(_selectProductConfigDir : NSMutableDictionary, startTimeStr _startTimeStr : String, endTimeStr _endTimeStr : String)
@@ -160,7 +193,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             self.historyQueryLeftView?.historyQueryLeftViewProtocol = self
         }
         self.historyLeftViewContainer.addSubview(self.historyQueryLeftView!)
-        self.historyQueryLeftView?.showQueryResult(_selectProductConfigDir, startTimeStr: _startTimeStr, endTimeStr: _startTimeStr)
+        self.historyQueryLeftView?.showQueryResult(_selectProductConfigDir, startTimeStr: _startTimeStr, endTimeStr: _endTimeStr)
     }
     
     var datePickerController : HSDatePickerViewController?
@@ -330,7 +363,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var elevationView : HistoryElevationChoiceView?
     func showElevationChoiceView()
     {
-        if self.currentProductDic == nil
+        if self.currentProductConfigDic == nil
         {
             return
         }
