@@ -86,12 +86,22 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$CONFIGURATION_BUILD_DIR/Alamofire/Alamofire.framework"
   install_framework "$CONFIGURATION_BUILD_DIR/CocoaAsyncSocket/CocoaAsyncSocket.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/FMDB/FMDB.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/GRMustache/GRMustache.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/JRSwizzle/JRSwizzle.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/Mapbox-iOS-SDK/Mapbox_iOS_SDK.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/SMCalloutView/SMCalloutView.framework"
   install_framework "$CONFIGURATION_BUILD_DIR/SQLite.swift/SQLite.framework"
   install_framework "$CONFIGURATION_BUILD_DIR/SSZipArchive/SSZipArchive.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$CONFIGURATION_BUILD_DIR/Alamofire/Alamofire.framework"
   install_framework "$CONFIGURATION_BUILD_DIR/CocoaAsyncSocket/CocoaAsyncSocket.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/FMDB/FMDB.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/GRMustache/GRMustache.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/JRSwizzle/JRSwizzle.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/Mapbox-iOS-SDK/Mapbox_iOS_SDK.framework"
+  install_framework "$CONFIGURATION_BUILD_DIR/SMCalloutView/SMCalloutView.framework"
   install_framework "$CONFIGURATION_BUILD_DIR/SQLite.swift/SQLite.framework"
   install_framework "$CONFIGURATION_BUILD_DIR/SSZipArchive/SSZipArchive.framework"
 fi

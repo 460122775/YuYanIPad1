@@ -35,7 +35,7 @@ class ProductUtilModel : NSObject {
                 self._productConfigArr.removeAllObjects()
                 let db = try Connection("\(PATH_DATABASE)\(DATABASE_NAME)")
                 let productConfig = Table("product_config")
-                for config in db.prepare(productConfig)
+                for config in try db.prepare(productConfig)
                 {
                     if NSNumber(longLong: config[Expression<Int64>("enableIPadQuery")]) == 1
                     {
@@ -133,9 +133,9 @@ class ProductUtilModel : NSObject {
         _productArr.removeAllObjects()
         var _productDic : NSMutableDictionary
         var _productConfigDic : NSMutableDictionary
-        for var i = 0; i < _productTypeList.count; i++
+        for i in 0 ..< _productTypeList.count
         {
-            for var j = 0; j < _productConfigArr.count; j++
+            for j in 0 ..< _productConfigArr.count
             {
                 _productConfigDic = (_productConfigArr.objectAtIndex(j) as? NSMutableDictionary)!
                 if Int64(_productConfigDic.valueForKey("type") as! Int) == (_productTypeList.objectAtIndex(i) as! NSString).longLongValue
@@ -309,7 +309,7 @@ class ProductUtilModel : NSObject {
         {
             var _productDic : NSMutableDictionary?
             var _productConfigDic : NSMutableDictionary
-            for var i = 0; i < _productConfigArr.count; i++
+            for i in 0 ..< _productConfigArr.count
             {
                 _productConfigDic = (_productConfigArr.objectAtIndex(i) as? NSMutableDictionary)!
                 if _productConfigDic.valueForKey("ename") as! String == productNameArr[productNameArr.count - 2]

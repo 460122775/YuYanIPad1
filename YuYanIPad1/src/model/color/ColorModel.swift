@@ -21,7 +21,7 @@ class ColorModel: NSObject {
                 let db = try Connection("\(PATH_DATABASE)\(DATABASE_NAME)")
                 let colorTable = Table("color_info")
                 // Fetch data from db.
-                for color in db.prepare(colorTable.filter(
+                for color in try db.prepare(colorTable.filter(
                     (Expression<String?>("fileName") == colorFile) && (Expression<Int64>("enable") == 1)).limit(1))
                 {
                     colorDic = NSMutableDictionary()
@@ -83,7 +83,7 @@ class ColorModel: NSObject {
         if colorType == 1
         {
             blockWidth = (colorImgView.frame.width - paddingLeft - paddingRight - 10) / CGFloat(scaleArr.count - 1)
-            for(var i : Int = 0; i < scaleArr.count - 1; i++)
+            for i in 0 ..< scaleArr.count - 1
             {
                 // Draw color.
                 CGContextSetFillColorWithColor(context,
@@ -107,7 +107,7 @@ class ColorModel: NSObject {
             ])
         }else if colorType == 2{
             blockWidth = (colorImgView.frame.width - paddingLeft - paddingRight - 10) / CGFloat(scaleArr.count)
-            for(var i : Int = 0; i < scaleArr.count; i++)
+            for i in 0 ..< scaleArr.count
             {
                 // Draw color.
                 CGContextSetFillColorWithColor(context,
@@ -142,10 +142,10 @@ class ColorModel: NSObject {
         // Create colorArray.
         let colorDataArray : NSMutableArray = NSMutableArray()
         var colorDataTempArray : NSArray? = nil
-        for (var i : Int = 0; i < rgbnArr.count / 4; i++)
+        for i : Int in 0 ..< rgbnArr.count / 4
         {
             // Create color array of 256 length.
-            for (var j : Int32 = 0; j < rgbnArr[i * 4 + 3].intValue; j++)
+            for _ : Int32 in 0 ..< rgbnArr[i * 4 + 3].intValue
             {
                 colorDataTempArray = NSArray(objects:
                     NSNumber(float: rgbnArr[i * 4 + 0].floatValue / 256.0),

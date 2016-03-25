@@ -41,7 +41,7 @@ class ViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return cells[indexPath.section][indexPath.row] as! UITableViewCell
+        return (cells[indexPath.section] as! NSArray)[indexPath.row] as! UITableViewCell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

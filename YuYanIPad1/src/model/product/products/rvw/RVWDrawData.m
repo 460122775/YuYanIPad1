@@ -32,7 +32,7 @@
 
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray:(NSMutableArray *)_colorArray
 {
-//    DLog(@">>>>>>>>Start Draw Product.[%i]", data.length);
+    NSDate* date1 = [[NSDate alloc] init];
     if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
     [super getImageData:productImgView andData:data colorArray:_colorArray];
     UIGraphicsBeginImageContext(productImgView.frame.size);
@@ -71,6 +71,8 @@
     float lat1_cos = cos(radarCoordinate1.latitude);
     float lat1_sin = sinf(radarCoordinate1.latitude);
     int xSymmetric = 0;
+    NSDate* date2 = [[NSDate alloc] init];
+    NSLog(@"2:%f", [date2 timeIntervalSinceDate:date1]  * 1000);
     for (int x = xMin; x <= xMax; x++)
     {
         int x_x0 = x - self.radarPosition.x;
@@ -129,6 +131,8 @@
             }
         }
     }
+    NSDate* date3 = [[NSDate alloc] init];
+    NSLog(@"3:%f", [date3 timeIntervalSinceDate:date2] * 1000);
     // Show image...
     productImgView.image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

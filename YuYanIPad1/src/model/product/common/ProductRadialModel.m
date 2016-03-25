@@ -74,22 +74,6 @@
     self.height = self.fileHeadStruct.addSec.Height / 1000.0;
 }
 
-//-(CLLocationCoordinate2D)getCoordinate:(CLLocationCoordinate2D)coordinate andDistance:(double)distance andAngle:(double)angle
-//{
-//    return CLLocationCoordinate2DMake(
-//                                      distance * 1000 * cos(angle * M_PI / 180.0) / (PolarR + (EquatorR - PolarR) * (90 - coordinate.latitude) / 90.0) * 180 / M_PI + coordinate.latitude,
-//                                      distance * 1000 * sin(angle * M_PI / 180.0) / (PolarR + (EquatorR - PolarR) * (90 - coordinate.latitude) / 90.0) * cos(coordinate.latitude * M_PI / 180.0) * 180 / M_PI + coordinate.longitude
-//                                      );
-//}
-//
-//-(CGPoint)transToMercatorPosition:(CLLocationCoordinate2D)coordinate
-//{
-//    return CGPointMake(
-//                       0 + EquatorR * (coordinate.longitude * M_PI / 180 - 0),
-//                       0 + EquatorR * log(tan(M_PI_4 + coordinate.latitude * M_PI_2 / 180.0))
-//                       );
-//}
-
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
 {
     [super getImageData:productImgView andData:data colorArray:_colorArray];

@@ -33,8 +33,8 @@ class ChatMainView : UIView, UITextViewDelegate
     override func drawRect(rect : CGRect)
     {
         super.drawRect(rect)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyBoardShowControl:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyBoardHideControl:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatMainView.keyBoardShowControl(_:)), name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatMainView.keyBoardHideControl(_:)), name: UIKeyboardWillHideNotification, object: nil)
         self.inputAreaView.delegate = self
     }
     

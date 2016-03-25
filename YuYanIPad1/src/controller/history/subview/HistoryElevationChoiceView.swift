@@ -41,7 +41,7 @@ class HistoryElevationChoiceView : UIView, UITableViewDelegate, UITableViewDataS
         // Set notification for receiving elevation list.
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveElevationData:",
+            selector: #selector(HistoryElevationChoiceView.receiveElevationData(_:)),
             name: "\(ELEVATIONLIST)\(SELECT)\(SUCCESS)",
             object: nil)
     }
@@ -70,24 +70,27 @@ class HistoryElevationChoiceView : UIView, UITableViewDelegate, UITableViewDataS
             var _elevationValue : String?
             var tempElevationValue : Float32 = 0
             self.elevationArr.removeAll()
-            var i : Int = 0, j : Int = 0
+            var index : Int = 0
             var flag : Bool = false
-            for i = 0; i < _elevationArr?.count; i++
+            for i in 0 ..< _elevationArr!.count
             {
                 _elevationValue = (_elevationArr?.objectAtIndex(i) as? String)!
                 tempElevationValue = Float32(_elevationValue!.substringFromIndex((_elevationValue!.rangeOfString("-")?.endIndex)!))!
-                for j = 0, flag = false; j < elevationArr.count; j++
+                flag = false
+                for j in 0 ..< elevationArr.count
+//                for j = 0, flag = false; j < elevationArr.count; j += 1
                 {
                     if self.elevationArr[j] > tempElevationValue
                     {
                         self.elevationArr.insert(tempElevationValue, atIndex: j)
+                        index = j
                         flag = true
                         break
                     }
                 }
                 if !flag
                 {
-                    self.elevationArr.insert(tempElevationValue, atIndex: j)
+                    self.elevationArr.insert(tempElevationValue, atIndex: index)
                 }
             }
             // Must reload data in main queue, or maybe crashed.

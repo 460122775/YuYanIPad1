@@ -49,7 +49,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.productViewA = (NSBundle.mainBundle().loadNibNamed("ProductViewA", owner: self, options: nil) as NSArray).lastObject as? ProductViewA
         self.productViewA?.productViewADelegate = self
         self.productViewA!.frame.origin = CGPointMake(0, 0)
-        self.productContainerView.subviews.map { $0.removeFromSuperview() }
+        for view in self.productContainerView.subviews {view.removeFromSuperview()}
+//        self.productContainerView.subviews.map { $0.removeFromSuperview() }
         self.productContainerView.addSubview(self.productViewA!)
         // Init tools of the switch at right bottom corner.
         self.switchToolView = (NSBundle.mainBundle().loadNibNamed("SwitchToolView", owner: self, options: nil) as NSArray).lastObject as? SwitchToolView
@@ -79,22 +80,22 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         // Add Observer.
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveDataFromHttp:",
+            selector: #selector(HistoryViewController.receiveDataFromHttp(_:)),
             name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveHistoryProductData:",
+            selector: #selector(HistoryViewController.receiveHistoryProductData(_:)),
             name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)",
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveRadarStatus:",
+            selector: #selector(HistoryViewController.receiveRadarStatus(_:)),
             name: "\(RECEIVE)\(RADARSTATUS)",
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "appActiveControl:",
+            selector: #selector(HistoryViewController.appActiveControl(_:)),
             name: "\(APP_ACTIVE)",
             object: nil)
         // Init radar status.
@@ -149,7 +150,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.view?.drawViewHierarchyInRect((self.view?.bounds)!, afterScreenUpdates: true)
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        UIImageWriteToSavedPhotosAlbum(snapshot, self, "image:didFinishSavingWithError:contextInfo:", nil)
+        UIImageWriteToSavedPhotosAlbum(snapshot, self, #selector(HistoryViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject)
@@ -230,7 +231,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     // History Choice of Product Protocol.
     func getSelectedProduct(productConfigVo : NSMutableDictionary)
     {
-        self.historyLeftViewContainer?.subviews.map { $0.removeFromSuperview() }
+        for view in self.historyLeftViewContainer!.subviews {view.removeFromSuperview()}
+//        self.historyLeftViewContainer?.subviews.map { $0.removeFromSuperview() }
         self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
         self.historyChoiceView?.setProductBtnByVo(productConfigVo)
     }
@@ -287,6 +289,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         {
             self.currentProductDic?.setValue(self.historyChoiceView?._selectProductConfigDir?.objectForKey("colorFile"), forKey: "colorFile")
         }
+        NSLog("04:" + String(NSDate().timeIntervalSince1970))
         self.productViewA?.drawProductImg(self.currentProductDic, data: data)
     }
     
@@ -313,12 +316,14 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     func returnBackToChoice()
     {
-        self.historyLeftViewContainer?.subviews.map { $0.removeFromSuperview() }
+        for view in self.historyLeftViewContainer!.subviews {view.removeFromSuperview()}
+//        self.historyLeftViewContainer?.subviews.map { $0.removeFromSuperview() }
         self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
     }
     
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
+        NSLog("01:" + String(NSDate().timeIntervalSince1970))
         currentProductDic = selectedProductDic
         self.analyseProduct()
         currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
@@ -335,6 +340,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
             // Download data.
             Alamofire.request(.GET, url).responseData { response in
+                NSLog("02:" + String(NSDate().timeIntervalSince1970))
                 LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
                 if response.result.value == nil || response.result.value?.length <= 48
                 {
@@ -353,6 +359,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                     return
                 }else{
                     // Draw product.
+                    NSLog("03:" + String(NSDate().timeIntervalSince1970))
                     self.drawProduct(self.currentProductData!)
                 }
             }
@@ -455,7 +462,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
-                for var i : Int = 0; i < currentProductDicArr?.count; i++
+                for i in 0 ..< currentProductDicArr!.count
+//                for var i : Int = 0; i < currentProductDicArr?.count; i += 1
                 {
                     if (currentProductDic!.objectForKey("name") as! NSString) ==
                         (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)
@@ -470,7 +478,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 }
                 currentProductDicArr = nil
             }
-            requestLayer = ++layer
+            layer += 1
+            requestLayer = layer
             ProductUtilModel.getInstance.getDataByLayer(
                 (currentProductDic!.objectForKey("name") as! NSString).substringWithRange(NSRange(location: 0, length: 15)),
                 productType: (currentProductDic!.objectForKey("type") as! NSNumber).intValue,
@@ -495,7 +504,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
-                for var i : Int = 0; i < currentProductDicArr?.count; i++
+                for i in 0 ..< currentProductDicArr!.count
+//                for var i : Int = 0; i < currentProductDicArr?.count; i += 1
                 {
                     if (currentProductDic!.objectForKey("name") as! NSString) ==
                         (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)
@@ -577,7 +587,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         // Press up || down Btn.
         if currentProductDicArr?.count > 1
         {
-            for var i : Int = 0; i < currentProductDicArr?.count; i++
+            for i in 0 ..< currentProductDicArr!.count
             {
                 if (currentProductDic!.objectForKey("name") as! NSString) ==
                     (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)

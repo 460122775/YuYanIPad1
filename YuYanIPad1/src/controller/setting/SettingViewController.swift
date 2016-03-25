@@ -30,7 +30,7 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         self.view.addSubview(self.navListView!)
         self.navListView?.sysSettingDelegate = self
         // Add observer
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginSuccess", name: "\(LOGIN)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SettingViewController.loginSuccess), name: "\(LOGIN)\(SUCCESS)", object: nil)
     }
     
     override func viewWillAppear(animated: Bool)
@@ -47,7 +47,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
             self.loginResultView = (NSBundle.mainBundle().loadNibNamed("LoginResultView", owner: self, options: nil) as NSArray).lastObject as? LoginResultView
             self.loginResultView?.loginProtocolDelegate = self
             self.loginResultView!.frame.origin = CGPointMake(240, 0)
-            self.view.subviews.map { $0.removeFromSuperview() }
+            for view in self.view.subviews {view.removeFromSuperview()}
+//            self.view.subviews.map { $0.removeFromSuperview() }
             self.view.addSubview(self.navListView!)
             self.view.addSubview(self.loginResultView!)
             self.loginResultView?.loginSuccessControl(CurrentUserVo!)
@@ -58,7 +59,7 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
     func loginOutControl()
     {
         loginBtnClick()
-        UserModel.getInstance.loginControl(USERCONST_GUEST_NAME, userPwd: USERCONST_GUEST_PWD)
+        UserModel.getInstance.loginControl(USERCONST_GUEST_NAME, _userPwd: USERCONST_GUEST_PWD)
     }
     
     func loginBtnClick()
@@ -70,7 +71,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
             // Init login view.
             self.loginView = (NSBundle.mainBundle().loadNibNamed("LoginView", owner: self, options: nil) as NSArray).lastObject as? LoginView
             self.loginView!.frame.origin = CGPointMake(240, 0)
-            self.view.subviews.map { $0.removeFromSuperview() }
+            for view in self.view.subviews {view.removeFromSuperview()}
+//            self.view.subviews.map { $0.removeFromSuperview() }
             self.view.addSubview(self.navListView!)
             self.view.addSubview(self.loginView!)
         }
@@ -81,7 +83,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         // Init system config view.
         self.configView = (NSBundle.mainBundle().loadNibNamed("ConfigView", owner: self, options: nil) as NSArray).lastObject as? ConfigView
         self.configView!.frame.origin = CGPointMake(240, 0)
-        self.view.subviews.map { $0.removeFromSuperview() }
+        for view in self.view.subviews {view.removeFromSuperview()}
+//        self.view.subviews.map { $0.removeFromSuperview() }
         self.view.addSubview(self.navListView!)
         self.view.addSubview(self.configView!)
         self.configView!.setViewByData()
@@ -92,7 +95,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         // Init aboutus view.
         self.aboutUsView = (NSBundle.mainBundle().loadNibNamed("AboutUsView", owner: self, options: nil) as NSArray).lastObject as? AboutUsView
         self.aboutUsView!.frame.origin = CGPointMake(240, 0)
-        self.view.subviews.map { $0.removeFromSuperview() }
+        for view in self.view.subviews {view.removeFromSuperview()}
+//        self.view.subviews.map { $0.removeFromSuperview() }
         self.view.addSubview(self.navListView!)
         self.view.addSubview(self.aboutUsView!)
     }
@@ -102,7 +106,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         // Init law info view.
         self.lawInfoVIew = (NSBundle.mainBundle().loadNibNamed("LawView", owner: self, options: nil) as NSArray).lastObject as? LawView
         self.lawInfoVIew!.frame.origin = CGPointMake(240, 0)
-        self.view.subviews.map { $0.removeFromSuperview() }
+        for view in self.view.subviews {view.removeFromSuperview()}
+//        self.view.subviews.map { $0.removeFromSuperview() }
         self.view.addSubview(self.navListView!)
         self.view.addSubview(self.lawInfoVIew!)
     }
@@ -112,7 +117,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         // Init clause info view.
         self.clauseInfoView = (NSBundle.mainBundle().loadNibNamed("ClauseView", owner: self, options: nil) as NSArray).lastObject as? ClauseView
         self.clauseInfoView!.frame.origin = CGPointMake(240, 0)
-        self.view.subviews.map { $0.removeFromSuperview() }
+        for view in self.view.subviews {view.removeFromSuperview()}
+//        self.view.subviews.map { $0.removeFromSuperview() }
         self.view.addSubview(self.navListView!)
         self.view.addSubview(self.clauseInfoView!)
     }
@@ -122,7 +128,8 @@ class SettingViewController : UIViewController, SysSettingNavProtocol, LoginResu
         // Init version info view.
         self.versionInfoVIew = (NSBundle.mainBundle().loadNibNamed("VersionView", owner: self, options: nil) as NSArray).lastObject as? VersionView
         self.versionInfoVIew!.frame.origin = CGPointMake(240, 0)
-        self.view.subviews.map { $0.removeFromSuperview() }
+        for view in self.view.subviews {view.removeFromSuperview()}
+//        self.view.subviews.map { $0.removeFromSuperview() }
         self.view.addSubview(self.navListView!)
         self.view.addSubview(self.versionInfoVIew!)
     }

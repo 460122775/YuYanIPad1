@@ -59,6 +59,6 @@ class LoginView : UIView
             return
         }
         // Login Action.
-        UserModel.getInstance.loginControl(userNameInput.text, userPwd: userPwdInput.text)
+        UserModel.getInstance.loginControl(userNameInput.text, _userPwd: userPwdInput.text)
     }
 }

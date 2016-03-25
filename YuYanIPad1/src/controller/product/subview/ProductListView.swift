@@ -40,7 +40,7 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         self.productListTableView.separatorInset = UIEdgeInsetsZero
 
         // Add Listener.
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: "getProductTypeListControl", name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductListView.getProductTypeListControl), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
         // Get data.
         getProductTypeListControl()
     }
@@ -84,7 +84,7 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
             return
         }else{
             var _productDic : NSMutableDictionary?
-            for(var i : Int = 0; i < productArr?.count; i++)
+            for i in 0 ..< productArr!.count
             {
                  _productDic = (productArr?.objectAtIndex(i) as? NSMutableDictionary)!
                 if _productDic?.objectForKey("ename") as! String == productEname
@@ -145,7 +145,7 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         var arry = tableView.visibleCells;
-        for(var i = 0; i < arry.count; i++)
+        for i in 0 ..< arry.count
         {
             let _cell : UITableViewCell = arry[i] ;
             _cell.contentView.backgroundColor = UIColor.clearColor();

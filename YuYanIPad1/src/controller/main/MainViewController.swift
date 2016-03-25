@@ -30,16 +30,16 @@ class MainViewController : UIViewController
         // Get Product Config.
         ProductUtilModel.getInstance.selectProductConfigFromLocal()
         // Add Listener.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "socketConnectSuccess:", name: "\(SOCKET)\(SUCCESS)", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "getProductTypeListControl:", name: "\(PRODUCTTYPELIST)\(SELECT)", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "loginSuccessControl", name: "\(LOGIN)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.socketConnectSuccess(_:)), name: "\(SOCKET)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.getProductTypeListControl(_:)), name: "\(PRODUCTTYPELIST)\(SELECT)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MainViewController.loginSuccessControl), name: "\(LOGIN)\(SUCCESS)", object: nil)
         // Connect Socket.
         SocketCenter.getInstance.conntcpclient()
     }
     
     func socketConnectSuccess(notification : NSNotification)
     {
-        UserModel.getInstance.loginControl(nil, userPwd: nil)
+        UserModel.getInstance.loginControl(nil, _userPwd: nil)
     }
     
     func getProductTypeListControl(notification : NSNotification)
@@ -68,7 +68,7 @@ class MainViewController : UIViewController
                 self.addChildViewController(productViewController!)
             }
             // Remove all subviews.
-            self.rightView.subviews.map { $0.removeFromSuperview() }
+            for view in self.rightView.subviews {view.removeFromSuperview()}
             self.rightView.addSubview(productViewController!.view)
         }
     }
@@ -84,7 +84,7 @@ class MainViewController : UIViewController
                 self.addChildViewController(historyViewController!)
             }
             // Remove all subviews.
-            self.rightView.subviews.map { $0.removeFromSuperview() }
+            for view in self.rightView.subviews {view.removeFromSuperview()}
             self.rightView.addSubview(historyViewController!.view)
         }
     }
@@ -100,7 +100,8 @@ class MainViewController : UIViewController
                 self.addChildViewController(chatViewController!)
             }
             // Remove all subviews.
-            self.rightView.subviews.map { $0.removeFromSuperview() }
+            for view in self.rightView.subviews {view.removeFromSuperview()}
+//            self.rightView.subviews.map { $0.removeFromSuperview() }
             self.rightView.addSubview(chatViewController!.view)
         }
     }
@@ -116,7 +117,8 @@ class MainViewController : UIViewController
                 self.addChildViewController(thresholdViewController!)
             }
             // Remove all subviews.
-            self.rightView.subviews.map { $0.removeFromSuperview() }
+            for view in self.rightView.subviews {view.removeFromSuperview()}
+//            self.rightView.subviews.map { $0.removeFromSuperview() }
             self.rightView.addSubview(thresholdViewController!.view)
         }
     }
@@ -132,7 +134,8 @@ class MainViewController : UIViewController
                 self.addChildViewController(settingViewController!)
             }
             // Remove all subviews.
-            self.rightView.subviews.map { $0.removeFromSuperview() }
+            for view in self.rightView.subviews {view.removeFromSuperview()}
+//            self.rightView.subviews.map { $0.removeFromSuperview() }
             self.rightView.addSubview(settingViewController!.view)
         }
     }

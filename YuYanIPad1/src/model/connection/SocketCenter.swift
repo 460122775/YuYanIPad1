@@ -62,7 +62,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
         NSNotificationCenter.defaultCenter().postNotificationName("\(SOCKET)\(FAIL)", object: nil)
         if appIsActive == true
         {
-            connectCount++
+            connectCount += 1
             if connectCount >= 3
             {
                 return
@@ -138,8 +138,8 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
             {
                 return
             }else{
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: "closeSocket", name: "\(APP_STOP)", object: nil)
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: "conntcpclient", name: "\(APP_ACTIVE)", object: nil)
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SocketCenter.closeSocket), name: "\(APP_STOP)", object: nil)
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SocketCenter.conntcpclient), name: "\(APP_ACTIVE)", object: nil)
             }
         }
         do{
@@ -186,7 +186,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
                 {
                     if heartJumpTimer == nil
                     {
-                        heartJumpTimer = NSTimer.scheduledTimerWithTimeInterval(HeartPkgCycle, target: self, selector: "sendHeartJumpData", userInfo: nil, repeats: true)
+                        heartJumpTimer = NSTimer.scheduledTimerWithTimeInterval(HeartPkgCycle, target: self, selector: #selector(SocketCenter.sendHeartJumpData), userInfo: nil, repeats: true)
                     }
                     heartJumpTimer!.fire()
                 }
@@ -216,13 +216,15 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
         }
     }
     
-    internal func send(var type _type : UInt32, var subType _subType : UInt32, var status _status : UInt32, data _data : NSData)->Bool
+    internal func send(type _type : UInt32, subType _subType : UInt32, status _status : UInt32, data _data : NSData)->Bool
     {
         if gcdSocket.isConnected == false
         {
             conntcpclient()
         }
-        
+        var type = _type
+        var subType = _subType
+        var status = _status
         // Send Data.
         let socketData : NSMutableData = NSMutableData()
         var socketDataLength : UInt32 = 20 + 20 + UInt32(_data.length) + 4 + 4
@@ -230,7 +232,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
         socketData.appendBytes(&SOCKETCONST_NET_SOI, length: 4)
         socketData.appendBytes(&socketDataLength, length: 4)
         socketData.appendBytes(&SOCKETCONST_NET_VER, length: 4)
-        switch _type
+        switch type
         {
             case SOCKETCONST_TYPE_LOGIN: socketData.appendBytes(&SOCKETCONST_NET_TYPE_UTTOPT_LOGIN, length: 4)
             default: return false
@@ -238,15 +240,15 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
         socketData.appendBytes(&ZeroValue, length: 4)
         socketData.appendBytes(&SOCKETCONST_START_FLAG, length: 4)
         socketData.appendBytes(&SOCKETCONST_IPADLOGINFLAG, length: 4)
-        socketData.appendBytes(&_type, length: 4)
-        socketData.appendBytes(&_subType, length: 4)
-        socketData.appendBytes(&_status, length: 4)
+        socketData.appendBytes(&type, length: 4)
+        socketData.appendBytes(&subType, length: 4)
+        socketData.appendBytes(&status, length: 4)
         socketData.appendData(_data)
         socketData.appendBytes(&ZeroValue, length: 4)
         socketData.appendBytes(&SOCKETCONST_NET_EOI, length: 4)
         LogModel.getInstance.insertLog("SocketCenter Start Sending Data [length:\(socketData.length)]")
-        gcdSocket.writeData(socketData, withTimeout: -1.0, tag: Int(_type))
-        gcdSocket.readDataWithTimeout(-1.0, tag: Int(_type))
+        gcdSocket.writeData(socketData, withTimeout: -1.0, tag: Int(type))
+        gcdSocket.readDataWithTimeout(-1.0, tag: Int(type))
         return true
     }
 

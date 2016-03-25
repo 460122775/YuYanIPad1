@@ -19,7 +19,7 @@ protocol ProductViewADelegate
 
 class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
 {
-    var mapView : RMMapView?
+    var mapView : RMMapView!
 
     @IBOutlet var mapContainerView: UIView!
     @IBOutlet var productContainerView: UIView!
@@ -54,11 +54,11 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
     {
         // Set Map View.
         RMConfiguration.sharedInstance().accessToken = "pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg"
-        self.mapView = RMMapView(frame: self.mapContainerView.bounds)
-        self.mapView?.tileSource = RMMapboxSource(mapID: "daiyachen.k71impl7")
-        self.mapView?.delegate = self
-        self.mapContainerView.addSubview(mapView!)
-        self.mapView?.zoom = 8
+        self.mapView = RMMapView(frame: self.bounds)
+        self.mapView.tileSource = RMMapboxSource(mapID: "daiyachen.k71impl7")
+        self.mapView.delegate = self
+        self.mapContainerView.addSubview(mapView)
+        self.mapView.zoom = 8
         // Set default location.
         radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
         self.initGestureReconizer(true)
@@ -71,13 +71,13 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
             // Zoom.
             if pinchGesture == nil
             {
-                pinchGesture = UIPinchGestureRecognizer(target: self, action: "handlePinchGesture:")
+                pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(ProductViewA.handlePinchGesture(_:)))
             }
             self.productImgVIew.addGestureRecognizer(pinchGesture!)
             // Drag.
             if panGesture == nil
             {
-                panGesture = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
+                panGesture = UIPanGestureRecognizer(target: self, action: #selector(ProductViewA.handlePanGesture(_:)))
                 panGesture!.minimumNumberOfTouches = 1
                 panGesture!.maximumNumberOfTouches = 1
             }
@@ -85,14 +85,14 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
             // To Right.
             if swipeRightGesture == nil
             {
-                swipeRightGesture = UISwipeGestureRecognizer(target: self, action: "handleSwipeLRGesture:")
+                swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(ProductViewA.handleSwipeLRGesture(_:)))
                 swipeRightGesture!.numberOfTouchesRequired = 2
             }
             self.productImgVIew.addGestureRecognizer(swipeRightGesture!)
             // To Left
             if swipeLeftGesture == nil
             {
-                swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: "handleSwipeLRGesture:")
+                swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(ProductViewA.handleSwipeLRGesture(_:)))
                 swipeLeftGesture!.numberOfTouchesRequired = 2
                 swipeLeftGesture!.direction = UISwipeGestureRecognizerDirection.Left
             }
@@ -100,7 +100,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
             // To Up.
             if swipeUpGesture == nil
             {
-                swipeUpGesture = UISwipeGestureRecognizer(target: self, action: "handleSwipeUDGesture:")
+                swipeUpGesture = UISwipeGestureRecognizer(target: self, action: #selector(ProductViewA.handleSwipeUDGesture(_:)))
                 swipeUpGesture!.numberOfTouchesRequired = 2
                 swipeUpGesture!.direction = UISwipeGestureRecognizerDirection.Up
 
@@ -109,7 +109,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
             // To Down.
             if swipeDownGesture == nil
             {
-                swipeDownGesture = UISwipeGestureRecognizer(target: self, action: "handleSwipeUDGesture:")
+                swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(ProductViewA.handleSwipeUDGesture(_:)))
                 swipeDownGesture!.numberOfTouchesRequired = 2
                 swipeDownGesture!.direction = UISwipeGestureRecognizerDirection.Down
             }
@@ -166,7 +166,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         {
             UIView.animateWithDuration(0.1) { () -> Void in
                 self.productImgVIew.frame.origin = CGPointMake(translation.x - self.fromLocation.x, translation.y - self.fromLocation.y)
-                self.mapView?.moveBy(CGSizeMake(self.toLocation.x - translation.x, self.toLocation.y - translation.y))
+                self.mapView.moveBy(CGSizeMake(self.toLocation.x - translation.x, self.toLocation.y - translation.y))
                 self.toLocation = translation
             }
         }else if sender.state == UIGestureRecognizerState.Began{
@@ -256,6 +256,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
             currentProductModel?.radarPosition = radarPosition!
             currentProductModel?.initData(data, withProductImgView: self.productImgVIew)
         }
+        print("05:" + String(NSDate().timeIntervalSince1970))
         currentProductModel?.getImageData(self.productImgVIew, andData: data, colorArray: self.currentColorDataArray)
         // Set map bounds.
 //        self.mapView?.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
@@ -283,18 +284,18 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         }
         if currentLocation != nil
         {
-            self.mapView!.showsUserLocation = visible
+            self.mapView.showsUserLocation = visible
         }
     }
     
     func saveCurrentLocation()
     {
-        currentLocation = self.mapView?.centerCoordinate
+        currentLocation = self.mapView.centerCoordinate
     }
     
     func setMapCenerByCurrentLocation()
     {
-        self.mapView?.setCenterCoordinate(currentLocation!, animated: false)
+//        self.mapView.setCenterCoordinate(currentLocation!, animated: false)
     }
     
     // CLLocationManagerDelegate.
@@ -304,7 +305,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         if updateMapCenterByLocation == true
         {
             updateMapCenterByLocation = false
-            self.mapView?.setCenterCoordinate((currentLocation)!, animated: true)
+//            self.mapView.setCenterCoordinate((currentLocation)!, animated: true)
             locationManager?.stopUpdatingLocation()
         }
     }
@@ -339,6 +340,6 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         var neLa : CLLocationDegrees = CLLocationDegrees(radarMerPos.y + productImgVIew.frame.size.height / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
         neLa = 180 / M_PI * (2 * atan(exp(neLa * M_PI / 180)) - M_PI / 2)
         let neLo : CLLocationDegrees = CLLocationDegrees(radarMerPos.x + productImgVIew.frame.size.width / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
-        self.mapView?.zoomWithLatitudeLongitudeBoundsSouthWest(CLLocationCoordinate2DMake(swLa, swLo), northEast: CLLocationCoordinate2DMake(neLa, neLo), animated: false)
+        self.mapView.zoomWithLatitudeLongitudeBoundsSouthWest(CLLocationCoordinate2DMake(swLa, swLo), northEast: CLLocationCoordinate2DMake(neLa, neLo), animated: false)
     }
 }

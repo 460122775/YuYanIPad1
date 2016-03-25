@@ -38,7 +38,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
         {
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
-                selector: "setViewByProductConfig",
+                selector: #selector(HistoryChoiceOfProductView.setViewByProductConfig(_:)),
                 name: "\(PRODUCTCONFIG)\(SELECT)\(SUCCESS)",
                 object: nil)
         }else{
@@ -109,7 +109,7 @@ class HistoryChoiceOfProductView : UIView, UITableViewDataSource, UITableViewDel
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         var arry = tableView.visibleCells;
-        for(var i = 0; i < arry.count; i++)
+        for i in 0 ..< arry.count
         {
             let _cell : UITableViewCell = arry[i] ;
             _cell.contentView.backgroundColor = UIColor.clearColor();

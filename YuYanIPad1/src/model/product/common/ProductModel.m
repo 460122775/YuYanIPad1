@@ -9,6 +9,8 @@
 #import "ProductModel.h"
 #import "NameSpace.h"
 
+static NSMutableArray* SinArr;
+static NSMutableArray* CosArr;
 
 @implementation ProductModel
 @synthesize zoomValue, radarCoordinate, radarMerPosition, productType, radarPosition, topMerLatitude,
@@ -18,6 +20,32 @@
     self = [super init];
     self.zoomValue = 1;
     return self;
+}
+
++(NSMutableArray*)getSinArr
+{
+    if(SinArr == nil)
+    {
+        SinArr = [[NSMutableArray alloc] init];
+        for(int i = 0; i < 360000; i++)
+        {
+            [SinArr addObject: [NSNumber numberWithFloat:sinf(i * M_PI / 180000)]];
+        }
+    }
+    return SinArr;
+}
+
++(NSMutableArray*)getCosArr
+{
+    if(CosArr == nil)
+    {
+        CosArr = [[NSMutableArray alloc] init];
+        for(int i = 0; i < 360000; i++)
+        {
+            [CosArr addObject: [NSNumber numberWithFloat:cosf(i * M_PI / 180000)]];
+        }
+    }
+    return CosArr;
 }
 
 - (void) initData:(NSData*) data withProductImgView:(UIImageView*) productImgView

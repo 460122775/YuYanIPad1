@@ -38,14 +38,14 @@ class CacheManageModel: NSObject
         dateformatter?.dateFormat = "YYYYMMDDHHmmssSSSS"
     }
     
-    func addCacheForProductFile(var productName : String, data _data : NSData)
+    func addCacheForProductFile(productName : String, data _data : NSData)
     {
         // Save ProductData into file.
         if _data.length == 0
         {
             return
         }else if _data.length > 48 && productName.lowercaseString.hasSuffix(".zdb"){
-            productName = productName.stringByReplacingOccurrencesOfString(".zdb", withString: "")
+            let productName = productName.stringByReplacingOccurrencesOfString(".zdb", withString: "")
             try! _data.subdataWithRange(NSMakeRange(48, (_data.length) - 48)).gunzippedData().writeToFile(PATH_PRODUCT + productName, atomically: false)
         }else if productName.lowercaseString.hasSuffix(".zip"){
             _data.writeToFile(PATH_PRODUCT + productName, atomically: false)
@@ -68,10 +68,10 @@ class CacheManageModel: NSObject
         
     }
     
-    func getCacheForProductFile(var productName : String) -> NSData?
+    func getCacheForProductFile(_productName : String) -> NSData?
     {
         // Get product data file which has already decompressed.
-        productName = productName.stringByReplacingOccurrencesOfString(".zdb", withString: "")
+        var productName = _productName.stringByReplacingOccurrencesOfString(".zdb", withString: "")
         productName = productName.stringByReplacingOccurrencesOfString(".zip", withString: "")
         return NSData(contentsOfFile:"\(PATH_PRODUCT)\(productName)")
     }
@@ -155,7 +155,7 @@ extension NSFileManager {
         var size : Int64 = 0
         do {
             let files = try subpathsOfDirectoryAtPath(path)
-            for var i = 0; i < files.count; ++i {
+            for i in 0 ..< files.count {
                 size += fileSizeAtPath(path + files[i])
             }
         } catch {

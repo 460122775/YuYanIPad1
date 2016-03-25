@@ -180,7 +180,7 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         var arry = tableView.visibleCells;
-        for(var i = 0; i < arry.count; i++)
+        for i in 0 ..< arry.count
         {
             let _cell : UITableViewCell = arry[i] ;
             _cell.contentView.backgroundColor = UIColor.clearColor();

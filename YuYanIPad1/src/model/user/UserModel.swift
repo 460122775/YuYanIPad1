@@ -57,9 +57,11 @@ class UserModel: NSObject {
         }
     }
     
-    func loginControl(var userName : String?, var userPwd : String?)
+    func loginControl(_userName : String?, _userPwd : String?)
     {
         // Get user info
+        var userName = _userName
+        var userPwd = _userPwd
         if userName == nil || userPwd == nil
         {
             if NSUserDefaults.standardUserDefaults().objectForKey(CURRENTUSERINFO) == nil
@@ -121,7 +123,7 @@ class UserModel: NSObject {
             NSNotificationCenter.defaultCenter().postNotificationName("\(LOGIN)\(FAIL)", object: "\(loginErrorCode)")
             SwiftNotice.showText("登录失败，用户名或密码错误！")
             // Login again by using guest account.
-            loginControl(USERCONST_GUEST_NAME, userPwd: USERCONST_GUEST_PWD)
+            loginControl(USERCONST_GUEST_NAME, _userPwd: USERCONST_GUEST_PWD)
         }
     }
 }

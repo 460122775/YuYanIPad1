@@ -155,7 +155,7 @@ class CartoonBarView: UIView
             self.backBtn.enabled = false
             self.multiplePreBtn.enabled = false
             self.preBtn.enabled = false
-            self.cartoonTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "onCartoonTimer:", userInfo: nil, repeats: true)
+            self.cartoonTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(CartoonBarView.onCartoonTimer(_:)), userInfo: nil, repeats: true)
         }else{
             if cartoonTimer != nil
             {
@@ -199,7 +199,7 @@ class CartoonBarView: UIView
         if self.cartoonBarDelegate?.getLockFlag() == true && self.currentIndex + 1 <= self.totalCount
         {
             // Refresh the slider block`s position.
-            self.currentIndex++
+            self.currentIndex += 1
             self.setSliderXByIndex(self.currentIndex)
             if self.currentIndex == self.totalCount
             {
@@ -220,7 +220,7 @@ class CartoonBarView: UIView
         {
             return
         }
-        self.currentIndex--
+        self.currentIndex -= 1
         self.setSliderXByIndex(self.currentIndex)
         self.cartoonBarDelegate?.drawProductAtNo(self.currentIndex)
     }
@@ -231,7 +231,7 @@ class CartoonBarView: UIView
         {
             return
         }
-        self.currentIndex++
+        self.currentIndex += 1
         self.setSliderXByIndex(self.currentIndex)
         self.cartoonBarDelegate?.drawProductAtNo(self.currentIndex)
     }

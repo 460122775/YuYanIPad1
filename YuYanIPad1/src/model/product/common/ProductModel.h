@@ -39,6 +39,9 @@
 @property (nonatomic, assign) CGPoint radarMerPosition;
 
 //- (void) drawDistanceCircle:(UIImageView *) productImgView;
++(NSMutableArray*)getSinArr;
++(NSMutableArray*)getCosArr;
+
 - (void) initData:(NSData*) data withProductImgView:(UIImageView*) productImgView;
 //- (CGPoint) getPointByPosition:(CLLocation*) point andFrame:(CGRect)frame;
 //- (CLLocationCoordinate2D) getPositionByPoint:(CGPoint) point;

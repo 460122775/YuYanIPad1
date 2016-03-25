@@ -252,7 +252,7 @@ class DVDatePickerTableViewCell: UITableViewCell {
             ),
             ])
         
-        datePicker.addTarget(self, action: "datePicked", forControlEvents: UIControlEvents.ValueChanged)
+        datePicker.addTarget(self, action: #selector(DVDatePickerTableViewCell.datePicked), forControlEvents: UIControlEvents.ValueChanged)
         setDateTime(NSDate())
         leftLabel.text = "Date Picker"
     }

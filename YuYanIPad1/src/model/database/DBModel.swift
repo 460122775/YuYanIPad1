@@ -151,7 +151,7 @@ class DBModel: NSObject
             let rgbnStr = Expression<String?>("rgbnStr")
             let enable = Expression<Int64>("enable")
             
-            for color in db.prepare(colorTable.filter(productType == Int64(_productType)).limit(1))
+            for color in try db.prepare(colorTable.filter(productType == Int64(_productType)).limit(1))
             {
                 let colorDic : NSMutableDictionary = NSMutableDictionary()
                 colorDic.setValue(NSNumber(longLong: color[colorId]), forKey: "colorId")

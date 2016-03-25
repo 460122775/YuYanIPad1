@@ -54,7 +54,7 @@ class HistoryChoiceView : UIView
         {
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
-                selector: "setViewByProductConfig",
+                selector: #selector(HistoryChoiceView.setViewByProductConfig(_:)),
                 name: "\(PRODUCTCONFIG)\(SELECT)\(SUCCESS)",
                 object: nil)
         }else{

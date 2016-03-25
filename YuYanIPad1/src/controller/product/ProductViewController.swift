@@ -42,7 +42,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.productViewA!.frame.origin = CGPointMake(0, 0)
         self.productViewA?.userInteractionEnabled = true
         self.productViewA?.productViewADelegate = self
-        self.productContainerView.subviews.map { $0.removeFromSuperview() }
+        for view in productContainerView.subviews {view.removeFromSuperview()}
         self.productContainerView.addSubview(self.productViewA!)
         // Init tools of the switch at right bottom corner.
         self.switchToolView = (NSBundle.mainBundle().loadNibNamed("SwitchToolView", owner: self, options: nil) as NSArray).lastObject as? SwitchToolView
@@ -54,7 +54,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.cartoonBarView?.cartoonBarDelegate = self
         self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
         self.productContainerView.addSubview(self.cartoonBarView!)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "receiveProduct:", name: "\(RECEIVE)\(PRODUCT)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveProduct(_:)), name: "\(RECEIVE)\(PRODUCT)", object: nil)
         // Init user location.
         self.productViewA!.setUserLocationVisible(false, _updateMapCenterByLocation: true)
     }
@@ -65,29 +65,29 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         // Use for switchToolView.
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveDataFromHttp:",
+            selector: #selector(ProductViewController.receiveDataFromHttp(_:)),
             name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveRadarStatus:",
+            selector: #selector(ProductViewController.receiveRadarStatus(_:)),
             name: "\(RECEIVE)\(RADARSTATUS)",
             object: nil)
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "appActiveControl:",
+            selector: #selector(ProductViewController.appActiveControl(_:)),
             name: "\(APP_ACTIVE)",
             object: nil)
         //Use for cartoon.
         NSNotificationCenter.defaultCenter().addObserver(
             self,
-            selector: "receiveCartoonDataFromHttp:",
+            selector: #selector(ProductViewController.receiveCartoonDataFromHttp(_:)),
             name: "\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)",
             object: nil)
         // Init radar status.
         self.receiveRadarStatus(nil)
         // Reset Map center.
-        self.productViewA?.setMapCenerByCurrentLocation()
+//        self.productViewA?.setMapCenerByCurrentLocation()
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -151,7 +151,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.view.drawViewHierarchyInRect(self.view.bounds, afterScreenUpdates: true)
         let snapshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        UIImageWriteToSavedPhotosAlbum(snapshot, self, "image:didFinishSavingWithError:contextInfo:", nil)
+        UIImageWriteToSavedPhotosAlbum(snapshot, self, #selector(ProductViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     func image(image: UIImage, didFinishSavingWithError: NSError?, contextInfo: AnyObject)
@@ -345,7 +345,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
-                for var i : Int = 0; i < currentProductDicArr?.count; i++
+                for i in 0 ..< currentProductDicArr!.count
                 {
                     if (currentProductDic!.objectForKey("name") as! NSString) ==
                         (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)
@@ -360,7 +360,8 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
                 }
                 currentProductDicArr = nil
             }
-            requestLayer = ++layer
+            layer += 1
+            requestLayer = layer
             ProductUtilModel.getInstance.getDataByLayer(
                 (currentProductDic!.objectForKey("name") as! NSString).substringWithRange(NSRange(location: 0, length: 15)),
                 productType: (currentProductDic!.objectForKey("type") as! NSNumber).intValue,
@@ -368,7 +369,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             )
         }
     }
-    
+
     func switchDownControl()
     {
         if !synFlag || currentProductDic == nil
@@ -385,7 +386,8 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             // Search from local.
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
-                for var i : Int = 0; i < currentProductDicArr?.count; i++
+                for i in 0 ..< currentProductDicArr!.count
+                
                 {
                     if (currentProductDic!.objectForKey("name") as! NSString) ==
                         (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)
@@ -444,7 +446,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             mcodeString: currentProductDic!.objectForKey("mcode") as? String
         )
     }
-    
+
     func receiveDataFromHttp(notification : NSNotification?) -> Void
     {
         // Clear cartoon data.
@@ -469,7 +471,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         // Press up || down Btn.
         if currentProductDicArr?.count > 1
         {
-            for var i : Int = 0; i < currentProductDicArr?.count; i++
+            for i in 0 ..< currentProductDicArr!.count
             {
                 if (currentProductDic!.objectForKey("name") as! NSString) ==
                     (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)
@@ -534,7 +536,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         ProductUtilModel.getInstance.getLastDataForCartoon("", productType:
             (_selectProductConfigDic!.objectForKey("type") as! NSString).intValue, mcodeString: "")
     }
-    
+
     func getLockFlag() -> Bool
     {
         return synFlag

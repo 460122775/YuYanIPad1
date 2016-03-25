@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -19,7 +19,7 @@
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCO-Em-Kjc" userLabel="ProductContainerView">
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                     <subviews>
-                        <imageView alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYc-AG-raW" userLabel="productImgView">
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYc-AG-raW" userLabel="productImgView">
                             <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                             <accessibility key="accessibilityConfiguration">
                                 <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
@@ -80,7 +80,7 @@
                 <outlet property="colorContainerView" destination="ywE-aY-3UD" id="Ip2-Xa-D7Y"/>
                 <outlet property="colorImgView" destination="YWl-rf-5ep" id="AC5-sn-CRj"/>
                 <outlet property="distanceCircleImgView" destination="cYo-WG-Fo2" id="Sf8-Z6-J0d"/>
-                <outlet property="mapContainerView" destination="X0C-JG-BJA" id="fyW-OA-wWk"/>
+                <outlet property="mapContainerView" destination="X0C-JG-BJA" id="YVc-JL-wgD"/>
                 <outlet property="productContainerView" destination="nCO-Em-Kjc" id="DE9-4H-njK"/>
                 <outlet property="productImgVIew" destination="EYc-AG-raW" id="0Qg-ks-SMT"/>
             </connections>

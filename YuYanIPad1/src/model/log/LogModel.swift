@@ -23,7 +23,7 @@ class LogModel : NSObject {
     
     func insertLog(logContent : String?)
     {
-        print(">>>>>> \(logContent)")
+//        print(">>>>>> \(logContent)")
         if !ISDEBUGMODE
         {
             return
