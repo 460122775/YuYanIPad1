@@ -79,10 +79,10 @@
 		01875B1E1C4CE83F006B2C64 /* EBDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 01875B1D1C4CE83F006B2C64 /* EBDrawData.m */; };
 		0192F7651BB3EEF800CC6498 /* PageVo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0192F7641BB3EEF800CC6498 /* PageVo.swift */; };
 		019525021BEC476700041B30 /* HSDatePickerViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = 01E4056F1BEB2D6200C68C21 /* HSDatePickerViewController.h */; };
+		0198A9711CA902330035EC01 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0198A9701CA902330035EC01 /* Mapbox.framework */; };
+		0198A9721CA902330035EC01 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0198A9701CA902330035EC01 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		019D8A4C1C11714600BA8E74 /* ColorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 019D8A4B1C11714600BA8E74 /* ColorModel.swift */; };
-		01A4217E1CA4E1AB0057BB50 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A4217D1CA4E1AB0057BB50 /* FMDB.framework */; };
-		01A421801CA528660057BB50 /* GRMustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A4217F1CA528660057BB50 /* GRMustache.framework */; };
-		01A421821CA52B540057BB50 /* Mapbox_iOS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A421811CA52B540057BB50 /* Mapbox_iOS_SDK.framework */; };
+		01A4217E1CA4E1AB0057BB50 /* FMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A4217D1CA4E1AB0057BB50 /* FMDB.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		01A514411BD0CF550042BD82 /* LogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A514401BD0CF550042BD82 /* LogModel.swift */; };
 		01A859E71BE85DEB009FECCA /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859D81BE85DEB009FECCA /* Bool.swift */; };
 		01A859E91BE85DEB009FECCA /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A859DA1BE85DEB009FECCA /* Dictionary.swift */; };
@@ -119,7 +119,7 @@
 		01E405731BEB2D6200C68C21 /* HSDatePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E405711BEB2D6200C68C21 /* HSDatePickerViewController.xib */; };
 		01FB3C3A1AB9664000C41264 /* ProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FB3C391AB9664000C41264 /* ProductViewController.swift */; };
 		01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FB3C3D1AB980ED00C41264 /* ProductViewController.xib */; };
-		7BB7587F2FDBEC7ED37C273F /* Pods_YuYanIPad1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37B0DD7EC4745912DB7622FE /* Pods_YuYanIPad1.framework */; };
+		DC128AB4E84A612384C64C7A /* Pods_YuYanIPad1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA03D68B404BE483E4B7C416 /* Pods_YuYanIPad1.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +131,20 @@
 			remoteInfo = YuYanIPad1;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0198A9731CA902330035EC01 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0198A9721CA902330035EC01 /* Mapbox.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		010E17CA1AC2F676008E2F69 /* HistoryChoiceOfProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryChoiceOfProductView.swift; path = src/controller/history/subview/HistoryChoiceOfProductView.swift; sourceTree = "<group>"; };
@@ -217,10 +231,9 @@
 		01875B1C1C4CE83F006B2C64 /* EBDrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EBDrawData.h; path = src/model/product/products/eb/EBDrawData.h; sourceTree = "<group>"; };
 		01875B1D1C4CE83F006B2C64 /* EBDrawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EBDrawData.m; path = src/model/product/products/eb/EBDrawData.m; sourceTree = "<group>"; };
 		0192F7641BB3EEF800CC6498 /* PageVo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageVo.swift; path = src/model/common/PageVo.swift; sourceTree = "<group>"; };
+		0198A9701CA902330035EC01 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Mapbox.framework; sourceTree = "<group>"; };
 		019D8A4B1C11714600BA8E74 /* ColorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorModel.swift; path = src/model/color/ColorModel.swift; sourceTree = "<group>"; };
 		01A4217D1CA4E1AB0057BB50 /* FMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FMDB.framework; path = library/FMDB.framework; sourceTree = "<group>"; };
-		01A4217F1CA528660057BB50 /* GRMustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GRMustache.framework; path = "../../../Library/Developer/Xcode/DerivedData/YuYanIPad1-ffxxvukhqmxebybyjmoqpehmglbs/Build/Products/Debug-iphoneos/GRMustache/GRMustache.framework"; sourceTree = "<group>"; };
-		01A421811CA52B540057BB50 /* Mapbox_iOS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox_iOS_SDK.framework; path = "../../../Library/Developer/Xcode/DerivedData/YuYanIPad1-ffxxvukhqmxebybyjmoqpehmglbs/Build/Products/Debug-iphoneos/Mapbox-iOS-SDK/Mapbox_iOS_SDK.framework"; sourceTree = "<group>"; };
 		01A514401BD0CF550042BD82 /* LogModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogModel.swift; path = src/model/log/LogModel.swift; sourceTree = "<group>"; };
 		01A859D81BE85DEB009FECCA /* Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bool.swift; path = src/model/otherAPI/ExSwift/Bool.swift; sourceTree = "<group>"; };
 		01A859DA1BE85DEB009FECCA /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Dictionary.swift; path = src/model/otherAPI/ExSwift/Dictionary.swift; sourceTree = "<group>"; };
@@ -267,8 +280,7 @@
 		01FB3C391AB9664000C41264 /* ProductViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductViewController.swift; path = src/controller/product/ProductViewController.swift; sourceTree = "<group>"; };
 		01FB3C3D1AB980ED00C41264 /* ProductViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductViewController.xib; path = src/controller/product/ProductViewController.xib; sourceTree = "<group>"; };
 		2457E4A2600041A96B303E9F /* Pods-YuYanIPad1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuYanIPad1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1.debug.xcconfig"; sourceTree = "<group>"; };
-		37B0DD7EC4745912DB7622FE /* Pods_YuYanIPad1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YuYanIPad1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6AAA00BD685CCC948FB539A8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA03D68B404BE483E4B7C416 /* Pods_YuYanIPad1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YuYanIPad1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2FC1D179AD93E2E4BAE616C /* Pods-YuYanIPad1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YuYanIPad1.release.xcconfig"; path = "Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,14 +289,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01A421821CA52B540057BB50 /* Mapbox_iOS_SDK.framework in Frameworks */,
-				01A421801CA528660057BB50 /* GRMustache.framework in Frameworks */,
 				016E7F931C04381E0044C4FE /* libz.tbd in Frameworks */,
 				01A4217E1CA4E1AB0057BB50 /* FMDB.framework in Frameworks */,
+				0198A9711CA902330035EC01 /* Mapbox.framework in Frameworks */,
 				01DB7D8A1C8D0C020061475E /* libsqlite3.0.tbd in Frameworks */,
 				01DB7D881C8D0B790061475E /* QuartzCore.framework in Frameworks */,
 				01DB7D861C8D0B6E0061475E /* CoreLocation.framework in Frameworks */,
-				7BB7587F2FDBEC7ED37C273F /* Pods_YuYanIPad1.framework in Frameworks */,
+				DC128AB4E84A612384C64C7A /* Pods_YuYanIPad1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,16 +845,14 @@
 		16A8CC8C05F7F9E822E341E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				01A421811CA52B540057BB50 /* Mapbox_iOS_SDK.framework */,
-				01A4217F1CA528660057BB50 /* GRMustache.framework */,
-				01DB7D891C8D0C020061475E /* libsqlite3.0.tbd */,
+				0198A9701CA902330035EC01 /* Mapbox.framework */,
 				01A4217D1CA4E1AB0057BB50 /* FMDB.framework */,
 				01DB7D871C8D0B790061475E /* QuartzCore.framework */,
 				01DB7D851C8D0B6E0061475E /* CoreLocation.framework */,
 				016E7F9B1C044C010044C4FE /* dylib1.o */,
+				01DB7D891C8D0C020061475E /* libsqlite3.0.tbd */,
 				016E7F8F1C0431EE0044C4FE /* libz.tbd */,
-				6AAA00BD685CCC948FB539A8 /* Pods.framework */,
-				37B0DD7EC4745912DB7622FE /* Pods_YuYanIPad1.framework */,
+				CA03D68B404BE483E4B7C416 /* Pods_YuYanIPad1.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -870,6 +879,8 @@
 				014AD6951AB6F81900E078E2 /* Resources */,
 				357A02FBB18AB279D5CC27ED /* Embed Pods Frameworks */,
 				38768F49375CF54CCF93A35B /* Copy Pods Resources */,
+				0198A9731CA902330035EC01 /* Embed Frameworks */,
+				0198A9741CA902520035EC01 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1008,9 +1019,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		357A02FBB18AB279D5CC27ED /* Embed Pods Frameworks */ = {
+		0198A9741CA902520035EC01 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework/strip-frameworks.sh\"";
+		};
+		357A02FBB18AB279D5CC27ED /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -1021,7 +1045,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YuYanIPad1/Pods-YuYanIPad1-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		38768F49375CF54CCF93A35B /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1278,6 +1301,7 @@
 					"\"${PODS_ROOT}/ShareSDK3/libraries\"",
 					"$(inherited)",
 					"$(PROJECT_DIR)/library",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;
@@ -1319,6 +1343,7 @@
 					"\"${PODS_ROOT}/ShareSDK3/libraries\"",
 					"$(inherited)",
 					"$(PROJECT_DIR)/library",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = YuYanIPad1/Info.plist;

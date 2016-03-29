@@ -24,9 +24,9 @@
 
 @import Foundation;
 
-#ifndef COCOAPODS
-#import "sqlite3.h"
-#endif
+//#ifndef COCOAPODS
+//#import "sqlite3.h"
+//#endif
 
 typedef struct SQLiteHandle SQLiteHandle; // CocoaPods workaround
 

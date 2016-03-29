@@ -1,60 +1,32 @@
 PODS:
   - Alamofire (3.1.2)
-  - CocoaAsyncSocket (7.4.2)
-  - FMDB (2.3):
-    - FMDB/standard (= 2.3)
-  - FMDB/common (2.3)
-  - FMDB/standard (2.3):
-    - FMDB/common
-  - GRMustache (7.3.0):
-    - JRSwizzle (~> 1.0)
-  - JRSwizzle (1.0)
-  - Mapbox-iOS-SDK (1.6.1):
-    - FMDB (= 2.3)
-    - GRMustache (= 7.3.0)
-    - SMCalloutView (= 2.0)
+  - CocoaAsyncSocket (7.4.3):
+    - CocoaAsyncSocket/All (= 7.4.3)
+  - CocoaAsyncSocket/All (7.4.3):
+    - CocoaAsyncSocket/GCD
+    - CocoaAsyncSocket/RunLoop
+  - CocoaAsyncSocket/GCD (7.4.3)
+  - CocoaAsyncSocket/RunLoop (7.4.3)
   - ShareSDK3 (3.1.3):
     - ShareSDK3/libraries (= 3.1.3)
   - ShareSDK3/libraries (3.1.3)
-  - SMCalloutView (2.0)
-  - SQLite.swift (0.9.3)
+  - SQLite.swift (0.10.1)
   - SSZipArchive (1.0.1)
 
 DEPENDENCIES:
   - Alamofire
-  - CocoaAsyncSocket
-  - Mapbox-iOS-SDK (from `https://github.com/mapbox/mapbox-ios-sdk-legacy.git`)
+  - CocoaAsyncSocket (~> 7.4.3)
   - ShareSDK3
-  - SQLite.swift (from `https://github.com/brandenr/SQLite.swift.git`, commit `33ced0255e99e85b7ad65288dc777f6bb9c53687`)
+  - SQLite.swift (~> 0.10.1)
   - SSZipArchive
-
-EXTERNAL SOURCES:
-  Mapbox-iOS-SDK:
-    :git: https://github.com/mapbox/mapbox-ios-sdk-legacy.git
-  SQLite.swift:
-    :commit: 33ced0255e99e85b7ad65288dc777f6bb9c53687
-    :git: https://github.com/brandenr/SQLite.swift.git
-
-CHECKOUT OPTIONS:
-  Mapbox-iOS-SDK:
-    :commit: c73562be28126e007fcb66df026ba0b48b81582d
-    :git: https://github.com/mapbox/mapbox-ios-sdk-legacy.git
-  SQLite.swift:
-    :commit: 33ced0255e99e85b7ad65288dc777f6bb9c53687
-    :git: https://github.com/brandenr/SQLite.swift.git
 
 SPEC CHECKSUMS:
   Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
-  CocoaAsyncSocket: f5783bdedd232d91b89769bc4b5a1580aed518ad
-  FMDB: e78c5941bb10563f2b707255119e3655e790c29e
-  GRMustache: 6baee020c5644416c034f5afb1607f6219e7f753
-  JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
-  Mapbox-iOS-SDK: a47036c2298c2f734fdc2aa416296c2d6135166e
+  CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
   ShareSDK3: 3e682c2309b955492ac8c0ca5603cb11470fac6f
-  SMCalloutView: f758edd824b18bf4f42de00df1e299861a2d1950
-  SQLite.swift: 5e76eb3f858a38d0d35d67fa9e37930ae1c408dc
+  SQLite.swift: 6a6e4b034efc317ce4e203b6af2d3024fee2b570
   SSZipArchive: 5f30a0af2cb3d48c0ff83b1e18029f7041ac3c38
 
-PODFILE CHECKSUM: bb96408b5396e0cdf25cd93200ff79359d305d64
+PODFILE CHECKSUM: 5f2fe80e986476ae23b0861a7e9086cfadf47d93
 
 COCOAPODS: 1.0.0.beta.4

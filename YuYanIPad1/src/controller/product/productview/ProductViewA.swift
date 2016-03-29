@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Mapbox
 
 protocol ProductViewADelegate
 {
@@ -17,11 +18,11 @@ protocol ProductViewADelegate
     func swipeRightControl()
 }
 
-class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
+class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
 {
-    var mapView : RMMapView!
+//    var mapView : RMMapView!
 
-    @IBOutlet var mapContainerView: UIView!
+    @IBOutlet var mapView: MGLMapView!
     @IBOutlet var productContainerView: UIView!
     @IBOutlet var productImgVIew: UIImageView!
     @IBOutlet var distanceCircleImgView: UIImageView!
@@ -53,12 +54,16 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
     override func drawRect(rect: CGRect)
     {
         // Set Map View.
-        RMConfiguration.sharedInstance().accessToken = "pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg"
-        self.mapView = RMMapView(frame: self.bounds)
-        self.mapView.tileSource = RMMapboxSource(mapID: "daiyachen.k71impl7")
+//        RMConfiguration.sharedInstance().accessToken = "pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg"
+//        self.mapView = RMMapView(frame: self.bounds)
+//        self.mapView.tileSource = RMMapboxSource(mapID: "daiyachen.k71impl7")
+//        self.mapView = MGLMapView(frame: self.bounds)
+        self.mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.mapView.zoomLevel = 10
         self.mapView.delegate = self
-        self.mapContainerView.addSubview(mapView)
-        self.mapView.zoom = 8
+        self.mapView.setCenterCoordinate(CLLocationCoordinate2DMake(39.915168,116.403875),animated:true)
+//        self.mapContainerView.addSubview(mapView)
+//        self.mapView.zoom = 8
         // Set default location.
         radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
         self.initGestureReconizer(true)
@@ -166,7 +171,8 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         {
             UIView.animateWithDuration(0.1) { () -> Void in
                 self.productImgVIew.frame.origin = CGPointMake(translation.x - self.fromLocation.x, translation.y - self.fromLocation.y)
-                self.mapView.moveBy(CGSizeMake(self.toLocation.x - translation.x, self.toLocation.y - translation.y))
+            
+//                self.mapView.moveBy(CGSizeMake(self.toLocation.x - translation.x, self.toLocation.y - translation.y))
                 self.toLocation = translation
             }
         }else if sender.state == UIGestureRecognizerState.Began{
@@ -259,7 +265,7 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         print("05:" + String(NSDate().timeIntervalSince1970))
         currentProductModel?.getImageData(self.productImgVIew, andData: data, colorArray: self.currentColorDataArray)
         // Set map bounds.
-//        self.mapView?.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
+        self.mapView?.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
         self.setMapByCoordinateBounds((self.currentProductModel?.radarMerPosition)!, radarCoordinate: (self.currentProductModel?.radarCoordinate)!, productImgView: self.productImgVIew, detM: CGFloat((self.currentProductModel?._detM)!))
         self.productContainerView.userInteractionEnabled = true
     }
@@ -310,17 +316,17 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         }
     }
     
-    func getMapCenterCoordinate(productModel : ProductModel?) -> CLLocationCoordinate2D
-    {
-        let posDis : CGPoint = CGPointMake(self.productImgVIew.frame.size.width / 2 - (productModel?.radarPosition.x)!,
-                                            self.productImgVIew.frame.size.height / 2 - (productModel?.radarPosition.y)!)
-        let centerMerPositon : CGPoint = CGPointMake(posDis.x * CGFloat(productModel!._detM) + (productModel?.radarMerPosition.x)!,
-                                            (productModel?.radarMerPosition.y)! - posDis.y * CGFloat(productModel!._detM))
-        let x : Double = Double(centerMerPositon.x) / Double(EquatorR) / M_PI * 180
-        var y : Double = Double(centerMerPositon.y) / Double(EquatorR) / M_PI * 180
-        y = 180 / M_PI * (2 * atan(exp(y * M_PI / 180)) - M_PI / 2)
-        return CLLocationCoordinate2DMake(y, x)
-    }
+//    func getMapCenterCoordinate(productModel : ProductModel?) -> CLLocationCoordinate2D
+//    {
+//        let posDis : CGPoint = CGPointMake(self.productImgVIew.frame.size.width / 2 - (productModel?.radarPosition.x)!,
+//                                            self.productImgVIew.frame.size.height / 2 - (productModel?.radarPosition.y)!)
+//        let centerMerPositon : CGPoint = CGPointMake(posDis.x * CGFloat(productModel!._detM) + (productModel?.radarMerPosition.x)!,
+//                                            (productModel?.radarMerPosition.y)! - posDis.y * CGFloat(productModel!._detM))
+//        let x : Double = Double(centerMerPositon.x) / Double(EquatorR) / M_PI * 180
+//        var y : Double = Double(centerMerPositon.y) / Double(EquatorR) / M_PI * 180
+//        y = 180 / M_PI * (2 * atan(exp(y * M_PI / 180)) - M_PI / 2)
+//        return CLLocationCoordinate2DMake(y, x)
+//    }
 
 //    func setMapByMerBounds(radarMerPos : CGPoint, radarCoordinate : CLLocationCoordinate2D, productImgView : UIImageView, detM : CGFloat)
 //    {
@@ -340,6 +346,6 @@ class ProductViewA: UIView, RMMapViewDelegate, CLLocationManagerDelegate
         var neLa : CLLocationDegrees = CLLocationDegrees(radarMerPos.y + productImgVIew.frame.size.height / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
         neLa = 180 / M_PI * (2 * atan(exp(neLa * M_PI / 180)) - M_PI / 2)
         let neLo : CLLocationDegrees = CLLocationDegrees(radarMerPos.x + productImgVIew.frame.size.width / 2 * detM) / CLLocationDegrees(EquatorR) / M_PI * 180.0
-        self.mapView.zoomWithLatitudeLongitudeBoundsSouthWest(CLLocationCoordinate2DMake(swLa, swLo), northEast: CLLocationCoordinate2DMake(neLa, neLo), animated: false)
+//        self.mapView.zoomWithLatitudeLongitudeBoundsSouthWest(CLLocationCoordinate2DMake(swLa, swLo), northEast: CLLocationCoordinate2DMake(neLa, neLo), animated: false)
     }
 }

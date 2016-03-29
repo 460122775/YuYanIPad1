@@ -6,12 +6,15 @@ target "YuYanIPad1" do
 # pod 'HanekeSwift'
 # pod 'YYHRequest'
 # pod 'ASIHTTPRequest'
-pod 'CocoaAsyncSocket'
-pod 'Mapbox-iOS-SDK', :git => 'https://github.com/mapbox/mapbox-ios-sdk-legacy.git'
+
+#pod 'Mapbox-iOS-SDK@sputnik', '~> 1.6.3:-sputnik'
 #, :commit => '5997259f51d1be81a5ae86a2138266360f0e6ad9'
-# pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git'
-# pod 'SQLite.swift', git: 'https://github.com/stephencelis/SQLite.swift.git', branch: 'cocoapods-xcode-7-3'
-pod 'SQLite.swift', :git => 'https://github.com/brandenr/SQLite.swift.git', :commit => '33ced0255e99e85b7ad65288dc777f6bb9c53687'
+#platform :ios, '8.0'
+#pod 'Mapbox-iOS-SDK'
+#use_frameworks!
+
+pod 'CocoaAsyncSocket', '~> 7.4.3'
+pod 'SQLite.swift', '~> 0.10.1'
 pod 'Alamofire'
 pod 'SSZipArchive'
 pod 'ShareSDK3'

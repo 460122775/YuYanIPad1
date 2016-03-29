@@ -12,9 +12,16 @@
             <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" userLabel="mapContainerView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0C-JG-BJA" userLabel="mapContainerView" customClass="MGLMapView">
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="allowsRotating" value="NO"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="zoomLevel">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/daiyachen/cih5ysabn0035bnm5ahtdnokf"/>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCO-Em-Kjc" userLabel="ProductContainerView">
                     <rect key="frame" x="0.0" y="0.0" width="936" height="748"/>
@@ -80,7 +87,7 @@
                 <outlet property="colorContainerView" destination="ywE-aY-3UD" id="Ip2-Xa-D7Y"/>
                 <outlet property="colorImgView" destination="YWl-rf-5ep" id="AC5-sn-CRj"/>
                 <outlet property="distanceCircleImgView" destination="cYo-WG-Fo2" id="Sf8-Z6-J0d"/>
-                <outlet property="mapContainerView" destination="X0C-JG-BJA" id="YVc-JL-wgD"/>
+                <outlet property="mapView" destination="X0C-JG-BJA" id="x2l-R9-Qrx"/>
                 <outlet property="productContainerView" destination="nCO-Em-Kjc" id="DE9-4H-njK"/>
                 <outlet property="productImgVIew" destination="EYc-AG-raW" id="0Qg-ks-SMT"/>
             </connections>
