@@ -35,7 +35,8 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     var currentProductModel : ProductModel?
     var currentProductData : NSData?
     var radarPosition : CGPoint!
-    
+    var productImgBounds : MGLCoordinateBounds!
+    var lastZoomValue : Double = 0
     var locationManager : CLLocationManager?
     var currentLocation : CLLocationCoordinate2D?
     
@@ -46,6 +47,8 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     var swipeUpGesture : UISwipeGestureRecognizer?
     var swipeDownGesture : UISwipeGestureRecognizer?
     
+    let ZOOM : Double = 8
+    
     required init?(coder : NSCoder)
     {
         super.init(coder: coder)
@@ -55,18 +58,97 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     {
         // Set Map View.
 //        RMConfiguration.sharedInstance().accessToken = "pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg"
-//        self.mapView = RMMapView(frame: self.bounds)
 //        self.mapView.tileSource = RMMapboxSource(mapID: "daiyachen.k71impl7")
-//        self.mapView = MGLMapView(frame: self.bounds)
         self.mapView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.mapView.zoomLevel = 10
+        self.mapView.zoomLevel = ZOOM
         self.mapView.delegate = self
         self.mapView.setCenterCoordinate(CLLocationCoordinate2DMake(39.915168,116.403875),animated:true)
-//        self.mapContainerView.addSubview(mapView)
-//        self.mapView.zoom = 8
         // Set default location.
         radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
-        self.initGestureReconizer(true)
+        lastPoint = radarPosition
+//        self.initGestureReconizer(true)
+    }
+    
+    var lastPoint : CGPoint!
+    func mapViewWillStartRenderingFrame(mapView: MGLMapView)
+    {
+//        let point = mapView.convertCoordinate(mapView.centerCoordinate, toPointToView: mapView)
+//        lastPoint = point
+//        print(point)
+//        print(mapView.centerCoordinate)
+//        print("333333333333")
+    }
+    
+    func mapViewRegionIsChanging(mapView: MGLMapView)
+    {
+        if self.currentProductModel != nil
+        {
+            let _radarPosition = mapView.convertCoordinate((self.currentProductModel?.radarCoordinate)!, toPointToView: mapView)
+            if self.mapView.zoomLevel != ZOOM
+            {
+                let n = CGFloat(pow(2, self.mapView.zoomLevel - ZOOM))
+                self.productImgVIew.frame = CGRectMake(
+                    _radarPosition.x - self.mapView.frame.size.width * n,
+                    _radarPosition.y - self.mapView.frame.size.height * n,
+                    self.mapView.frame.size.width * n,
+                    self.mapView.frame.size.height * n
+                )
+            }else{
+                self.productImgVIew.frame.origin = CGPointMake(
+                    _radarPosition.x - lastPoint.x,
+                    _radarPosition.y - lastPoint.y
+                )
+            }
+        }
+    }
+    
+    func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool)
+    {
+        // Change detM & reDraw product.
+        if self.mapView.zoomLevel != lastZoomValue
+        {
+            lastZoomValue = self.mapView.zoomLevel
+            productImgBounds = self.mapView.convertRect(CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height), toCoordinateBoundsFromView: self.mapView)
+            if self.currentProductModel != nil
+            {
+                self.currentProductModel?.setDetM(productImgBounds.sw, andNE: productImgBounds.ne, andHeight: Float(self.productImgVIew.frame.size.height))
+//                self.mapView.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
+            }
+//            self.currentProductModel?.getImageData(self.productImgVIew, andData: self.currentProductData!, colorArray: self.currentColorDataArray)
+        }
+        
+    }
+    
+    var startLocation : CGPoint!
+    func handleMapPanGesture(sender: UIPanGestureRecognizer)
+    {
+        let translation : CGPoint = sender.locationInView(self)
+        if sender.state == UIGestureRecognizerState.Changed
+        {
+//            UIView.animateWithDuration(0.1) { () -> Void in
+//                self.productImgVIew.frame.origin = CGPointMake(translation.x - self.startLocation.x, translation.y - self.startLocation.y)
+//                self.toLocation = translation
+//            }
+            let cgpoint = CGPointMake(translation.x - self.startLocation.x, translation.y - self.startLocation.y)
+            print(cgpoint)
+        }else if sender.state == UIGestureRecognizerState.Began{
+            startLocation = translation
+            toLocation = translation
+        }else if sender.state == UIGestureRecognizerState.Ended && sender.state != UIGestureRecognizerState.Failed{
+//            self.radarPosition.x += self.productImgVIew.frame.origin.x
+//            self.radarPosition.y += self.productImgVIew.frame.origin.y
+//            self.productImgVIew.frame.origin = CGPointMake(0, 0)
+//            currentProductModel?.radarPosition.x = radarPosition.x
+//            currentProductModel?.radarPosition.y = radarPosition.y
+//            currentProductModel?.getImageData(self.productImgVIew, andData: currentProductData, colorArray: self.currentColorDataArray)
+//             Set map bounds.
+//            self.setMapByCoordinateBounds(
+//                (self.currentProductModel?.radarMerPosition)!,
+//                radarCoordinate: (self.currentProductModel?.radarCoordinate)!,
+//                productImgView: self.productImgVIew,
+//                detM: CGFloat((self.currentProductModel?._detM)!)
+//            )
+        }
     }
     
     func initGestureReconizer(isAddGestureReconizer : Bool)
@@ -153,7 +235,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             }else if self.currentProductModel?.zoomValue < 0.6{
                 self.currentProductModel?.zoomValue = 1
             }
-            self.drawProductImg(self.currentProductDic, data: self.currentProductData!)
+            currentProductModel?.getImageData(self.productImgVIew, andData: self.currentProductData!, colorArray: self.currentColorDataArray)
         }
     }
     
@@ -217,6 +299,8 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         }
     }
     
+    var lastSize : CGSize = CGSizeMake(0, 0)
+    var isFirstTime : Bool = true
     func drawProductImg(_productDic : NSMutableDictionary?, data : NSData)
     {
         if _productDic == nil
@@ -258,16 +342,25 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             return
         }else{
             currentProductModel?.clearContent()
+            self.lastSize = self.productImgVIew.frame.size
+            self.productImgVIew.frame.size = self.mapView.frame.size
             radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
             currentProductModel?.radarPosition = radarPosition!
             currentProductModel?.initData(data, withProductImgView: self.productImgVIew)
         }
+        if isFirstTime
+        {
+            self.mapView?.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
+            isFirstTime = false
+        }
+        // If only draw once.
+        lastZoomValue = self.mapView.zoomLevel
+        productImgBounds = self.mapView.convertRect(CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height), toCoordinateBoundsFromView: self.mapView)
+        self.currentProductModel?.setDetM(productImgBounds.sw, andNE: productImgBounds.ne, andHeight: Float(self.productImgVIew.frame.size.height))
+        self.mapView.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
+        self.currentProductModel?.getImageData(self.productImgVIew, andData: self.currentProductData!, colorArray: self.currentColorDataArray)
+        self.productImgVIew.frame.size = self.lastSize
         print("05:" + String(NSDate().timeIntervalSince1970))
-        currentProductModel?.getImageData(self.productImgVIew, andData: data, colorArray: self.currentColorDataArray)
-        // Set map bounds.
-        self.mapView?.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: true)
-        self.setMapByCoordinateBounds((self.currentProductModel?.radarMerPosition)!, radarCoordinate: (self.currentProductModel?.radarCoordinate)!, productImgView: self.productImgVIew, detM: CGFloat((self.currentProductModel?._detM)!))
-        self.productContainerView.userInteractionEnabled = true
     }
     
     var updateMapCenterByLocation : Bool = false

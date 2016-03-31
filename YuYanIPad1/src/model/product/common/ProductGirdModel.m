@@ -9,7 +9,7 @@
 #import "ProductGirdModel.h"
 
 @implementation ProductGirdModel
-@synthesize maxWindowCount, windowSize;
+@synthesize maxWindowCount, windowSize, topMerLatitude, leftMerLongitude, _detM;
 
 -(id)init
 {
@@ -29,18 +29,23 @@
     self.topMerLatitude = EquatorR * log(tan(self.maxRadarDistance * 1000 / (PolarR + (EquatorR - PolarR) * (90 - self.radarCoordinate.latitude) / 90.0) / 2 + self.radarCoordinate.latitude * M_PI_2 / 180.0 + M_PI_4));
     self.leftMerLongitude = (self.maxRadarDistance * 1000 * (-1) / (PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude/ 90.0))
                              * cos(self.radarCoordinate.latitude * M_PI / 180.0) + self.radarCoordinate.longitude * M_PI / 180.0 )* EquatorR;
-    // Mercator Distance, radius.
-    double maxMerDistance = 0;
-    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
-    {
-        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
-    }else{
-        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
-    }
-    maxMerDistance = maxMerDistance / 2.0;
-    // Attention sequence.
-    self._detM = maxMerDistance / self.iRadius;
+//     Mercator Distance, radius.
+//    double maxMerDistance = 0;
+//    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
+//    {
+//        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
+//    }else{
+//        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
+//    }
+//    maxMerDistance = maxMerDistance / 2.0;
+//    // Attention sequence.
+//    self._detM = maxMerDistance / self.iRadius;
     self.height = self.fileHeadStruct.addSec.Height / 1000.0;
+}
+
+-(void)setDetM:(CLLocationCoordinate2D) swCoordinate andNE:(CLLocationCoordinate2D) neCoordinate andHeight: (float) height
+{
+    
 }
 
 //-(CLLocationCoordinate2D)getCoordinate:(CLLocationCoordinate2D)coordinate andDistance:(double)distance andAngle:(double)angle

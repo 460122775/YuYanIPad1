@@ -18,20 +18,19 @@
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray;
 -(void)clearContent;
 
+@optional
+-(void)setDetM:(CLLocationCoordinate2D) swCoordinate andNE:(CLLocationCoordinate2D) neCoordinate andHeight: (float) height;
+
 @end
 
 @interface ProductModel: NSObject<ProductDrawDataProtocol>{
   
 }
 
-@property (nonatomic, assign) double topMerLatitude; // 上边界莫卡托纬度坐标
-@property (nonatomic, assign) double leftMerLongitude;// 左边界莫卡托经度坐标
 @property (nonatomic, assign) int maxRadarDistance;    // 最大测距
 @property (nonatomic, assign) double zoomValue;
 @property (nonatomic, assign) int productType;
 @property (nonatomic, assign) float iRadius;      // view.width * 0.5
-@property (nonatomic, assign) float _det;         // 一个像素点代表的距离库数
-@property (nonatomic, assign) float _detM;        // Real distance of each pix.
 @property (nonatomic, assign) float height;       // 天线海拔
 @property (nonatomic, assign) tagRealFile fileHeadStruct;
 @property (nonatomic, assign) CGPoint radarPosition;

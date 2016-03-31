@@ -9,7 +9,7 @@
 #import "ProductRadialModel.h"
 
 @implementation ProductRadialModel
-@synthesize sizeofRadial, iBinNumber, iRefBinLen, rad360, cosEle;
+@synthesize sizeofRadial, iBinNumber, iRefBinLen, rad360, cosEle, topMerLatitude, leftMerLongitude, _detM;
 
 -(id)init
 {
@@ -59,19 +59,26 @@
 //    float ed = (ec * cos(self.radarCoordinate.latitude * M_PI / 180));
 //    float BJD = (dx / ed  * 180.0 / M_PI + self.radarCoordinate.longitude);
 //    self.leftMerLongitude = EquatorR * (BJD * M_PI / 180);
-    // Mercator Distance, radius.
-    double maxMerDistance = 0;
-    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
-    {
-        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
-    }else{
-        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
-    }
-    maxMerDistance = maxMerDistance / 2.0;
-    self._det = self.iBinNumber / self.iRadius;
-    // Attention sequence.
-    self._detM = maxMerDistance / self.iRadius;
+    
+//     Mercator Distance, radius.
+//    double maxMerDistance = 0;
+//    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
+//    {
+//        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
+//    }else{
+//        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
+//    }
+//    maxMerDistance = maxMerDistance / 2.0;
+//     Attention sequence.
+//    self._detM = maxMerDistance / self.iRadius;
     self.height = self.fileHeadStruct.addSec.Height / 1000.0;
+}
+
+-(void)setDetM:(CLLocationCoordinate2D) swCoordinate andNE:(CLLocationCoordinate2D) neCoordinate andHeight: (float) height
+{
+    float topMerValue = 0 + EquatorR * log(tan(M_PI_4 + neCoordinate.latitude * M_PI_2 / 180.0));
+    float buttomMerValue = 0 + EquatorR * log(tan(M_PI_4 + swCoordinate.latitude * M_PI_2 / 180.0));
+    self._detM = (topMerValue - buttomMerValue) / height;
 }
 
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray

@@ -13,6 +13,10 @@
   
 }
 
+@property (nonatomic, assign) float _detM;        // Real distance of each pix.
+@property (nonatomic, assign) double topMerLatitude; // 上边界莫卡托纬度坐标
+@property (nonatomic, assign) double leftMerLongitude;// 左边界莫卡托经度坐标
+@property (nonatomic, assign) CGRect imgBounds;   // 径向大小
 @property (nonatomic, assign) int sizeofRadial;   // 径向大小
 @property (nonatomic, assign) int iBinNumber;     // 距离库数
 @property (nonatomic, assign) int iRefBinLen;     // 距离库长
