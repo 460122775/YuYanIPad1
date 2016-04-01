@@ -158,7 +158,8 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         LogModel.getInstance.insertLog("用户点击了：" + (_selectProductConfigDic!.objectForKey("cname") as! String) + "（" + (_selectProductConfigDic!.objectForKey("ename") as! String) + "）")
         if (_selectProductConfigDic!.objectForKey("name") as! String).lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0
         {
-            SwiftNotice.showText("未收集到该产品!")
+//            SwiftNotice.showText("未收集到该产品!")
+            ProductUtilModel.getInstance.getNewestDataByType((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue)
         }else{
             SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
             if productListDelegate != nil

@@ -25,7 +25,7 @@
     [super initData:data withProductImgView:productImgView];
     cosEle = cos(self.fileHeadStruct.obserSec.iElevation[0] / 100 * M_PI / 180.0);
     /****  Radial product sets ****/
-    self.iRadius = productImgView.frame.size.height / 2.0 * self.zoomValue;
+    self.iRadius = productImgView.frame.size.height / 2.0;
     self.rad360 = self.fileHeadStruct.obserSec.iRadialNum[0] / 360.0;
     switch (self.fileHeadStruct.obserSec.batch.wavForm[0])
     {
@@ -54,24 +54,29 @@
     self.topMerLatitude = EquatorR * log(tan(maxHorDistance * 1000 / (PolarR + (EquatorR - PolarR) * (90 - self.radarCoordinate.latitude) / 90.0) / 2
                                         + self.radarCoordinate.latitude * M_PI_2 / 180.0 + M_PI_4));
     self.leftMerLongitude = EquatorR * (((maxHorDistance * (-1000)) / ((PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude / 90.0)) * cos(self.radarCoordinate.latitude * M_PI / 180)) + self.radarCoordinate.longitude * M_PI / 180));
-//    float dx = (maxHorDistance * (-1000));
-//    float ec = (PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude / 90.0));
-//    float ed = (ec * cos(self.radarCoordinate.latitude * M_PI / 180));
-//    float BJD = (dx / ed  * 180.0 / M_PI + self.radarCoordinate.longitude);
-//    self.leftMerLongitude = EquatorR * (BJD * M_PI / 180);
-    
-//     Mercator Distance, radius.
-//    double maxMerDistance = 0;
-//    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
-//    {
-//        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
-//    }else{
-//        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
-//    }
-//    maxMerDistance = maxMerDistance / 2.0;
-//     Attention sequence.
-//    self._detM = maxMerDistance / self.iRadius;
     self.height = self.fileHeadStruct.addSec.Height / 1000.0;
+}
+
+-(void)setDetMByMaxRadarDistance
+{
+    int maxHorDistance = ceil(self.maxRadarDistance * self.cosEle / 1000.0);
+    float dx = (maxHorDistance * (-1000));
+    float ec = (PolarR + (EquatorR - PolarR) * (1 - self.radarCoordinate.latitude / 90.0));
+    float ed = (ec * cos(self.radarCoordinate.latitude * M_PI / 180));
+    float BJD = (dx / ed  * 180.0 / M_PI + self.radarCoordinate.longitude);
+    self.leftMerLongitude = EquatorR * (BJD * M_PI / 180);
+    
+    // Mercator Distance, radius.
+    double maxMerDistance = 0;
+    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
+    {
+        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
+    }else{
+        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
+    }
+    maxMerDistance = maxMerDistance / 2.0;
+    // Attention sequence.
+    self._detM = maxMerDistance / self.iRadius;
 }
 
 -(void)setDetM:(CLLocationCoordinate2D) swCoordinate andNE:(CLLocationCoordinate2D) neCoordinate andHeight: (float) height
@@ -81,6 +86,11 @@
     self._detM = (topMerValue - buttomMerValue) / height;
 }
 
+-(float)getDetM
+{
+    return self._detM;
+}
+
 -(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
 {
     [super getImageData:productImgView andData:data colorArray:_colorArray];
@@ -88,7 +98,6 @@
 
 -(void)clearContent
 {
-    self._detM = 1;
     self.iBinNumber = 0;
     self.iRefBinLen = 0;
     [super clearContent];

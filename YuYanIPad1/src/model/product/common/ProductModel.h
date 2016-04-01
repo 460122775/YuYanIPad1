@@ -20,7 +20,8 @@
 
 @optional
 -(void)setDetM:(CLLocationCoordinate2D) swCoordinate andNE:(CLLocationCoordinate2D) neCoordinate andHeight: (float) height;
-
+-(void)setDetMByMaxRadarDistance;
+-(float)getDetM;
 @end
 
 @interface ProductModel: NSObject<ProductDrawDataProtocol>{
@@ -28,7 +29,6 @@
 }
 
 @property (nonatomic, assign) int maxRadarDistance;    // 最大测距
-@property (nonatomic, assign) double zoomValue;
 @property (nonatomic, assign) int productType;
 @property (nonatomic, assign) float iRadius;      // view.width * 0.5
 @property (nonatomic, assign) float height;       // 天线海拔

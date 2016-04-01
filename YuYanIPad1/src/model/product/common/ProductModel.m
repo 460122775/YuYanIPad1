@@ -13,11 +13,10 @@ static NSMutableArray* SinArr;
 static NSMutableArray* CosArr;
 
 @implementation ProductModel
-@synthesize zoomValue, radarCoordinate, radarMerPosition, productType, radarPosition, maxRadarDistance, iRadius, height, fileHeadStruct;
+@synthesize radarCoordinate, radarMerPosition, productType, radarPosition, maxRadarDistance, iRadius, height, fileHeadStruct;
 -(id)init
 {
     self = [super init];
-    self.zoomValue = 1;
     return self;
 }
 

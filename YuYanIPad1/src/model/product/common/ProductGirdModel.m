@@ -23,7 +23,7 @@
 {
     [super initData:data withProductImgView:productImgView];
     /****  Radial product sets ****/
-    self.iRadius = productImgView.frame.size.height / 2.0 * self.zoomValue;
+    self.iRadius = productImgView.frame.size.height / 2.0;
     self.maxRadarDistance = self.maxWindowCount * self.windowSize;
     // Mercator Coordinate of bounds.
     self.topMerLatitude = EquatorR * log(tan(self.maxRadarDistance * 1000 / (PolarR + (EquatorR - PolarR) * (90 - self.radarCoordinate.latitude) / 90.0) / 2 + self.radarCoordinate.latitude * M_PI_2 / 180.0 + M_PI_4));
@@ -43,9 +43,32 @@
     self.height = self.fileHeadStruct.addSec.Height / 1000.0;
 }
 
+-(void)setDetMByMaxRadarDistance
+{
+    self.maxRadarDistance = self.maxWindowCount * self.windowSize;
+    // Mercator Distance, radius.
+    double maxMerDistance = 0;
+    if (self.radarMerPosition.x - self.leftMerLongitude > self.topMerLatitude - self.radarMerPosition.y)
+    {
+        maxMerDistance = self.leftMerLongitude + (self.radarMerPosition.x - self.leftMerLongitude) * 2 - self.leftMerLongitude;
+    }else{
+        maxMerDistance = (self.topMerLatitude - self.radarMerPosition.y) * 2;
+    }
+    maxMerDistance = maxMerDistance / 2.0;
+    // Attention sequence.
+    self._detM = maxMerDistance / self.iRadius;
+}
+
 -(void)setDetM:(CLLocationCoordinate2D) swCoordinate andNE:(CLLocationCoordinate2D) neCoordinate andHeight: (float) height
 {
-    
+    float topMerValue = 0 + EquatorR * log(tan(M_PI_4 + neCoordinate.latitude * M_PI_2 / 180.0));
+    float buttomMerValue = 0 + EquatorR * log(tan(M_PI_4 + swCoordinate.latitude * M_PI_2 / 180.0));
+    self._detM = (topMerValue - buttomMerValue) / height;
+}
+
+-(float)getDetM
+{
+    return self._detM;
 }
 
 //-(CLLocationCoordinate2D)getCoordinate:(CLLocationCoordinate2D)coordinate andDistance:(double)distance andAngle:(double)angle

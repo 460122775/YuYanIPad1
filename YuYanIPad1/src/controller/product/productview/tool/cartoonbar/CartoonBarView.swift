@@ -20,12 +20,10 @@ protocol CartoonBarDelegate
 
 class CartoonBarView: UIView
 {
-    @IBOutlet var multipleBackBtn: UIButton!
     @IBOutlet var backBtn: UIButton!
     @IBOutlet var sliderBgImg: UIImageView!
     @IBOutlet var sliderBtn: UIButton!
     @IBOutlet var preBtn: UIButton!
-    @IBOutlet var multiplePreBtn: UIButton!
     @IBOutlet var controlBtn: UIButton!
     @IBOutlet var buttonContainerView: UIView!
     
@@ -35,8 +33,8 @@ class CartoonBarView: UIView
     var isPlaying : Bool = false
     var totalCount : Int = 0
     
-    let MAX_SliderX : CGFloat = 400
-    let MIN_SliderX : CGFloat = 110
+    let MAX_SliderX : CGFloat = 352
+    let MIN_SliderX : CGFloat = 62
     
     override init(frame: CGRect)
     {
@@ -65,7 +63,7 @@ class CartoonBarView: UIView
                 return false
             }
         }else{
-            if point.x > 546 && point.y > 0
+            if point.x > 450 && point.y > 0
             {
                 return true
             }else{
@@ -104,9 +102,9 @@ class CartoonBarView: UIView
             self.totalCount = 0
             self.setSliderXByIndex(1)
             sender.selected = true
-            self.buttonContainerView.frame = CGRectMake(546, 0, 0, 48)
+            self.buttonContainerView.frame = CGRectMake(450, 0, 0, 48)
             UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.buttonContainerView.frame = CGRectMake(0, 0, 546, 48)
+                self.buttonContainerView.frame = CGRectMake(0, 0, 450, 48)
             })
             self.sliderBtn.selected = true
             self.cartoonBarDelegate?.prepareCartoonData()
@@ -114,7 +112,7 @@ class CartoonBarView: UIView
         }else{
             sender.selected = false
             UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.buttonContainerView.frame = CGRectMake(546, 0, 0, 48)
+                self.buttonContainerView.frame = CGRectMake(450, 0, 0, 48)
             })
             self.sliderBtn.selected = false
             self.sliderBtnClick(self.sliderBtn)
@@ -151,9 +149,7 @@ class CartoonBarView: UIView
                 return
             }
             self.isPlaying = true
-            self.multipleBackBtn.enabled = false
             self.backBtn.enabled = false
-            self.multiplePreBtn.enabled = false
             self.preBtn.enabled = false
             self.cartoonTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(CartoonBarView.onCartoonTimer(_:)), userInfo: nil, repeats: true)
         }else{
@@ -162,9 +158,7 @@ class CartoonBarView: UIView
                 cartoonTimer.invalidate()
             }
             self.isPlaying = false
-            self.multipleBackBtn.enabled = true
             self.backBtn.enabled = true
-            self.multiplePreBtn.enabled = true
             self.preBtn.enabled = true
         }
     }

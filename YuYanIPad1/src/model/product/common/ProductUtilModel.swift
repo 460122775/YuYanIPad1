@@ -141,7 +141,7 @@ class ProductUtilModel : NSObject {
                 if Int64(_productConfigDic.valueForKey("type") as! Int) == (_productTypeList.objectAtIndex(i) as! NSString).longLongValue
                 {
                     _productDic = NSMutableDictionary()
-                    _productDic.setValue(_productTypeList.objectAtIndex(i), forKey: "type")
+                    _productDic.setValue(NSNumber(int:(_productTypeList.objectAtIndex(i) as! NSString).intValue), forKey: "type")
                     _productDic.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
                     _productDic.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
                     _productDic.setValue(_productConfigDic.objectForKey("colorFile") as! String, forKey: "colorFile")
@@ -203,6 +203,24 @@ class ProductUtilModel : NSObject {
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
 //            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
             NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
+    internal func getNewestDataByType(_productType : Int32)
+    {
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectLastDataByPage?type=\(_productType)"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            NSNotificationCenter.defaultCenter().postNotificationName("\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)",
+                object: NSMutableDictionary(dictionary: resultDic))
         })
         task.resume()
     }

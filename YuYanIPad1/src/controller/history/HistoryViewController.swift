@@ -59,7 +59,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.productContainerView.addSubview(self.switchToolView!)
         // Init tools of the cartoon bar at right bottom corner.
         self.cartoonBarView = (NSBundle.mainBundle().loadNibNamed("CartoonBarView", owner: self, options: nil) as NSArray).lastObject as? CartoonBarView
-        self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
+        self.cartoonBarView!.frame.origin = CGPointMake(428, 630)
         self.cartoonBarView?.cartoonBarDelegate = self
         self.productContainerView.addSubview(self.cartoonBarView!)
         // Init main choice view.
@@ -100,10 +100,14 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             object: nil)
         // Init radar status.
         self.receiveRadarStatus(nil)
+        // Reset Map center.
+        self.productViewA?.setMapCenerByCurrentLocation()
     }
     
     override func viewWillDisappear(animated: Bool)
     {
+        // Save Map center.
+        self.productViewA?.saveCurrentLocation()
         // Remove Observer.
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: nil)

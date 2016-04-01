@@ -52,9 +52,10 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         // Init tools of the cartoon bar at right bottom corner.
         self.cartoonBarView = (NSBundle.mainBundle().loadNibNamed("CartoonBarView", owner: self, options: nil) as NSArray).lastObject as? CartoonBarView
         self.cartoonBarView?.cartoonBarDelegate = self
-        self.cartoonBarView!.frame.origin = CGPointMake(332, 630)
+        self.cartoonBarView!.frame.origin = CGPointMake(428, 630)
         self.productContainerView.addSubview(self.cartoonBarView!)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveProduct(_:)), name: "\(RECEIVE)\(PRODUCT)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveNewestProductByHttp(_:)), name: "\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         // Init user location.
         self.productViewA!.setUserLocationVisible(false, _updateMapCenterByLocation: true)
     }
@@ -87,7 +88,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         // Init radar status.
         self.receiveRadarStatus(nil)
         // Reset Map center.
-//        self.productViewA?.setMapCenerByCurrentLocation()
+        self.productViewA?.setMapCenerByCurrentLocation()
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -178,6 +179,39 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_error"), forState: UIControlState.Normal)
         }else if RadarStatus == RADARSTATUS_ERROR{
             self.radarStatusBtn.setImage(UIImage(named: "topbar_pic_radarstatus_off"), forState: UIControlState.Normal)
+        }
+    }
+    
+    func receiveNewestProductByHttp(notification : NSNotification)
+    {
+        // Clear cartoon data.
+        cartoonPlayArr = nil
+        let resultStr : String = notification.object?.valueForKey("result") as! String
+        if resultStr == FAIL
+        {
+            // Tell reason of FAIL.
+            SwiftNotice.showText("服务端查询失败，请重试!")
+            self.synFlag = true
+            return
+        }
+        // Show result data.
+        let productArr = (notification.object?.valueForKey("list") as? NSMutableArray)
+        // Tell user the result.
+        if productArr == nil || productArr?.count == 0
+        {
+            SwiftNotice.showText(NODATA)
+            self.synFlag = true
+            return
+        }
+        let productDic = productArr?.objectAtIndex(0) as! NSDictionary
+        LogModel.getInstance.insertLog("Receive product from HTTP : [\(productDic)].")
+        var _nameArrTemp : [String]? = (productDic.objectForKey("pos_file") as! String).componentsSeparatedByString("\\")
+        if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
+        {
+            let aa = _nameArrTemp![(_nameArrTemp?.count)! - 2]
+            self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productDic.objectForKey("pos_file") as! String)
+            let _selectedProductDic = NSMutableDictionary(dictionary: productDic)
+            self.selectedProductControl(_selectedProductDic)
         }
     }
     
