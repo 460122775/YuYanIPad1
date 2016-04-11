@@ -138,7 +138,9 @@ class SwiftNotice: NSObject {
         
         if autoClear {
             let selector = #selector(SwiftNotice.hideNotice(_:))
-            self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(autoClearTime))
+            dispatch_async(dispatch_get_main_queue(), {
+                self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(autoClearTime))
+            });
         }
     }
     static func wait(imageNames: Array<UIImage> = Array<UIImage>(), timeInterval: Int = 0) {
@@ -212,7 +214,10 @@ class SwiftNotice: NSObject {
         window.addSubview(mainView)
         windows.append(window)
         let selector = #selector(SwiftNotice.hideNotice(_:))
-        self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(timeInterval))
+        // Must reload data in main queue, or maybe crashed.
+        dispatch_async(dispatch_get_main_queue(), {
+            self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(timeInterval))
+        });
     }
     
     static func showNoticeWithText(type: NoticeType,text: String, autoClear: Bool, autoClearTime: Int) {
@@ -256,7 +261,9 @@ class SwiftNotice: NSObject {
         
         if autoClear {
             let selector = #selector(SwiftNotice.hideNotice(_:))
-            self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(autoClearTime))
+            dispatch_async(dispatch_get_main_queue(), {
+                self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(autoClearTime))
+            });
         }
     }
     

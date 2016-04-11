@@ -37,6 +37,11 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.topTitleBarView.layer.masksToBounds = true
+        // Product Left view.
+        self.productLeftView = (NSBundle.mainBundle().loadNibNamed("ProductLeftView", owner: self, options: nil) as NSArray).lastObject as? ProductLeftView
+        self.productLeftView?.frame.origin = CGPointMake(-240, 0)
+        self.productLeftView?.productLeftViewDelegate = self
+        self.view.addSubview(self.productLeftView!)
         // Init product view.
         self.productViewA = (NSBundle.mainBundle().loadNibNamed("ProductViewA", owner: self, options: nil) as NSArray).lastObject as? ProductViewA
         self.productViewA!.frame.origin = CGPointMake(0, 0)
@@ -56,6 +61,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.productContainerView.addSubview(self.cartoonBarView!)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveProduct(_:)), name: "\(RECEIVE)\(PRODUCT)", object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveNewestProductByHttp(_:)), name: "\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.getProductTypeListControl), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
         // Init user location.
         self.productViewA!.setUserLocationVisible(false, _updateMapCenterByLocation: true)
     }
@@ -89,17 +95,34 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.receiveRadarStatus(nil)
         // Reset Map center.
         self.productViewA?.setMapCenerByCurrentLocation()
+        // Init left bar data.
+        
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         // Save Map center.
         self.productViewA?.saveCurrentLocation()
+        // Stop cartoon.
+        self.cartoonBarView?.stopCartoon()
         // Remove Observer.
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(RECEIVE)\(RADARSTATUS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(APP_ACTIVE)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
+    }
+    
+    // Auto show the first product at the first time.
+    func getProductTypeListControl()
+    {
+        let productArr : NSArray? = ProductUtilModel.getInstance.getProductList()
+        if productArr == nil || productArr!.count == 0
+        {
+            return
+        }
+        let firstProductConfigDic = (productArr!.objectAtIndex(0) as? NSMutableDictionary)!
+        ProductUtilModel.getInstance.getNewestDataByType((firstProductConfigDic.objectForKey("type") as! NSNumber).intValue)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
     }
     
     var productLeftView : ProductLeftView?
@@ -108,13 +131,6 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         sender.selected = !sender.selected
         if sender.selected == true
         {
-            if self.productLeftView == nil
-            {
-                self.productLeftView = (NSBundle.mainBundle().loadNibNamed("ProductLeftView", owner: self, options: nil) as NSArray).lastObject as? ProductLeftView
-                self.productLeftView?.frame.origin = CGPointMake(-240, 0)
-                self.productLeftView?.productLeftViewDelegate = self
-                self.view.addSubview(self.productLeftView!)
-            }
             self.productLeftView!.segmentControlChanged(self.productLeftView!.segmentControl)
             UIView.animateWithDuration(0.6, animations: { () -> Void in
                 self.topTitleBarView.frame.origin = CGPointMake(240, 0)
@@ -208,7 +224,6 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         var _nameArrTemp : [String]? = (productDic.objectForKey("pos_file") as! String).componentsSeparatedByString("\\")
         if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
         {
-            let aa = _nameArrTemp![(_nameArrTemp?.count)! - 2]
             self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productDic.objectForKey("pos_file") as! String)
             let _selectedProductDic = NSMutableDictionary(dictionary: productDic)
             self.selectedProductControl(_selectedProductDic)
@@ -241,8 +256,9 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             let arr : Array = (selectedProductDic.objectForKey("name") as! String).componentsSeparatedByString("\\")
             selectedProductDic.setObject(arr.last!, forKey: "name")
         }
-        self.analyseProduct()
         currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+        self.analyseProduct()
+        
         if currentProductData != nil
         {
             LogModel.getInstance.insertLog("ProductViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
@@ -317,22 +333,26 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func drawProduct(data : NSData)
     {
-        // Init left view by data.
-        self.productLeftView?.setProductLeftViewByData(data)
-        // Init top bar by data.
-        titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
-            + ProductInfoModel.getDataTimeString(data) + "  "
-        if currentProductDic == nil || currentProductDic!.objectForKey("type") == nil
-        {
-            return
-        }
-        let type : Int64 = Int64((currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
-        if type == ProductType_Z || type == ProductType_V || type == ProductType_W
-        {
-            titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
-        }
-        // Draw Color.
-        self.productViewA?.drawProductImg(self.currentProductDic, data: data)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+            // Init left view by data.
+            self.productLeftView?.setProductLeftViewByData(data)
+            // Init top bar by data.
+            self.titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
+                + ProductInfoModel.getDataTimeString(data) + "  " //+ (self.currentProductDic!.objectForKey("cname") as! String)
+            if self.currentProductDic == nil || self.currentProductDic!.objectForKey("type") == nil
+            {
+                return
+            }
+            let type : Int64 = Int64((self.currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
+            if type == ProductType_Z || type == ProductType_V || type == ProductType_W
+            {
+                self.titleLabel.text = self.titleLabel.text! + "[" + (self.currentProductDic!.objectForKey("mcode") as! String) + "°]"
+            }else{
+                
+            }
+            // Draw Color.
+            self.productViewA?.drawProductImg(self.currentProductDic, data: data)
+        });
     }
     
     func initProductInfoByData()
@@ -568,7 +588,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             return
         }
         ProductUtilModel.getInstance.getLastDataForCartoon("", productType:
-            (_selectProductConfigDic!.objectForKey("type") as! NSString).intValue, mcodeString: "")
+            (_selectProductConfigDic!.objectForKey("type") as! NSNumber).intValue, mcodeString: "")
     }
 
     func getLockFlag() -> Bool

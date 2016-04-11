@@ -83,6 +83,14 @@ class CartoonBarView: UIView
         self.sliderBtnClick(self.sliderBtn)
     }
     
+    func stopCartoon()
+    {
+        if self.controlBtn.selected == true
+        {
+            self.controlBtnClick(self.controlBtn)
+        }
+    }
+    
     func getIndexBySliderX() -> Int
     {
         return Int((self.sliderBtn.frame.origin.x - MIN_SliderX) / (MAX_SliderX - MIN_SliderX) * CGFloat(self.totalCount - 1)) + 1

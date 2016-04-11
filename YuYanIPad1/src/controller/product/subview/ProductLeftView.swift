@@ -28,11 +28,11 @@ class ProductLeftView: UIView, ProductListProtocol
     {
         super.init(coder: coder)
     }
-    
+
     var productListView : ProductListView?
     var productInfoView : ProductInfoView?
     var productLeftViewDelegate : ProductLeftViewProtocol?
-    
+
     @IBAction func segmentControlChanged(sender: UISegmentedControl)
     {
         if self.segmentControl.selectedSegmentIndex == 0
@@ -68,6 +68,10 @@ class ProductLeftView: UIView, ProductListProtocol
     
     func setProductLeftViewByData(data : NSData)
     {
+        if self.segmentControl == nil
+        {
+            return
+        }
         if self.segmentControl.selectedSegmentIndex == 1
         {
             if self.productInfoView != nil

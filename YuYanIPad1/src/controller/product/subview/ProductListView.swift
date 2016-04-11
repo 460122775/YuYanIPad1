@@ -161,7 +161,7 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
 //            SwiftNotice.showText("未收集到该产品!")
             ProductUtilModel.getInstance.getNewestDataByType((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue)
         }else{
-            SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
+//            SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
             if productListDelegate != nil
             {
                 self.productListDelegate?.productSelectControl(_selectProductConfigDic!.objectForKey("name") as! String)

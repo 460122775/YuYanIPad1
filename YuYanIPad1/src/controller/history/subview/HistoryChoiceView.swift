@@ -117,7 +117,7 @@ class HistoryChoiceView : UIView
         }else if sender == preciseTimeBtn_sixHour{
             self.startTime = self.endTime?.dateByAddingTimeInterval(-6 * 60 * 60)
         }else if sender == preciseTimeBtn_twelveHour{
-            self.startTime = self.startTime?.dateByAddingTimeInterval(-12 * 60 * 60)
+            self.startTime = self.endTime?.dateByAddingTimeInterval(-12 * 60 * 60)
         }else if sender == preciseTimeBtn_oneDay{
             self.startTime = self.endTime?.dateByAddingTimeInterval(-24 * 60 * 60)
         }

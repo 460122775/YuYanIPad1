@@ -108,6 +108,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     {
         // Save Map center.
         self.productViewA?.saveCurrentLocation()
+        // Stop cartoon.
+        self.cartoonBarView?.stopCartoon()
         // Remove Observer.
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: nil)
@@ -120,7 +122,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         sender.selected = !sender.selected
         if sender.selected == true
         {
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
+            UIView.animateWithDuration(0.6, animations: { () -> Void in
                 self.topTitleBarView.frame.origin = CGPointMake(240, 0)
                 self.topTitleBarView.frame.size = CGSizeMake(580, 48)
                 self.historyLeftViewContainer.frame.origin = CGPointMake(0, 0)
@@ -129,7 +131,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             })
         }else{
             self.titleBarBgImg.frame.size = CGSizeMake(762, 48)
-            UIView.animateWithDuration(1.0, animations: { () -> Void in
+            UIView.animateWithDuration(0.6, animations: { () -> Void in
                 self.topTitleBarView.frame = CGRectMake(0, 0, 820, 48)
                 self.historyLeftViewContainer.frame.origin = CGPointMake(-240, 0)
             })

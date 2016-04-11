@@ -116,7 +116,7 @@
                 {
                     value = value * 2 + 56.0;
                     if (value > 255) value = 255;
-                    colorValueArray = (NSArray*)([_colorArray objectAtIndex:value]);
+                    colorValueArray = (NSArray*)([_colorArray objectAtIndex:(int)(value)]);
                     CGContextSetRGBFillColor(context,
                                              [[NSNumber numberWithFloat:[colorValueArray[0] floatValue]] floatValue],
                                              [[NSNumber numberWithFloat:[colorValueArray[1] floatValue]] floatValue],

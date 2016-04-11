@@ -200,8 +200,9 @@ class ProductUtilModel : NSObject {
             {
                 return
             }
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
-//            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            
             NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYPRODUCT)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
         })
         task.resume()
@@ -273,7 +274,7 @@ class ProductUtilModel : NSObject {
         dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
         let time = dateFormatter.dateFromString(timeStr)!.timeIntervalSince1970 - 1
         let urlStr : NSString = "\(URL_Server)/ios/product/selectSameMcodeProduct?time=\(Int64(time))&type=\(_productType)&count=\(1)&mcode=\((_mcodeStr! as NSString))"
-        LogModel.getInstance.insertLog("\(urlStr)")
+        LogModel.getInstance.insertLog("\(timeStr)=\(time)>>>\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             if response == nil || data == nil
@@ -300,7 +301,7 @@ class ProductUtilModel : NSObject {
             time = Int64(dateFormatter.dateFromString(timeStr)!.timeIntervalSince1970) + Int64(1)
         }
         let urlStr : NSString = "\(URL_Server)/ios/product/selectSameMcodeProduct?time=\(Int64(time))&type=\(_productType)&count=\(8)&mcode=\((_mcodeStr! as NSString))"
-        LogModel.getInstance.insertLog("\(urlStr)")
+        LogModel.getInstance.insertLog("\(timeStr)=\(time)>>>\(urlStr)")
         let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
         let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             if response == nil || data == nil

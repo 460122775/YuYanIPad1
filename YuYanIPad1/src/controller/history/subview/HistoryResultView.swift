@@ -53,6 +53,8 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
     
     func changResultTitle(_currentProductConfigDic : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     {
+        // Clear.
+        self.setHistoryQueryResultArr(nil)
         self.currentProductConfigDic = _currentProductConfigDic
         self.startTimeStr = startTimeStr
         self.endTimeStr = endTimeStr
@@ -91,11 +93,11 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
                 self.elevationChooseBtn.hidden = false
                 self.elevationChooseBtn.enabled = true
             }
-            // Must reload data in main queue, or maybe crashed.
-            dispatch_async(dispatch_get_main_queue(), {
-                self.resultTableView.reloadData()
-            });
         }
+        // Must reload data in main queue, or maybe crashed.
+        dispatch_async(dispatch_get_main_queue(), {
+            self.resultTableView.reloadData()
+        });
     }
     
     func setSelectedProductDic(productDic : NSMutableDictionary)

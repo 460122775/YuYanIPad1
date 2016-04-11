@@ -40,6 +40,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     var radarPosition : CGPoint!
     var productImgBounds : MGLCoordinateBounds!
     var lastZoomValue : Double = 0
+    var isFirstTime : Bool = true
     
     var pinchGesture : UIPinchGestureRecognizer?
     var panGesture : UIPanGestureRecognizer?
@@ -65,38 +66,10 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         self.mapView.delegate = self
         self.mapView.rotateEnabled = false
         self.mapView.pitchEnabled = false
-        self.mapView.setCenterCoordinate(CLLocationCoordinate2DMake(39.915168,116.403875),animated:true)
+        self.mapView.setCenterCoordinate(CLLocationCoordinate2DMake(30.666667,104.066667),animated:true)
         // Set default location.
         radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
-//        self.initGestureReconizer(true)
-    }
-    
-    func mapViewRegionIsChanging(mapView: MGLMapView)
-    {
-        if self.currentProductModel != nil
-        {
-            let _radarPosition = mapView.convertCoordinate((self.currentProductModel?.radarCoordinate)!, toPointToView: mapView)
-            // Zoom.
-            if self.mapView.zoomLevel != lastZoomValue
-            {
-                let zoomOffset = CGFloat(pow(2, self.mapView.zoomLevel - lastZoomValue))
-                let widthOffset = zoomOffset * self.productImgVIew.frame.size.width
-                let heightOffset = zoomOffset * self.productImgVIew.frame.size.height
-                self.productImgVIew.frame = CGRectMake(
-                    _radarPosition.x - widthOffset / 2,
-                    _radarPosition.y - heightOffset / 2,
-                    widthOffset,
-                    heightOffset
-                )
-                lastZoomValue = self.mapView.zoomLevel
-            // Pan.
-            }else{
-                self.productImgVIew.frame.origin = CGPointMake(
-                    _radarPosition.x - self.productImgVIew.frame.width / 2,
-                    _radarPosition.y - self.productImgVIew.frame.height / 2
-                )
-            }
-        }
+        self.initGestureReconizer(true)
     }
     
     func mapView(mapView: MGLMapView, regionDidChangeAnimated animated: Bool)
@@ -119,20 +92,20 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         if isAddGestureReconizer == true
         {
             // Drag.
-            if panGesture == nil
-            {
-                panGesture = UIPanGestureRecognizer(target: self, action: #selector(ProductViewA.handlePanGesture(_:)))
-                panGesture!.minimumNumberOfTouches = 1
-                panGesture!.maximumNumberOfTouches = 1
-            }
-            self.productImgVIew.addGestureRecognizer(panGesture!)
+//            if panGesture == nil
+//            {
+//                panGesture = UIPanGestureRecognizer(target: self, action: #selector(ProductViewA.handlePanGesture(_:)))
+//                panGesture!.minimumNumberOfTouches = 1
+//                panGesture!.maximumNumberOfTouches = 1
+//            }
+//            self.productImgVIew.addGestureRecognizer(panGesture!)
             // To Right.
             if swipeRightGesture == nil
             {
                 swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(ProductViewA.handleSwipeLRGesture(_:)))
                 swipeRightGesture!.numberOfTouchesRequired = 2
             }
-            self.productImgVIew.addGestureRecognizer(swipeRightGesture!)
+            self.mapView.addGestureRecognizer(swipeRightGesture!)
             // To Left
             if swipeLeftGesture == nil
             {
@@ -140,7 +113,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
                 swipeLeftGesture!.numberOfTouchesRequired = 2
                 swipeLeftGesture!.direction = UISwipeGestureRecognizerDirection.Left
             }
-            self.productImgVIew.addGestureRecognizer(swipeLeftGesture!)
+            self.mapView.addGestureRecognizer(swipeLeftGesture!)
             // To Up.
             if swipeUpGesture == nil
             {
@@ -149,7 +122,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
                 swipeUpGesture!.direction = UISwipeGestureRecognizerDirection.Up
 
             }
-            self.productImgVIew.addGestureRecognizer(swipeUpGesture!)
+            self.mapView.addGestureRecognizer(swipeUpGesture!)
             // To Down.
             if swipeDownGesture == nil
             {
@@ -157,7 +130,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
                 swipeDownGesture!.numberOfTouchesRequired = 2
                 swipeDownGesture!.direction = UISwipeGestureRecognizerDirection.Down
             }
-            self.productImgVIew.addGestureRecognizer(swipeDownGesture!)
+            self.mapView.addGestureRecognizer(swipeDownGesture!)
         }else{
             self.productImgVIew.removeGestureRecognizer(pinchGesture!)
             self.productImgVIew.removeGestureRecognizer(panGesture!)
@@ -220,8 +193,34 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         }
     }
     
-    var lastSize : CGSize = CGSizeMake(0, 0)
-    var isFirstTime : Bool = true
+    func mapViewRegionIsChanging(mapView: MGLMapView)
+    {
+        if self.currentProductModel != nil
+        {
+            let _radarPosition = mapView.convertCoordinate((self.currentProductModel?.radarCoordinate)!, toPointToView: mapView)
+            // Zoom.
+            if self.mapView.zoomLevel != lastZoomValue
+            {
+                let zoomOffset = CGFloat(pow(2, self.mapView.zoomLevel - lastZoomValue))
+                let widthOffset = zoomOffset * self.productImgVIew.frame.size.width
+                let heightOffset = zoomOffset * self.productImgVIew.frame.size.height
+                self.productImgVIew.frame = CGRectMake(
+                    _radarPosition.x - widthOffset / 2,
+                    _radarPosition.y - heightOffset / 2,
+                    widthOffset,
+                    heightOffset
+                )
+                lastZoomValue = self.mapView.zoomLevel
+                // Pan.
+            }else{
+                self.productImgVIew.frame.origin = CGPointMake(
+                    _radarPosition.x - self.productImgVIew.frame.width / 2,
+                    _radarPosition.y - self.productImgVIew.frame.height / 2
+                )
+            }
+        }
+    }
+
     func drawProductImg(_productDic : NSMutableDictionary?, data : NSData)
     {
         if _productDic == nil
@@ -235,8 +234,10 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             ((currentProductDic?.objectForKey("type") as! NSNumber).intValue != (_productDic?.objectForKey("type") as! NSNumber).intValue)
         {
             let _data =  ColorModel.drawColorImg(_productDic?.objectForKey("colorFile") as! String, colorImgView: colorImgView)
-            self.colorImgView.image = _data.image
-            self.colorContainerView.hidden = false
+            dispatch_async(dispatch_get_main_queue(), {
+                self.colorImgView.image = _data.image
+                self.colorContainerView.hidden = false
+            });
             if currentColorDataArray != nil
             {
                 currentColorDataArray?.removeAllObjects()
@@ -276,14 +277,16 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         }
         // Set size of radar image by map`s detM.
         let currentRadarImgDetM = self.currentProductModel?.getDetM()
-        productImgBounds = self.mapView.convertRect(CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height), toCoordinateBoundsFromView: self.mapView)
-        self.currentProductModel?.setDetM(productImgBounds.sw, andNE: productImgBounds.ne, andHeight: Float(self.productImgVIew.frame.size.height))
+        self.productImgBounds = self.mapView.convertRect(CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height), toCoordinateBoundsFromView: self.mapView)
+        self.currentProductModel?.setDetM(self.productImgBounds.sw, andNE: self.productImgBounds.ne, andHeight: Float(self.productImgVIew.frame.size.height))
         let newRadarImgDetM = self.currentProductModel?.getDetM()
         self.productImgVIew.frame.size = CGSizeMake(
             self.productImgVIew.frame.size.width * CGFloat(currentRadarImgDetM! / newRadarImgDetM!) ,
             self.productImgVIew.frame.size.height * CGFloat(currentRadarImgDetM! / newRadarImgDetM!))
         // Set to the same origin.
-        self.mapViewRegionIsChanging(self.mapView)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.mapViewRegionIsChanging(self.mapView)
+        });
         print("05:" + String(NSDate().timeIntervalSince1970))
     }
     
@@ -291,19 +294,25 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     func setUserLocationVisible(visible : Bool, _updateMapCenterByLocation : Bool)
     {
         updateMapCenterByLocation = _updateMapCenterByLocation
-        if locationManager == nil
+        if self.locationManager == nil
         {
-            locationManager = CLLocationManager()
-            locationManager?.delegate = self
-            locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
-            locationManager?.distanceFilter = 500
-            locationManager?.requestWhenInUseAuthorization()
+            self.locationManager = CLLocationManager()
+            self.locationManager?.delegate = self
+            self.locationManager?.desiredAccuracy = kCLLocationAccuracyKilometer
+            self.locationManager?.distanceFilter = 500
+            self.locationManager?.requestWhenInUseAuthorization()
         }
         if visible == true || updateMapCenterByLocation
         {
-            locationManager?.startUpdatingLocation()
+            self.locationManager?.startUpdatingLocation()
         }else{
-            locationManager?.stopUpdatingLocation()
+            self.locationManager?.stopUpdatingLocation()
+        }
+        if visible == false && self.currentProductModel != nil
+        {
+            self.currentLocation = self.currentProductModel?.radarCoordinate
+            self.mapView.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: false)
+            self.mapViewRegionIsChanging(self.mapView)
         }
         self.mapView.showsUserLocation = visible
     }
@@ -324,12 +333,13 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     // CLLocationManagerDelegate.
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-//        currentLocation = locations[0].coordinate
         if updateMapCenterByLocation == true
         {
             updateMapCenterByLocation = false
-//            self.mapView.setCenterCoordinate((currentLocation)!, animated: true)
+            self.mapView.setCenterCoordinate((locations[0].coordinate), animated: false)
+            currentLocation = self.mapView.centerCoordinate
             locationManager?.stopUpdatingLocation()
+            self.mapViewRegionIsChanging(self.mapView)
         }
     }
     

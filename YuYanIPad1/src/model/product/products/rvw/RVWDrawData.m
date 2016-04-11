@@ -103,6 +103,7 @@
                 charvalue = (unsigned char *)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct) + self.sizeofRadial * seta + RadialHeadLength + iRb, sizeof(unsigned char))] bytes];
                 if (charvalue[0] > 1 && charvalue[0] < 255)
                 {
+                    if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
                     colorValueArray = (NSArray*)([_colorArray objectAtIndex:charvalue[0]]);
                     CGContextSetRGBFillColor(context,
                                              [[NSNumber numberWithFloat:[colorValueArray[0] floatValue]] floatValue],
@@ -133,9 +134,13 @@
     }
     NSDate* date3 = [[NSDate alloc] init];
     NSLog(@"3:%f", [date3 timeIntervalSinceDate:date2] * 1000);
-    // Show image...
-    productImgView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage* image =UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        productImgView.image = image;
+    });
+//    productImgView.image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
 }
 
 @end
