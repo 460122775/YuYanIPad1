@@ -31,6 +31,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     var currentProductData : NSData?
     var requestLayer : Int32 = -1
     var synFlag : Bool = true
+    var titleStr : String = "--"
     
     override func viewDidLoad()
     {
@@ -95,8 +96,6 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.receiveRadarStatus(nil)
         // Reset Map center.
         self.productViewA?.setMapCenerByCurrentLocation()
-        // Init left bar data.
-        
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -225,7 +224,16 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
         {
             self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productDic.objectForKey("pos_file") as! String)
-            let _selectedProductDic = NSMutableDictionary(dictionary: productDic)
+            let _selectedProductDic = NSMutableDictionary()
+            _selectedProductDic.setObject(productDic.objectForKey("file_size")!, forKey: "file_size")
+            _selectedProductDic.setObject(productDic.objectForKey("id")!, forKey: "id")
+            _selectedProductDic.setObject(productDic.objectForKey("layer")!, forKey: "layer")
+            _selectedProductDic.setObject(productDic.objectForKey("mcode")!, forKey: "mcode")
+            _selectedProductDic.setObject(productDic.objectForKey("name")!, forKey: "name")
+            _selectedProductDic.setObject(productDic.objectForKey("pos_file")!, forKey: "pos_file")
+            _selectedProductDic.setObject(productDic.objectForKey("scan_mode")!, forKey: "scan_mode")
+            _selectedProductDic.setObject(productDic.objectForKey("time")!, forKey: "time")
+            _selectedProductDic.setObject(productDic.objectForKey("type")!, forKey: "type")
             self.selectedProductControl(_selectedProductDic)
         }
     }
@@ -247,112 +255,145 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         }
     }
     
-    // ProductLeftViewProtocol Protocol.
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
-        currentProductDic = selectedProductDic
-        if (selectedProductDic.objectForKey("name") as! String).containsString("\\")
+        self.currentProductDic = selectedProductDic
+        if (self.currentProductDic!.objectForKey("name") as! String).containsString("\\")
         {
             let arr : Array = (selectedProductDic.objectForKey("name") as! String).componentsSeparatedByString("\\")
-            selectedProductDic.setObject(arr.last!, forKey: "name")
+            self.currentProductDic!.setObject(arr.last!, forKey: "name")
         }
-        currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
-        self.analyseProduct()
+        print("11=====================")
+        let analyseProductOperation = NSBlockOperation{ () -> Void in
+            print("21=====================")
+            if self.currentProductDic!.valueForKey("level") == nil || self.currentProductDic!.valueForKey("colorFile") == nil
+            {
+                // Set Level for each Product.
+                if self.productDicArr == nil
+                {
+                    self.productDicArr = ProductUtilModel.getInstance.getProductConfigArr()
+                }
+                for productConfig in self.productDicArr!
+                {
+                    if  ((productConfig as! NSDictionary).valueForKey("type") as! NSNumber).longLongValue == (self.currentProductDic!.valueForKey("type") as! NSNumber).longLongValue
+                    {
+                        self.currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("colorFile"), forKey: "colorFile")
+                        self.currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("level"), forKey: "level")
+                        self.currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("cname"), forKey: "cname")
+                        break
+                    }
+                }
+            }
+            let level : Int64 = (self.currentProductDic!.valueForKey("level") as! NSNumber).longLongValue
+            let scanMode : Int64 = Int64((self.currentProductDic!.valueForKey("name") as! NSString).substringWithRange(NSRange(location: 23, length: 3)))!
+            // Is VOL && Set SwitchToolView.
+            if level == LEVEL_FIRSTCLASS && scanMode >= 0 && scanMode <= 9
+            {
+                self.switchToolView!.setBtnVisible(false, hideVolBtn: false)
+                self.currentProductDic!.setValue((self.currentProductDic!.valueForKey("name") as! NSString).substringWithRange(NSRange(location: 16, length: 2)), forKey: "layer")
+            }else{
+                self.switchToolView!.setBtnVisible(true, hideVolBtn: false)
+            }
+            print("22=====================")
+        }
         
-        if currentProductData != nil
-        {
-            LogModel.getInstance.insertLog("ProductViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
-            // Draw product.
-            self.drawProduct(self.currentProductData!)
-            self.synFlag = true
-        }else{
-            LogModel.getInstance.insertLog("ProductViewController download selected data1:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-            // Compose url.
-            var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
-            url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
-            url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
-            // Download data.
-            Alamofire.request(.GET, url).responseData { response in
-                LogModel.getInstance.insertLog("ProductViewController downloaded selected data2:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-                if response.result.value == nil || response.result.value?.length <= 48
-                {
-                    // Tell reason to user.
-                    SwiftNotice.showText("数据文件下载失败，请检查网络后重试！")
-                    self.synFlag = true
-                    return
-                }
-                // Cache data.
-                CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
-                self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
-                if self.currentProductData == nil
-                {
-                    // Cache failed, maybe the reason of uncompress failed.
-                    // Tell reason to user.
-                    SwiftNotice.showText("数据格式解压失败，或不支持此格式！")
-                    self.synFlag = true
-                    return
-                }else{
-                    // Draw product.
-                    self.drawProduct(self.currentProductData!)
-                    self.synFlag = true
-                }
-            }
-        }
-    }
-    
-    func analyseProduct()
-    {
-        if currentProductDic!.valueForKey("level") == nil || currentProductDic!.valueForKey("colorFile") == nil
-        {
-            // Set Level for each Product.
-            if productDicArr == nil
+        let drawProductOperation = NSBlockOperation{ () -> Void in
+            print("51=====================")
+            if self.currentProductData != nil
             {
-                productDicArr = ProductUtilModel.getInstance.getProductConfigArr()
+                self.drawProduct(self.currentProductData!)
+                self.synFlag = true
             }
-            for productConfig in productDicArr!
+            print("52=====================")
+        }
+        
+        // Prepare data.
+        let prepareDataOperation = NSBlockOperation{ () -> Void in
+            print("31=====================")
+            self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+            if self.currentProductData == nil
             {
-                if  ((productConfig as! NSDictionary).valueForKey("type") as! NSNumber).longLongValue == (currentProductDic!.valueForKey("type") as! NSNumber).longLongValue
-                {
-                    currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("colorFile"), forKey: "colorFile")
-                    currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("level"), forKey: "level")
-                    break
+                LogModel.getInstance.insertLog("ProductViewController download selected data1:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                // Compose url.
+                var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
+                url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
+                url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
+                // Download data.
+                Alamofire.request(.GET, url).responseData { response in
+                    print("41=====================")
+                    LogModel.getInstance.insertLog("ProductViewController downloaded selected data2:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                    if response.result.value == nil || response.result.value?.length <= 48
+                    {
+                        // Tell reason to user.
+                        SwiftNotice.showText("数据文件下载失败，请检查网络后重试！")
+                        self.synFlag = true
+                        return
+                    }
+                    // Cache data.
+                    CacheManageModel.getInstance.addCacheForProductFile(self.currentProductDic!.objectForKey("name") as! String, data: response.result.value!)
+                    self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(self.currentProductDic!.objectForKey("name") as! String)
+                    if self.currentProductData == nil
+                    {
+                        // Cache failed, maybe the reason of uncompress failed.
+                        // Tell reason to user.
+                        SwiftNotice.showText("数据格式解压失败，或不支持此格式！")
+                        self.synFlag = true
+                        return
+                    }else{
+                       drawProductOperation.start()
+                    }
+                    print("42=====================")
                 }
+            }else{
+                drawProductOperation.start()
             }
+            print("32=====================")
         }
-        let level : Int64 = (currentProductDic!.valueForKey("level") as! NSNumber).longLongValue
-        let scanMode : Int64 = Int64((currentProductDic!.valueForKey("name") as! NSString).substringWithRange(NSRange(location: 23, length: 3)))!
-        // Is VOL && Set SwitchToolView.
-        if level == LEVEL_FIRSTCLASS && scanMode >= 0 && scanMode <= 9
-        {
-            self.switchToolView!.setBtnVisible(false, hideVolBtn: false)
-            currentProductDic!.setValue((currentProductDic!.valueForKey("name") as! NSString).substringWithRange(NSRange(location: 16, length: 2)), forKey: "layer")
-        }else{
-            self.switchToolView!.setBtnVisible(true, hideVolBtn: false)
-        }
+        prepareDataOperation.addDependency(analyseProductOperation)
+        let queue = NSOperationQueue()
+        queue.addOperations([prepareDataOperation, analyseProductOperation], waitUntilFinished: false)
+        print("12=====================")
     }
-    
+
     func drawProduct(data : NSData)
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
-            // Init left view by data.
-            self.productLeftView?.setProductLeftViewByData(data)
-            // Init top bar by data.
-            self.titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
-                + ProductInfoModel.getDataTimeString(data) + "  " //+ (self.currentProductDic!.objectForKey("cname") as! String)
-            if self.currentProductDic == nil || self.currentProductDic!.objectForKey("type") == nil
-            {
-                return
-            }
-            let type : Int64 = Int64((self.currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
-            if type == ProductType_Z || type == ProductType_V || type == ProductType_W
-            {
-                self.titleLabel.text = self.titleLabel.text! + "[" + (self.currentProductDic!.objectForKey("mcode") as! String) + "°]"
-            }else{
-                
-            }
-            // Draw Color.
-            self.productViewA?.drawProductImg(self.currentProductDic, data: data)
-        });
+        // Init left view by data.
+        self.productLeftView?.setProductLeftViewByData(data)
+        // Init top bar by data.
+        self.titleStr = ProductInfoModel.getDataDateString(data) + "  "
+            + ProductInfoModel.getDataTimeString(data) + "  " + (self.currentProductDic!.objectForKey("cname") as! String)
+        if self.currentProductDic == nil || self.currentProductDic!.objectForKey("type") == nil
+        {
+            return
+        }
+        let type : Int64 = Int64((self.currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
+        if type == ProductType_Z || type == ProductType_V || type == ProductType_W
+        {
+            self.titleStr = self.titleStr + "[" + (self.currentProductDic!.objectForKey("mcode") as! String) + "°]"
+        }
+        dispatch_async(dispatch_get_main_queue(), {
+            self.titleLabel.text = self.titleStr
+        })
+        // Draw Product Img.
+        self.productViewA?.drawProductImg(self.currentProductDic, data: data)
+    }
+    
+    // Product left view delegate
+    func chooseProductFromLeftList(productType : Int32, selectedProductDic: NSMutableDictionary?)
+    {
+        // Clear all.
+        self.cartoonBarView?.stopCartoon()
+        self.productViewA?.clearProductView()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.titleLabel.text = "--"
+        })
+        // Draw newest product or fetch the newest one from server.
+        if selectedProductDic != nil
+        {
+            self.selectedProductControl(selectedProductDic!)
+        }else{
+            ProductUtilModel.getInstance.getNewestDataByType(productType)
+        }
     }
     
     func initProductInfoByData()
@@ -541,6 +582,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
                     // Not Found.
                     }else{
                         SwiftNotice.showText("当前已经是最高层了!")
+                        self.synFlag = true
                         return
                     }
                     self.selectedProductControl(currentProductDic!)
@@ -565,30 +607,26 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             return
         }
         // Show result data.
-        cartoonPlayArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
+        self.cartoonPlayArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
         // Tell user the result.
-        if cartoonPlayArr == nil || cartoonPlayArr?.count == 0
+        if self.cartoonPlayArr == nil || self.cartoonPlayArr?.count == 0
         {
             SwiftNotice.showText(NODATA)
             return
-        }
-        // Press up || down Btn.
-        if cartoonPlayArr?.count > 1
-        {
-            self.cartoonBarView?.playCartoon((cartoonPlayArr?.count)!)
+        }else if self.cartoonPlayArr?.count > 1{
+            self.cartoonBarView?.playCartoon((self.cartoonPlayArr?.count)!)
         }
     }
     
     // Cartoon Bar Delagate.
     func prepareCartoonData()
     {
-        let _selectProductConfigDic = self.productLeftView?.getSelectProductConfigForCartoon()
-        if _selectProductConfigDic == nil
+        if self.currentProductDic == nil
         {
             return
         }
         ProductUtilModel.getInstance.getLastDataForCartoon("", productType:
-            (_selectProductConfigDic!.objectForKey("type") as! NSNumber).intValue, mcodeString: "")
+            (self.currentProductDic!.objectForKey("type") as! NSNumber).intValue, mcodeString: "")
     }
 
     func getLockFlag() -> Bool
@@ -599,10 +637,10 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     func drawProductAtNo(playIndex: Int)
     {
         print("Draw At \(playIndex)")
-        if cartoonPlayArr != nil && cartoonPlayArr!.count > 0 && playIndex <= cartoonPlayArr?.count
+        if self.cartoonPlayArr != nil && self.cartoonPlayArr!.count > 0 && playIndex <= self.cartoonPlayArr?.count
         {
             self.synFlag = false
-            currentProductDic = NSMutableDictionary(dictionary: (cartoonPlayArr?.objectAtIndex(playIndex - 1) as? NSMutableDictionary)!)
+            currentProductDic = NSMutableDictionary(dictionary: (self.cartoonPlayArr?.objectAtIndex(playIndex - 1) as? NSMutableDictionary)!)
             self.selectedProductControl(currentProductDic!)
         }
     }

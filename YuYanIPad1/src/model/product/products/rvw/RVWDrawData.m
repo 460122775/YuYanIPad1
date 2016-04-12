@@ -30,12 +30,11 @@
     self.sizeofRadial = self.iBinNumber + RadialHeadLength;
 }
 
--(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray:(NSMutableArray *)_colorArray
+-(UIImage*)getImageData:(CGSize) imgSize andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray;
 {
-    NSDate* date1 = [[NSDate alloc] init];
-    if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
-    [super getImageData:productImgView andData:data colorArray:_colorArray];
-    UIGraphicsBeginImageContext(productImgView.frame.size);
+    if (data == nil || _colorArray == nil || _colorArray.count == 0) return nil;
+    UIImage* productImg = [super getImageData:imgSize andData:data colorArray:_colorArray];
+    UIGraphicsBeginImageContext(imgSize);
     CGContextRef context = UIGraphicsGetCurrentContext();
     NSArray *colorValueArray = nil;
     unsigned char *charvalue;
@@ -49,12 +48,12 @@
     
     // Judge if it is in the productImgView`s Bounds.
     if (yMin < 0) yMin = 0;
-    if (yMax > productImgView.frame.size.height)
+    if (yMax > imgSize.height)
     {
-        yMax = productImgView.frame.size.height;
+        yMax = imgSize.height;
     }
     // Select the drawing bound, according to the radar center relative to the productImgView center.
-    if (self.radarPosition.x < productImgView.frame.size.width / 2)
+    if (self.radarPosition.x < imgSize.width / 2)
     {
         xMin = self.radarPosition.x;
     }else{
@@ -62,17 +61,17 @@
     }
     // Judge if it is in the productImgView`s Bounds.
     if (xMin < 0) xMin = 0;
-    if (xMin >= productImgView.frame.size.width)
+    if (xMin >= imgSize.width)
     {
-        xMax = productImgView.frame.size.width - 1;
+        xMax = imgSize.width - 1;
     }
     CLLocationCoordinate2D radarCoordinate1 = CLLocationCoordinate2DMake(self.radarCoordinate.latitude * M_PI / 180, self.radarCoordinate.longitude * M_PI / 180);
     CLLocationCoordinate2D radarCoordinate2;
     float lat1_cos = cos(radarCoordinate1.latitude);
     float lat1_sin = sinf(radarCoordinate1.latitude);
     int xSymmetric = 0;
-    NSDate* date2 = [[NSDate alloc] init];
-    NSLog(@"2:%f", [date2 timeIntervalSinceDate:date1]  * 1000);
+    
+    NSLog(@"2:%f", [[NSDate alloc] init].timeIntervalSince1970 * 1000);
     for (int x = xMin; x <= xMax; x++)
     {
         int x_x0 = x - self.radarPosition.x;
@@ -103,7 +102,7 @@
                 charvalue = (unsigned char *)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct) + self.sizeofRadial * seta + RadialHeadLength + iRb, sizeof(unsigned char))] bytes];
                 if (charvalue[0] > 1 && charvalue[0] < 255)
                 {
-                    if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
+                    if (data == nil || _colorArray == nil || _colorArray.count == 0) return nil;
                     colorValueArray = (NSArray*)([_colorArray objectAtIndex:charvalue[0]]);
                     CGContextSetRGBFillColor(context,
                                              [[NSNumber numberWithFloat:[colorValueArray[0] floatValue]] floatValue],
@@ -113,7 +112,7 @@
                     CGContextStrokePath(context);
                 }
                 // Judge x_Symmetric_point is in the symmetric area, devide the Central axis.
-                if (xSymmetric != x && xSymmetric >= 0 && xSymmetric < productImgView.frame.size.width)
+                if (xSymmetric != x && xSymmetric >= 0 && xSymmetric < imgSize.width)
                 {
                     // Draw right half of product.
                     seta = 359 - seta;
@@ -132,15 +131,10 @@
             }
         }
     }
-    NSDate* date3 = [[NSDate alloc] init];
-    NSLog(@"3:%f", [date3 timeIntervalSinceDate:date2] * 1000);
-    UIImage* image =UIGraphicsGetImageFromCurrentImageContext();
+    NSLog(@"3:%f", [[NSDate alloc] init].timeIntervalSince1970 * 1000);
+    productImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    dispatch_async(dispatch_get_main_queue(), ^{
-        productImgView.image = image;
-    });
-//    productImgView.image = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
+    return productImg;
 }
 
 @end

@@ -185,37 +185,36 @@ class SwiftNotice: NSObject {
         windows.append(window)
     }
     static func showText(text: String, timeInterval: Int = 3) {
-        let window = UIWindow()
-        window.backgroundColor = UIColor.clearColor()
-        let mainView = UIView()
-        mainView.layer.cornerRadius = 12
-        mainView.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 0.8)
-        
-        let label = UILabel()
-        label.text = text
-        label.numberOfLines = 0
-        label.font = UIFont.systemFontOfSize(13)
-        label.textAlignment = NSTextAlignment.Center
-        label.textColor = UIColor.whiteColor()
-        label.sizeToFit()
-        mainView.addSubview(label)
-        
-        let superFrame = CGRectMake(0, 0, label.frame.width + 50 , label.frame.height + 30)
-        window.frame = superFrame
-        mainView.frame = superFrame
-        
-        label.center = mainView.center
-        
-        window.windowLevel = UIWindowLevelAlert
-        window.center = getRealCenter()
-        // change orientation
-        window.transform = CGAffineTransformMakeRotation(CGFloat(degree * M_PI / 1))
-        window.hidden = false
-        window.addSubview(mainView)
-        windows.append(window)
-        let selector = #selector(SwiftNotice.hideNotice(_:))
-        // Must reload data in main queue, or maybe crashed.
         dispatch_async(dispatch_get_main_queue(), {
+            let window = UIWindow()
+            window.backgroundColor = UIColor.clearColor()
+            let mainView = UIView()
+            mainView.layer.cornerRadius = 12
+            mainView.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 0.8)
+            
+            let label = UILabel()
+            label.text = text
+            label.numberOfLines = 0
+            label.font = UIFont.systemFontOfSize(13)
+            label.textAlignment = NSTextAlignment.Center
+            label.textColor = UIColor.whiteColor()
+            label.sizeToFit()
+            mainView.addSubview(label)
+            
+            let superFrame = CGRectMake(0, 0, label.frame.width + 50 , label.frame.height + 30)
+            window.frame = superFrame
+            mainView.frame = superFrame
+            
+            label.center = mainView.center
+            
+            window.windowLevel = UIWindowLevelAlert
+            window.center = getRealCenter()
+            // change orientation
+            window.transform = CGAffineTransformMakeRotation(CGFloat(degree * M_PI / 1))
+            window.hidden = false
+            window.addSubview(mainView)
+            windows.append(window)
+            let selector = #selector(SwiftNotice.hideNotice(_:))
             self.performSelector(selector, withObject: window, afterDelay: NSTimeInterval(timeInterval))
         });
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-var IP_Server : String = "114.55.30.68" //192.168.199.6
+var IP_Server : String = "192.168.199.6" //114.55.30.68
 var PORT_SERVER : Int = 9090 // 8080
 var URL_Server : String = "http://\(IP_Server):\(PORT_SERVER)/XYSystem"
 var URL_DATA : String = "http://\(IP_Server):\(PORT_SERVER)/data"

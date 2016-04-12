@@ -91,9 +91,9 @@
     return self._detM;
 }
 
--(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
+-(UIImage*)getImageData:(CGSize) imgSize andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
 {
-    [super getImageData:productImgView andData:data colorArray:_colorArray];
+    return [super getImageData:imgSize andData:data colorArray:_colorArray];
 }
 
 -(void)clearContent

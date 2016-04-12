@@ -145,30 +145,34 @@ class CartoonBarView: UIView
             }
             return
         }
-        sender.selected = !sender.selected
-        // Playing...
-        if sender.selected == false
-        {
-            // If while it is the end -> replay.
-            if self.currentIndex == self.totalCount
+        dispatch_async(dispatch_get_main_queue(), {
+            // something
+            sender.selected = !sender.selected
+            // Playing...
+            if sender.selected == false
             {
-                sender.selected = true
-                self.playCartoon(self.totalCount)
-                return
+                // If while it is the end -> replay.
+                if self.currentIndex == self.totalCount
+                {
+                    sender.selected = true
+                    self.playCartoon(self.totalCount)
+                    return
+                }
+                self.isPlaying = true
+                self.backBtn.enabled = false
+                self.preBtn.enabled = false
+                self.cartoonTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(CartoonBarView.onCartoonTimer(_:)), userInfo: nil, repeats: true)
+                self.cartoonTimer.fire()
+            }else{
+                if self.cartoonTimer != nil
+                {
+                    self.cartoonTimer.invalidate()
+                }
+                self.isPlaying = false
+                self.backBtn.enabled = true
+                self.preBtn.enabled = true
             }
-            self.isPlaying = true
-            self.backBtn.enabled = false
-            self.preBtn.enabled = false
-            self.cartoonTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: #selector(CartoonBarView.onCartoonTimer(_:)), userInfo: nil, repeats: true)
-        }else{
-            if cartoonTimer != nil
-            {
-                cartoonTimer.invalidate()
-            }
-            self.isPlaying = false
-            self.backBtn.enabled = true
-            self.preBtn.enabled = true
-        }
+        })
     }
     
     var isDragging : Bool = false

@@ -56,9 +56,9 @@ static NSMutableArray* CosArr;
                                      );
 }
 
--(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
+-(UIImage*)getImageData:(CGSize) imgSize andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray
 {
-    
+    return nil;
 }
 
 -(void)clearContent

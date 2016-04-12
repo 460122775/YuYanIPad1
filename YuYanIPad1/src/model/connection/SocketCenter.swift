@@ -176,7 +176,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
                 _packageData.getBytes(&tagSysStatus, range: NSMakeRange(0, 4))
                 RadarStatus = String(tagSysStatus)
                 NSNotificationCenter.defaultCenter().postNotificationName("\(RECEIVE)\(RADARSTATUS)", object: String(tagSysStatus))
-                LogModel.getInstance.insertLog("Receive radar state from PT.\(tagSysStatus)")
+//                LogModel.getInstance.insertLog("Receive radar state from PT.\(tagSysStatus)")
                 break
             
             case SOCKETCONST_NET_TYPE_CS_LOGIN:

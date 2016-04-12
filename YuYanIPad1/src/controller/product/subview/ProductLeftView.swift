@@ -11,7 +11,7 @@ import UIKit
 
 protocol ProductLeftViewProtocol
 {
-    func selectedProductControl(selectedProductDic: NSMutableDictionary)
+    func chooseProductFromLeftList(productType : Int32, selectedProductDic: NSMutableDictionary?)
     func initProductInfoByData()
 }
 
@@ -97,14 +97,16 @@ class ProductLeftView: UIView, ProductListProtocol
     }
     
     // ProductListProtocol
-    func productSelectControl(productName: String)
+    func productSelectControl(productType : Int32, productName: String?)
     {
         if self.productLeftViewDelegate != nil
         {
-            let productDic : NSMutableDictionary? = ProductUtilModel.getInstance.productNameToDicControl(productName)
-            if productDic != nil
+            if productName != nil
             {
-                self.productLeftViewDelegate?.selectedProductControl(productDic!)
+                let productDic : NSMutableDictionary? = ProductUtilModel.getInstance.productNameToDicControl(productName!)
+                self.productLeftViewDelegate?.chooseProductFromLeftList(productType, selectedProductDic: productDic)
+            }else{
+                self.productLeftViewDelegate?.chooseProductFromLeftList(productType, selectedProductDic: nil)
             }
         }
     }

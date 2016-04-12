@@ -11,7 +11,7 @@ import UIKit
 
 protocol ProductListProtocol
 {
-    func productSelectControl(productName : String)
+    func productSelectControl(productType : Int32, productName : String?)
 }
 
 class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
@@ -159,12 +159,13 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         if (_selectProductConfigDic!.objectForKey("name") as! String).lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0
         {
 //            SwiftNotice.showText("未收集到该产品!")
-            ProductUtilModel.getInstance.getNewestDataByType((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue)
+            self.productListDelegate?.productSelectControl((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue, productName: nil)
         }else{
 //            SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
             if productListDelegate != nil
             {
-                self.productListDelegate?.productSelectControl(_selectProductConfigDic!.objectForKey("name") as! String)
+                self.productListDelegate?.productSelectControl((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue,
+                                                               productName: _selectProductConfigDic!.objectForKey("name") as? String)
             }
         }
     }

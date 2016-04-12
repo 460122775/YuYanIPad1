@@ -33,11 +33,11 @@
     self.sizeofRadial = self.fileHeadStruct.obserSec.usRefBinNumber[0] * sizeof(unsigned char) + RadialHeadLength;
 }
 
--(void)getImageData:(UIImageView *) productImgView andData:(NSData *) data colorArray:(NSMutableArray *)_colorArray
+-(UIImage*)getImageData:(CGSize) imgSize andData:(NSData *) data colorArray: (NSMutableArray *) _colorArray;
 {
-    if (data == nil || _colorArray == nil || _colorArray.count == 0) return;
-    [super getImageData:productImgView andData:data colorArray:_colorArray];
-    UIGraphicsBeginImageContext(productImgView.frame.size);
+    if (data == nil || _colorArray == nil || _colorArray.count == 0) return nil;
+    UIImage* productImg = [super getImageData:imgSize andData:data colorArray:_colorArray];
+    UIGraphicsBeginImageContext(imgSize);
     CGContextRef context = UIGraphicsGetCurrentContext();
     NSArray *colorValueArray = nil;
     unsigned char *ucharValue = (unsigned char*)[[data subdataWithRange:NSMakeRange(sizeof(self.fileHeadStruct), data.length - sizeof(self.fileHeadStruct))] bytes];
@@ -51,12 +51,12 @@
     int yMax = self.radarPosition.y + (self.topMerLatitude - self.radarMerPosition.y) / self._detM;
     // Judge if it is in the productImgView`s Bounds.
     if (yMin < 0) yMin = 0;
-    if (yMax > productImgView.frame.size.height)
+    if (yMax > imgSize.height)
     {
-        yMax = productImgView.frame.size.height;
+        yMax = imgSize.height;
     }
     // Select the drawing bound, according to the radar center relative to the productImgView center.
-    if (self.radarPosition.x < productImgView.frame.size.width / 2)
+    if (self.radarPosition.x < imgSize.width / 2)
     {
         xMin = self.radarPosition.x;
     }else{
@@ -64,9 +64,9 @@
     }
     // Judge if it is in the productImgView`s Bounds.
     if (xMin < 0) xMin = 0;
-    if (xMin >= productImgView.frame.size.width)
+    if (xMin >= imgSize.width)
     {
-        xMax = productImgView.frame.size.width - 1;
+        xMax = imgSize.width - 1;
     }
     CLLocationCoordinate2D radarCoordinate1 = CLLocationCoordinate2DMake(self.radarCoordinate.latitude * M_PI / 180, self.radarCoordinate.longitude * M_PI / 180);
     CLLocationCoordinate2D radarCoordinate2;
@@ -111,7 +111,7 @@
                     CGContextStrokePath(context);
                 }
                 // Judge x_Symmetric_point is in the symmetric area, devide the Central axis.
-                if (xSymmetric != x && xSymmetric >= 0 && xSymmetric < productImgView.frame.size.width)
+                if (xSymmetric != x && xSymmetric >= 0 && xSymmetric < imgSize.width)
                 {
                     // Draw right half of product.
                     seta = 359 - seta;
@@ -133,8 +133,9 @@
         }
     }
     // Show image...
-    productImgView.image = UIGraphicsGetImageFromCurrentImageContext();
+    productImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    return productImg;
 }
 
 @end

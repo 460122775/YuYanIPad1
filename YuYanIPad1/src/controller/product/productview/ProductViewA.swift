@@ -35,6 +35,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
     var currentColorDataArray : NSMutableArray?
     var currentProductModel : ProductModel?
     var currentProductData : NSData?
+    var currentColorImg : UIImage?
     var currentLocation : CLLocationCoordinate2D?
     
     var radarPosition : CGPoint!
@@ -132,8 +133,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             }
             self.mapView.addGestureRecognizer(swipeDownGesture!)
         }else{
-            self.productImgVIew.removeGestureRecognizer(pinchGesture!)
-            self.productImgVIew.removeGestureRecognizer(panGesture!)
+//            self.productImgVIew.removeGestureRecognizer(panGesture!)
             self.productImgVIew.removeGestureRecognizer(swipeRightGesture!)
             self.productImgVIew.removeGestureRecognizer(swipeLeftGesture!)
             self.productImgVIew.removeGestureRecognizer(swipeUpGesture!)
@@ -155,7 +155,8 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         {
             UIView.animateWithDuration(0.1) { () -> Void in
                 self.productImgVIew.frame.origin = CGPointMake(translation.x - self.fromLocation.x, translation.y - self.fromLocation.y)
-//                self.mapView.moveBy(CGSizeMake(self.toLocation.x - translation.x, self.toLocation.y - translation.y))
+                // Mapbox 1.x use this line of code to move.
+                //self.mapView.moveBy(CGSizeMake(self.toLocation.x - translation.x, self.toLocation.y - translation.y))
                 self.toLocation = translation
             }
         }else if sender.state == UIGestureRecognizerState.Began{
@@ -167,7 +168,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             self.productImgVIew.frame.origin = CGPointMake(0, 0)
             currentProductModel?.radarPosition.x = radarPosition.x
             currentProductModel?.radarPosition.y = radarPosition.y
-            currentProductModel?.getImageData(self.productImgVIew, andData: currentProductData, colorArray: self.currentColorDataArray)
+            self.productImgVIew.image = currentProductModel?.getImageData(self.productImgVIew.frame.size, andData: currentProductData, colorArray: self.currentColorDataArray)
         }
     }
     
@@ -234,10 +235,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             ((currentProductDic?.objectForKey("type") as! NSNumber).intValue != (_productDic?.objectForKey("type") as! NSNumber).intValue)
         {
             let _data =  ColorModel.drawColorImg(_productDic?.objectForKey("colorFile") as! String, colorImgView: colorImgView)
-            dispatch_async(dispatch_get_main_queue(), {
-                self.colorImgView.image = _data.image
-                self.colorContainerView.hidden = false
-            });
+            currentColorImg = _data.image
             if currentColorDataArray != nil
             {
                 currentColorDataArray?.removeAllObjects()
@@ -269,7 +267,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         self.currentProductModel?.radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
         self.currentProductModel?.initData(data, withProductImgView: self.productImgVIew)
         self.currentProductModel?.setDetMByMaxRadarDistance()
-        self.currentProductModel?.getImageData(self.productImgVIew, andData: self.currentProductData!, colorArray: self.currentColorDataArray)
+        let img = self.currentProductModel?.getImageData(self.productImgVIew.frame.size, andData: self.currentProductData!, colorArray: self.currentColorDataArray)
         if isFirstTime
         {
             self.mapView?.setCenterCoordinate((self.currentProductModel?.radarCoordinate)!, animated: false)
@@ -280,14 +278,27 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         self.productImgBounds = self.mapView.convertRect(CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height), toCoordinateBoundsFromView: self.mapView)
         self.currentProductModel?.setDetM(self.productImgBounds.sw, andNE: self.productImgBounds.ne, andHeight: Float(self.productImgVIew.frame.size.height))
         let newRadarImgDetM = self.currentProductModel?.getDetM()
-        self.productImgVIew.frame.size = CGSizeMake(
-            self.productImgVIew.frame.size.width * CGFloat(currentRadarImgDetM! / newRadarImgDetM!) ,
-            self.productImgVIew.frame.size.height * CGFloat(currentRadarImgDetM! / newRadarImgDetM!))
-        // Set to the same origin.
+        // Refresh view.
         dispatch_async(dispatch_get_main_queue(), {
+            self.colorImgView.image = self.currentColorImg
+            self.colorContainerView.hidden = false
+            self.productImgVIew.image = img
+            self.productImgVIew.frame.size = CGSizeMake(
+                self.productImgVIew.frame.size.width * CGFloat(currentRadarImgDetM! / newRadarImgDetM!) ,
+                self.productImgVIew.frame.size.height * CGFloat(currentRadarImgDetM! / newRadarImgDetM!))
+            // Set to the same origin.
             self.mapViewRegionIsChanging(self.mapView)
-        });
+        })
         print("05:" + String(NSDate().timeIntervalSince1970))
+    }
+    
+    func clearProductView()
+    {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.productImgVIew.image = nil
+            self.colorImgView.image = nil
+            self.colorContainerView.hidden = false
+        })
     }
     
     var updateMapCenterByLocation : Bool = false
