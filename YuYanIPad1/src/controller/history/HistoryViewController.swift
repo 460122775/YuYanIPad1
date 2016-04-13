@@ -34,6 +34,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var currentProductConfigDic : NSMutableDictionary?
     var currentProductData : NSData?
     var currentElevationValue : Float32 = -1
+    var titleStr : String = "--"
     var startTimeStr : String?
     var endTimeStr : String?
     var requestLayer : Int32 = -1
@@ -238,40 +239,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     func getSelectedProduct(productConfigVo : NSMutableDictionary)
     {
         for view in self.historyLeftViewContainer!.subviews {view.removeFromSuperview()}
-//        self.historyLeftViewContainer?.subviews.map { $0.removeFromSuperview() }
         self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
         self.historyChoiceView?.setProductBtnByVo(productConfigVo)
-    }
-    
-    func analyseProduct()
-    {
-        if currentProductDic!.objectForKey("level") == nil
-        {
-            // Set Level for each Product.
-            if productConfigDicArr == nil
-            {
-                productConfigDicArr = ProductUtilModel.getInstance.getProductConfigArr()
-            }
-            for productConfig in productConfigDicArr!
-            {
-                if  ((productConfig as! NSDictionary).objectForKey("type") as! NSNumber).longLongValue == (currentProductDic!.objectForKey("type") as! NSNumber).longLongValue
-                {
-                    currentProductDic!.setValue((productConfig as! NSDictionary).objectForKey("level"), forKey: "level")
-                    break
-                }
-            }
-        }
-        let level : Int64 = (currentProductDic!.objectForKey("level") as! NSNumber).longLongValue
-        let scanMode : Int64 = Int64((currentProductDic!.objectForKey("name") as! NSString).substringWithRange(NSRange(location: 23, length: 3)))!
-        // Is VOL && Set SwitchToolView.
-        if level == LEVEL_FIRSTCLASS && scanMode >= 0 && scanMode <= 9
-        {
-            self.switchToolView!.setBtnVisible(false, hideVolBtn: false)
-            
-            currentProductDic!.setValue((currentProductDic!.objectForKey("name") as! NSString).substringWithRange(NSRange(location: 16, length: 2)), forKey: "layer")
-        }else{
-            self.switchToolView!.setBtnVisible(true, hideVolBtn: false)
-        }
     }
     
     func drawProduct(data : NSData)
@@ -279,8 +248,8 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         // Init left view by data.
         self.historyQueryLeftView?.setProductLeftViewByData(data)
         // Init top bar by data.
-        titleLabel.text = ProductInfoModel.getDataDateString(data) + "  "
-            + ProductInfoModel.getDataTimeString(data) + "  "
+        self.titleStr = ProductInfoModel.getDataDateString(data) + "  "
+            + ProductInfoModel.getDataTimeString(data) + "  " + (self.currentProductDic!.objectForKey("cname") as! String)
         if currentProductDic == nil || currentProductDic!.objectForKey("type") == nil
         {
             return
@@ -288,14 +257,12 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         let type : Int64 = Int64((currentProductDic!.objectForKey("type") as! NSNumber).integerValue)
         if type == ProductType_Z || type == ProductType_V || type == ProductType_W
         {
-            titleLabel.text = titleLabel.text! + "[" + (currentProductDic!.objectForKey("mcode") as! String) + "°]"
+            self.titleStr = self.titleStr + "[" + (self.currentProductDic!.objectForKey("mcode") as! String) + "°]"
         }
-        // Draw Color.
-        if self.currentProductDic?.objectForKey("colorFile") == nil
-        {
-            self.currentProductDic?.setValue(self.historyChoiceView?._selectProductConfigDir?.objectForKey("colorFile"), forKey: "colorFile")
-        }
-        NSLog("04:" + String(NSDate().timeIntervalSince1970))
+        dispatch_async(dispatch_get_main_queue(), {
+            self.titleLabel.text = self.titleStr
+        })
+        // Draw Product Img.
         self.productViewA?.drawProductImg(self.currentProductDic, data: data)
     }
     
@@ -329,48 +296,98 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
-        NSLog("01:" + String(NSDate().timeIntervalSince1970))
         currentProductDic = selectedProductDic
-        self.analyseProduct()
-        currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
-        if currentProductData != nil
-        {
-            LogModel.getInstance.insertLog("HistoryViewController get product [\(selectedProductDic.objectForKey("name") as! String)] from cache.")
-            // Draw product.
-            self.drawProduct(self.currentProductData!)
-        }else{
-            LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-            // Compose url.
-            var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
-            url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
-            url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
-            // Download data.
-            Alamofire.request(.GET, url).responseData { response in
-                NSLog("02:" + String(NSDate().timeIntervalSince1970))
-                LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
-                if response.result.value == nil || response.result.value?.length <= 48
+        print("11=====================")
+        let analyseProductOperation = NSBlockOperation{ () -> Void in
+            print("21=====================")
+            if self.currentProductDic!.objectForKey("level") == nil
+            {
+                // Set Level for each Product.
+                if self.productConfigDicArr == nil
                 {
-                    // Tell reason to user.
-                    SwiftNotice.showText("数据文件下载失败，请检查网络后重试！")
-                    return
+                    self.productConfigDicArr = ProductUtilModel.getInstance.getProductConfigArr()
                 }
-                // Cache data.
-                CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
-                self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
-                if self.currentProductData == nil
+                for productConfig in self.productConfigDicArr!
                 {
-                    // Cache failed, maybe the reason of uncompress failed.
-                    // Tell reason to user.
-                    SwiftNotice.showText("数据格式解压失败，或不支持此格式！")
-                    return
-                }else{
-                    // Draw product.
-                    NSLog("03:" + String(NSDate().timeIntervalSince1970))
-                    self.drawProduct(self.currentProductData!)
+                    if  ((productConfig as! NSDictionary).objectForKey("type") as! NSNumber).longLongValue == (self.currentProductDic!.objectForKey("type") as! NSNumber).longLongValue
+                    {
+                        self.currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("colorFile"), forKey: "colorFile")
+                        self.currentProductDic!.setValue((productConfig as! NSDictionary).objectForKey("level"), forKey: "level")
+                        self.currentProductDic!.setValue((productConfig as! NSDictionary).valueForKey("cname"), forKey: "cname")
+                        break
+                    }
                 }
             }
+            let level : Int64 = (self.currentProductDic!.objectForKey("level") as! NSNumber).longLongValue
+            let scanMode : Int64 = Int64((self.currentProductDic!.objectForKey("name") as! NSString).substringWithRange(NSRange(location: 23, length: 3)))!
+            // Is VOL && Set SwitchToolView.
+            if level == LEVEL_FIRSTCLASS && scanMode >= 0 && scanMode <= 9
+            {
+                self.switchToolView!.setBtnVisible(false, hideVolBtn: false)
+                self.currentProductDic!.setValue((self.currentProductDic!.objectForKey("name") as! NSString).substringWithRange(NSRange(location: 16, length: 2)), forKey: "layer")
+            }else{
+                self.switchToolView!.setBtnVisible(true, hideVolBtn: false)
+            }
+            print("22=====================")
         }
-        self.synFlag = true
+        
+        let drawProductOperation = NSBlockOperation{ () -> Void in
+            print("51=====================")
+            if self.currentProductData != nil
+            {
+                self.drawProduct(self.currentProductData!)
+                self.synFlag = true
+            }
+            print("52=====================")
+        }
+        
+        // Prepare data.
+        let prepareDataOperation = NSBlockOperation{ () -> Void in
+            print("31=====================")
+            self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(self.currentProductDic!.objectForKey("name") as! String)
+            if self.currentProductData == nil
+            {
+                LogModel.getInstance.insertLog("HistoryViewController download selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                // Compose url.
+                var url : String = "\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)"
+                url = url.stringByReplacingOccurrencesOfString("\\\\", withString: "/", options: .LiteralSearch, range: nil)
+                url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
+                // Download data.
+                Alamofire.request(.GET, url).responseData { response in
+                    print("41=====================")
+                    LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
+                    if response.result.value == nil || response.result.value?.length <= 48
+                    {
+                        // Tell reason to user.
+                        SwiftNotice.showText("数据文件下载失败，请检查网络后重试！")
+                        self.synFlag = true
+                        return
+                    }
+                    // Cache data.
+                    CacheManageModel.getInstance.addCacheForProductFile(selectedProductDic.objectForKey("name") as! String, data: response.result.value!)
+                    self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
+                    if self.currentProductData == nil
+                    {
+                        // Cache failed, maybe the reason of uncompress failed.
+                        // Tell reason to user.
+                        SwiftNotice.showText("数据格式解压失败，或不支持此格式！")
+                        self.synFlag = true
+                        return
+                    }else{
+                        drawProductOperation.start()
+                    }
+                    print("42=====================")
+                }
+            }else{
+                drawProductOperation.start()
+            }
+            print("32=====================")
+        }
+        
+        prepareDataOperation.addDependency(analyseProductOperation)
+        let queue = NSOperationQueue()
+        queue.addOperations([prepareDataOperation, analyseProductOperation], waitUntilFinished: false)
+        print("12=====================")
     }
 
     var elevationView : HistoryElevationChoiceView?
@@ -469,7 +486,6 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             if currentProductDicArr != nil && currentProductDicArr?.count > 1
             {
                 for i in 0 ..< currentProductDicArr!.count
-//                for var i : Int = 0; i < currentProductDicArr?.count; i += 1
                 {
                     if (currentProductDic!.objectForKey("name") as! NSString) ==
                         (currentProductDicArr?.objectAtIndex(i).objectForKey("name") as! NSString)
@@ -537,11 +553,11 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     func switchLeftControl()
     {
-        if !synFlag || currentProductDic == nil
+        if !self.synFlag || currentProductDic == nil
         {
             return
         }
-        synFlag = false
+        self.synFlag = false
         if currentProductDicArr != nil && currentProductDicArr?.count > 0
         {
             currentProductDicArr = nil
@@ -559,7 +575,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         {
             return
         }
-        synFlag = false
+        self.synFlag = false
         if currentProductDicArr != nil && currentProductDicArr?.count > 0
         {
             currentProductDicArr = nil
@@ -573,6 +589,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     func receiveDataFromHttp(notification : NSNotification?) -> Void
     {
+        // Clear cartoon data
         let resultStr : String = notification!.object?.valueForKey("result") as! String
         if resultStr == FAIL
         {

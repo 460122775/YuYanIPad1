@@ -35,10 +35,8 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         // Set product table view.
         self.productListTableView!.dataSource = self
         self.productListTableView!.delegate = self
-//        self.productListTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ProductListTableCellIndentifier)
         self.productListTableView.layoutMargins = UIEdgeInsetsZero
         self.productListTableView.separatorInset = UIEdgeInsetsZero
-
         // Add Listener.
          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductListView.getProductTypeListControl), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
         // Get data.
@@ -47,11 +45,12 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     
     internal func getProductTypeListControl()
     {
-        productArr = ProductUtilModel.getInstance.getProductList()
-        if productArr!.count == 0
+        self.productArr = ProductUtilModel.getInstance.getProductList()
+        if self.productArr!.count == 0
         {
             return
         }
+        self._selectProductConfigDic = (self.productArr?.objectAtIndex(0) as? NSMutableDictionary)!
         // Must reload data in main queue, or maybe crashed.
         dispatch_async(dispatch_get_main_queue(), {
             self.productListTableView.reloadData()
@@ -64,11 +63,11 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         {
             return nil
         }else if productArr == nil{
-            productArr = ProductUtilModel.getInstance.getProductList()
+            self.productArr = ProductUtilModel.getInstance.getProductList()
         }
-        if _selectProductConfigDic == nil
+        if self._selectProductConfigDic == nil
         {
-            _selectProductConfigDic = (productArr?.objectAtIndex(0) as? NSMutableDictionary)!
+            self._selectProductConfigDic = (self.productArr?.objectAtIndex(0) as? NSMutableDictionary)!
             // Must reload data in main queue, or maybe crashed.
             dispatch_async(dispatch_get_main_queue(), {
                 self.productListTableView.reloadData()

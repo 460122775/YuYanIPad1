@@ -508,7 +508,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     
     func switchLeftControl()
     {
-        if !synFlag || currentProductDic == nil
+        if !self.synFlag || currentProductDic == nil
         {
             return
         }
