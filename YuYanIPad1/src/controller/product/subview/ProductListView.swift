@@ -11,7 +11,7 @@ import UIKit
 
 protocol ProductListProtocol
 {
-    func productSelectControl(productType : Int32, productName : String?)
+    func productSelectControl(productType : Int32, productPosFile : String?)
 }
 
 class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
@@ -37,16 +37,16 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         self.productListTableView!.delegate = self
         self.productListTableView.layoutMargins = UIEdgeInsetsZero
         self.productListTableView.separatorInset = UIEdgeInsetsZero
-        // Add Listener.
-         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductListView.getProductTypeListControl), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductListView.initViewByProductTypeListData), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
         // Get data.
-        getProductTypeListControl()
+        initViewByProductTypeListData()
     }
     
-    internal func getProductTypeListControl()
+    internal func initViewByProductTypeListData()
     {
-        self.productArr = ProductUtilModel.getInstance.getProductList()
-        if self.productArr!.count == 0
+        // Attention !!! Do not clear self.productArr, it is only a reference.
+        self.productArr = ProductUtilModel.getInstance.getNewestProductList()
+        if self.productArr == nil || self.productArr!.count == 0
         {
             return
         }
@@ -59,11 +59,11 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
     
     func getSelectProductConfigForCartoon() -> NSMutableDictionary?
     {
-        if ProductUtilModel.getInstance.getProductList().count == 0
+        // Attention !!! Do not clear self.productArr, it is only a reference.
+        self.productArr = ProductUtilModel.getInstance.getNewestProductList()
+        if self.productArr == nil || self.productArr!.count == 0
         {
             return nil
-        }else if productArr == nil{
-            self.productArr = ProductUtilModel.getInstance.getProductList()
         }
         if self._selectProductConfigDic == nil
         {
@@ -74,24 +74,6 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
             });
         }
         return _selectProductConfigDic
-    }
-    
-    func setProductAddress(productEname : String, productAddress : String)
-    {
-        if self.productArr == nil
-        {
-            return
-        }else{
-            var _productDic : NSMutableDictionary?
-            for i in 0 ..< productArr!.count
-            {
-                 _productDic = (productArr?.objectAtIndex(i) as? NSMutableDictionary)!
-                if _productDic?.objectForKey("ename") as! String == productEname
-                {
-                    _productDic?.setObject(productAddress, forKey: "name")
-                }
-            }
-        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -157,14 +139,13 @@ class ProductListView: UIView, UITableViewDataSource, UITableViewDelegate
         LogModel.getInstance.insertLog("用户点击了：" + (_selectProductConfigDic!.objectForKey("cname") as! String) + "（" + (_selectProductConfigDic!.objectForKey("ename") as! String) + "）")
         if (_selectProductConfigDic!.objectForKey("name") as! String).lengthOfBytesUsingEncoding(NSUTF8StringEncoding) == 0
         {
-//            SwiftNotice.showText("未收集到该产品!")
-            self.productListDelegate?.productSelectControl((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue, productName: nil)
+            self.productListDelegate?.productSelectControl((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue, productPosFile: nil)
         }else{
 //            SwiftNotice.showText("\(_selectProductConfigDic!.objectForKey("name") as! String)")
             if productListDelegate != nil
             {
                 self.productListDelegate?.productSelectControl((_selectProductConfigDic?.objectForKey("type") as! NSNumber).intValue,
-                                                               productName: _selectProductConfigDic!.objectForKey("name") as? String)
+                                                               productPosFile: _selectProductConfigDic!.objectForKey("pos_file") as? String)
             }
         }
     }

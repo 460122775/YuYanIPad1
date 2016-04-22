@@ -21,5 +21,20 @@
 #import <sqlite3.h>
 #import <CoreLocation/CoreLocation.h>
 
-#endif 
+//########## ShareSDK  -start ##############
+//#import <ShareSDK/ShareSDK.h>
+//#import <ShareSDKUI/ShareSDK+SSUI.h>
+//#import <ShareSDKConnector/ShareSDKConnector.h>
+//
+//#import <TencentOpenAPI/TencentOAuth.h>
+//#import <TencentOpenAPI/QQApiInterface.h>
+//
+//#import "WXApi.h"
+//
+//#import "WeiboSDK.h"
+//
+//#import <RennSDK/RennSDK.h>
+//########## ShareSDK -end ##############
+
+#endif
 /* YuYanIPad1_Bridging_Header_h */

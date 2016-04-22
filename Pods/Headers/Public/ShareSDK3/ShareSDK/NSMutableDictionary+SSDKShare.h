@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDK.framework/Headers/NSMutableDictionary+SSDKShare.h
+../../../../ShareSDK3/ShareSDK/ShareSDK.framework/Headers/NSMutableDictionary+SSDKShare.h

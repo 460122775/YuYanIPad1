@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDKExtension.framework/Headers/SSEThirdPartyLoginHelper.h
+../../../../ShareSDK3/ShareSDK/Support/Optional/ShareSDKExtension.framework/Headers/SSEThirdPartyLoginHelper.h

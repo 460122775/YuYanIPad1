@@ -7,9 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="YuYanIPad1" customModuleProvider="target">
             <connections>
-                <outlet property="chatBtn" destination="NE9-wY-alv" id="zgM-50-ni4"/>
                 <outlet property="currentBtn" destination="HMz-iS-m1E" id="MkP-dh-x8c"/>
                 <outlet property="historyBtn" destination="MK2-CN-v2i" id="gLa-eG-fNJ"/>
+                <outlet property="listBtnClick" destination="NE9-wY-alv" id="dwO-6V-IDC"/>
                 <outlet property="rightView" destination="IEA-Jj-Ijb" id="mxo-Uo-IeC"/>
                 <outlet property="settingBtn" destination="3kW-SU-GaW" id="kgn-MV-g6G"/>
                 <outlet property="thresholdBtn" destination="ltf-ja-eIH" id="s3N-xJ-Dvo"/>
@@ -87,7 +87,7 @@
                                 <action selector="historyBtnClick:" destination="-1" eventType="touchUpInside" id="3yc-GG-FC3"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="chatBtn">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NE9-wY-alv" userLabel="listBtn">
                             <rect key="frame" x="0.0" y="200" width="88" height="100"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="88" id="8Wn-lt-1b6"/>
@@ -95,7 +95,7 @@
                             </constraints>
                             <state key="normal" backgroundImage="navbar_btn_chat_normal">
                                 <attributedString key="attributedTitle">
-                                    <fragment content="会商聊天">
+                                    <fragment content="产品列表">
                                         <attributes>
                                             <font key="NSFont" size="14" name="STHeitiSC-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
@@ -105,18 +105,9 @@
                                 </attributedString>
                             </state>
                             <state key="selected" backgroundImage="navbar_btn_chat_pressed"/>
-                            <state key="highlighted" backgroundImage="navbar_btn_chat_pressed">
-                                <attributedString key="attributedTitle">
-                                    <fragment content="聊天">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="STHeitiSC-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="3.5"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                            </state>
+                            <state key="highlighted" backgroundImage="navbar_btn_chat_pressed"/>
                             <connections>
-                                <action selector="chatBtnClick:" destination="-1" eventType="touchUpInside" id="gYg-jx-ipJ"/>
+                                <action selector="listBtnClick:" destination="-1" eventType="touchUpInside" id="BIw-s5-MQK"/>
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ltf-ja-eIH" userLabel="thresholdBtn">

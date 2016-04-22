@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDK.framework/Headers/SSDKUserQueryConditional.h
+../../../../ShareSDK3/ShareSDK/ShareSDK.framework/Headers/SSDKUserQueryConditional.h

@@ -11,6 +11,12 @@
 		011CCFA01C8D4BE9005534B4 /* ProductViewA.xib in Resources */ = {isa = PBXBuildFile; fileRef = 011CCF9F1C8D4BE9005534B4 /* ProductViewA.xib */; };
 		01210B601C8D7698001C8B80 /* HistoryElevationChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01210B5E1C8D7698001C8B80 /* HistoryElevationChoiceView.swift */; };
 		01210B611C8D7698001C8B80 /* HistoryElevationChoiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01210B5F1C8D7698001C8B80 /* HistoryElevationChoiceView.xib */; };
+		012373A71CC70CAD00B4C37B /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012373A51CC70CAD00B4C37B /* ListViewController.swift */; };
+		012373A81CC70CAD00B4C37B /* ListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 012373A61CC70CAD00B4C37B /* ListViewController.xib */; };
+		012373AE1CC70E2900B4C37B /* ListLeftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012373AA1CC70E2900B4C37B /* ListLeftView.swift */; };
+		012373AF1CC70E2900B4C37B /* ListLeftView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 012373AB1CC70E2900B4C37B /* ListLeftView.xib */; };
+		012373B01CC70E2900B4C37B /* ListListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012373AC1CC70E2900B4C37B /* ListListView.swift */; };
+		012373B11CC70E2900B4C37B /* ListListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 012373AD1CC70E2900B4C37B /* ListListView.xib */; };
 		012606B81BDA1B0B009BB949 /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012606B71BDA1B0B009BB949 /* NameSpace.swift */; };
 		0129CA9C1C51CB2B00C58D4B /* CAPPIDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129CA9B1C51CB2B00C58D4B /* CAPPIDrawData.m */; };
 		0129CA9F1C51D64500C58D4B /* MAXREFDrawData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0129CA9E1C51D64500C58D4B /* MAXREFDrawData.m */; };
@@ -151,6 +157,12 @@
 		011CCF9F1C8D4BE9005534B4 /* ProductViewA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProductViewA.xib; path = src/controller/product/productview/ProductViewA.xib; sourceTree = "<group>"; };
 		01210B5E1C8D7698001C8B80 /* HistoryElevationChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryElevationChoiceView.swift; path = src/controller/history/subview/HistoryElevationChoiceView.swift; sourceTree = "<group>"; };
 		01210B5F1C8D7698001C8B80 /* HistoryElevationChoiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryElevationChoiceView.xib; path = src/controller/history/subview/HistoryElevationChoiceView.xib; sourceTree = "<group>"; };
+		012373A51CC70CAD00B4C37B /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = src/controller/list/ListViewController.swift; sourceTree = "<group>"; };
+		012373A61CC70CAD00B4C37B /* ListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListViewController.xib; path = src/controller/list/ListViewController.xib; sourceTree = "<group>"; };
+		012373AA1CC70E2900B4C37B /* ListLeftView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListLeftView.swift; path = src/controller/list/subview/ListLeftView.swift; sourceTree = "<group>"; };
+		012373AB1CC70E2900B4C37B /* ListLeftView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListLeftView.xib; path = src/controller/list/subview/ListLeftView.xib; sourceTree = "<group>"; };
+		012373AC1CC70E2900B4C37B /* ListListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListListView.swift; path = src/controller/list/subview/ListListView.swift; sourceTree = "<group>"; };
+		012373AD1CC70E2900B4C37B /* ListListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ListListView.xib; path = src/controller/list/subview/ListListView.xib; sourceTree = "<group>"; };
 		012606B61BDA1AF5009BB949 /* YuYanIPad1-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "YuYanIPad1-Bridging-Header.h"; sourceTree = "<group>"; };
 		012606B71BDA1B0B009BB949 /* NameSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NameSpace.swift; path = src/controller/app/NameSpace.swift; sourceTree = "<group>"; };
 		0129CA9A1C51CB2B00C58D4B /* CAPPIDrawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CAPPIDrawData.h; path = src/model/product/products/cappi/CAPPIDrawData.h; sourceTree = "<group>"; };
@@ -309,6 +321,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		012373A91CC70CF900B4C37B /* subview */ = {
+			isa = PBXGroup;
+			children = (
+				012373AA1CC70E2900B4C37B /* ListLeftView.swift */,
+				012373AB1CC70E2900B4C37B /* ListLeftView.xib */,
+				012373AC1CC70E2900B4C37B /* ListListView.swift */,
+				012373AD1CC70E2900B4C37B /* ListListView.xib */,
+			);
+			name = subview;
+			sourceTree = "<group>";
+		};
 		0129CA991C51CB1800C58D4B /* cappi */ = {
 			isa = PBXGroup;
 			children = (
@@ -471,6 +494,16 @@
 			name = version;
 			sourceTree = "<group>";
 		};
+		017F65161CC486B4005375FC /* list */ = {
+			isa = PBXGroup;
+			children = (
+				012373A91CC70CF900B4C37B /* subview */,
+				012373A51CC70CAD00B4C37B /* ListViewController.swift */,
+				012373A61CC70CAD00B4C37B /* ListViewController.xib */,
+			);
+			name = list;
+			sourceTree = "<group>";
+		};
 		01806B891BA189A1005CBA7E /* product */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,9 +518,8 @@
 			children = (
 				016E7F941C0438770044C4FE /* zlib */,
 				01E4056E1BEB2D4100C68C21 /* HSDatePickerViewController */,
-				0156A7411BE8AA87008E41D1 /* SwiftNotice */,
-				01A859D61BE85DB4009FECCA /* ExSwift */,
 				0170B23B1BC66BB0009E2845 /* timechooser */,
+				0156A7411BE8AA87008E41D1 /* SwiftNotice */,
 			);
 			name = otherAPI;
 			sourceTree = "<group>";
@@ -707,6 +739,7 @@
 				0192F7661BB3EEFD00CC6498 /* common */,
 				018236B71BA026540006B930 /* user */,
 				018236A91BA0255F0006B930 /* otherAPI */,
+				01A859D61BE85DB4009FECCA /* ExSwift */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -718,9 +751,10 @@
 				01B3CB301AB7169A0028AB9D /* main */,
 				01FB3C331AB9576A00C41264 /* product */,
 				01B3CB331AB719440028AB9D /* history */,
+				017F65161CC486B4005375FC /* list */,
+				01FB3C361AB9578B00C41264 /* setting */,
 				01FB3C341AB9577900C41264 /* chat */,
 				01FB3C351AB9578200C41264 /* threshold */,
-				01FB3C361AB9578B00C41264 /* setting */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -983,6 +1017,7 @@
 				017AF5861AC3E26C00757E50 /* AboutUsView.xib in Resources */,
 				017AF5881AC3E2A500757E50 /* ClauseView.xib in Resources */,
 				01823A231ABBAA8200E70E74 /* HistoryResultView.xib in Resources */,
+				012373AF1CC70E2900B4C37B /* ListLeftView.xib in Resources */,
 				01823A291ABBAB6600E70E74 /* ScreenShotView.xib in Resources */,
 				01C29D021AB7D9C4008CBE96 /* LaunchScreen.xib in Resources */,
 				0156A7491BE9D508008E41D1 /* LoginResultView.xib in Resources */,
@@ -994,6 +1029,7 @@
 				01823A1A1ABBA96400E70E74 /* ProductListView.xib in Resources */,
 				01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */,
 				017AF5901AC3E31900757E50 /* VersionView.xib in Resources */,
+				012373A81CC70CAD00B4C37B /* ListViewController.xib in Resources */,
 				01823A501ABBC26600E70E74 /* SwitchToolView.xib in Resources */,
 				01823A441ABBBEF200E70E74 /* ProductLeftView.xib in Resources */,
 				017AF58E1AC3E2F700757E50 /* LoginView.xib in Resources */,
@@ -1006,6 +1042,7 @@
 				011CCFA01C8D4BE9005534B4 /* ProductViewA.xib in Resources */,
 				01210B611C8D7698001C8B80 /* HistoryElevationChoiceView.xib in Resources */,
 				015AF5241AB80F83007A913F /* MainViewController.xib in Resources */,
+				012373B11CC70E2900B4C37B /* ListListView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,6 +1121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01BCB8EA1C4DD63300BAB07A /* ProductTypeDefine.swift in Sources */,
+				012373AE1CC70E2900B4C37B /* ListLeftView.swift in Sources */,
 				019525021BEC476700041B30 /* HSDatePickerViewController.h in Sources */,
 				016F56811AC30534008D8615 /* ChatMainView.swift in Sources */,
 				016FFD311AC2483000596975 /* ScreenShotView.swift in Sources */,
@@ -1101,6 +1139,7 @@
 				01823A341ABBAC8400E70E74 /* ThresholdViewController.swift in Sources */,
 				01FB3C3A1AB9664000C41264 /* ProductViewController.swift in Sources */,
 				01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */,
+				012373A71CC70CAD00B4C37B /* ListViewController.swift in Sources */,
 				018236B91BA026880006B930 /* UserModel.swift in Sources */,
 				016FFD331AC24AB100596975 /* ProductLeftView.swift in Sources */,
 				01A98B5D1C02BC090099F39C /* DBInitTables.swift in Sources */,
@@ -1113,6 +1152,7 @@
 				01A859EC1BE85DEB009FECCA /* Float.swift in Sources */,
 				018236B61BA026340006B930 /* SocketCenter.swift in Sources */,
 				01A859F11BE85DEB009FECCA /* Range.swift in Sources */,
+				012373B01CC70E2900B4C37B /* ListListView.swift in Sources */,
 				016FFD351AC2620500596975 /* HistoryQueryLeftView.swift in Sources */,
 				01BCB8EC1C4DD63300BAB07A /* ProductVo.swift in Sources */,
 				01823A521ABBC79600E70E74 /* CartoonBarView.swift in Sources */,
@@ -1207,6 +1247,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Wang WenMing (52446X7E83)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -1257,6 +1298,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Wang WenMing (52446X7E83)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -1286,10 +1328,10 @@
 			baseConfigurationReference = 2457E4A2600041A96B303E9F /* Pods-YuYanIPad1.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: wangwenming@cdyw.com (ZPHS6VRWB9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -1314,7 +1356,7 @@
 					"$(PROJECT_DIR)/YuYanIPad1/src/model/otherAPI/Mapbox_1.6.1",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cdyw.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cdyw.YuYanIPad1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = YuYanIPad1/src/model/otherAPI/zlib;
@@ -1328,10 +1370,10 @@
 			baseConfigurationReference = E2FC1D179AD93E2E4BAE616C /* Pods-YuYanIPad1.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Wang WenMing (52446X7E83)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
@@ -1356,7 +1398,7 @@
 					"$(PROJECT_DIR)/YuYanIPad1/src/model/otherAPI/Mapbox_1.6.1",
 				);
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cdyw.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cdyw.YuYanIPad1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_INCLUDE_PATHS = YuYanIPad1/src/model/otherAPI/zlib;

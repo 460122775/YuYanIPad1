@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDKConnector.framework/Headers/ShareSDKConnector.h
+../../../../ShareSDK3/ShareSDK/Support/Required/ShareSDKConnector.framework/Headers/ShareSDKConnector.h

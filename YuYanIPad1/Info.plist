@@ -26,6 +26,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg</string>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -35,10 +39,6 @@
 	<string>我们要通过您的地理位置信息来为您提供更好的服务。</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>我们要通过您的地理位置信息来为您提供更好的服务。</string>
-	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
-	<true/>
-	<key>MGLMapboxAccessToken</key>
-	<string>pk.eyJ1IjoiZGFpeWFjaGVuIiwiYSI6ImJWOVQxREEifQ.FZG-Svwggu-ykrXu7rEhyg</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

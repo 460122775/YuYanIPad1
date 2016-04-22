@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## Alamofire
 
-Copyright (c) 2014–2015 Alamofire Software Foundation (http://alamofire.org/)
+Copyright (c) 2014–2016 Alamofire Software Foundation (http://alamofire.org/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,10 @@ The CocoaAsyncSocket project is in the public domain.
 The original TCP version (AsyncSocket) was created by Dustin Voss in January 2003.
 Updated and maintained by Deusty LLC and the Apple development community.
 
+
+## MOBFoundation
+
+Copyright © 2012-2015 mob
 
 ## SQLite.swift
 

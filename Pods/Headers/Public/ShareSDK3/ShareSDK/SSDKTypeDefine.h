@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDK.framework/Headers/SSDKTypeDefine.h
+../../../../ShareSDK3/ShareSDK/ShareSDK.framework/Headers/SSDKTypeDefine.h

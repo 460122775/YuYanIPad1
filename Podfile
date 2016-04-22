@@ -17,8 +17,16 @@ pod 'CocoaAsyncSocket', '~> 7.4.3'
 pod 'SQLite.swift', '~> 0.10.1'
 pod 'Alamofire'
 pod 'SSZipArchive'
-pod 'ShareSDK3'
 
+# ShareSDK -start
+pod 'ShareSDK3'
+pod 'MOBFoundation'
+pod 'ShareSDK3/ShareSDKUI'
+pod 'ShareSDK3/ShareSDKPlatforms/QQ'
+pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
+pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
+pod 'ShareSDK3/ShareSDKPlatforms/RenRen'
+# ShareSDK -end
 end
 
 # disable bitcode in every sub-target

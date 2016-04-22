@@ -262,6 +262,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
             return
         }
         currentProductModel?.clearContent()
+        self.productImgVIew.hidden = true
         // Reset current config.
         self.productImgVIew.frame.size = CGSizeMake(self.mapView.frame.size.width * 1, self.mapView.frame.size.height * 1)
         self.currentProductModel?.radarPosition = CGPointMake(self.productImgVIew.frame.width / 2, self.productImgVIew.frame.height / 2)
@@ -278,6 +279,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
         self.productImgBounds = self.mapView.convertRect(CGRectMake(0, 0, self.mapView.frame.size.width, self.mapView.frame.size.height), toCoordinateBoundsFromView: self.mapView)
         self.currentProductModel?.setDetM(self.productImgBounds.sw, andNE: self.productImgBounds.ne, andHeight: Float(self.productImgVIew.frame.size.height))
         let newRadarImgDetM = self.currentProductModel?.getDetM()
+        
         // Refresh view.
         dispatch_async(dispatch_get_main_queue(), {
             self.colorImgView.image = self.currentColorImg
@@ -288,6 +290,7 @@ class ProductViewA: UIView, MGLMapViewDelegate, CLLocationManagerDelegate
                 self.productImgVIew.frame.size.height * CGFloat(currentRadarImgDetM! / newRadarImgDetM!))
             // Set to the same origin.
             self.mapViewRegionIsChanging(self.mapView)
+            self.productImgVIew.hidden = false
         })
         print("05:" + String(NSDate().timeIntervalSince1970))
     }

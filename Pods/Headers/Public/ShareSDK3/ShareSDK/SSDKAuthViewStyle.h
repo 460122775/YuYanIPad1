@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDK.framework/Headers/SSDKAuthViewStyle.h
+../../../../ShareSDK3/ShareSDK/ShareSDK.framework/Headers/SSDKAuthViewStyle.h

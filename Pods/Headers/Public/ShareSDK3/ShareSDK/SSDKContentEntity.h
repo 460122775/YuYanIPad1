@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDK.framework/Headers/SSDKContentEntity.h
+../../../../ShareSDK3/ShareSDK/ShareSDK.framework/Headers/SSDKContentEntity.h

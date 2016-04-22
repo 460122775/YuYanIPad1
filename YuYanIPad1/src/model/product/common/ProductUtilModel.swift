@@ -14,8 +14,12 @@ class ProductUtilModel : NSObject {
     var _productConfigArr : NSMutableArray = []
     var _currentScanName : String = ""
     var _currentScanTime : String = ""
+    // Use for the table of ProductListView.
     var _productTypeList = []
-    var _productArr : NSMutableArray = []
+    var _newestProductArr : NSMutableArray = []
+    var _receivedProductArr : NSMutableArray = []
+    
+    let MAXRECEIVEPRODUCTCOUNT : Int = 30
     let dateFormatter = NSDateFormatter()
 
     class var getInstance : ProductUtilModel
@@ -117,7 +121,7 @@ class ProductUtilModel : NSObject {
         _productTypeList = productTypeStr!.componentsSeparatedByString(",")
         LogModel.getInstance.insertLog("ProductModel received product type :[\(_productTypeList)]")
         initProductByProductConfig()
-        if _productArr.count > 0
+        if _newestProductArr.count > 0
         {
             NSNotificationCenter.defaultCenter().postNotificationName("\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: self._productTypeList)
         }
@@ -130,33 +134,72 @@ class ProductUtilModel : NSObject {
         {
             return
         }
-        _productArr.removeAllObjects()
-        var _productDic : NSMutableDictionary
-        var _productConfigDic : NSMutableDictionary
+        _newestProductArr.removeAllObjects()
+        var _productDic : NSMutableDictionary?
+        var _productConfigDic : NSMutableDictionary?
+        
         for i in 0 ..< _productTypeList.count
         {
             for j in 0 ..< _productConfigArr.count
             {
                 _productConfigDic = (_productConfigArr.objectAtIndex(j) as? NSMutableDictionary)!
-                if Int64(_productConfigDic.valueForKey("type") as! Int) == (_productTypeList.objectAtIndex(i) as! NSString).longLongValue
+                if Int64(_productConfigDic!.valueForKey("type") as! Int) == (_productTypeList.objectAtIndex(i) as! NSString).longLongValue
                 {
                     _productDic = NSMutableDictionary()
-                    _productDic.setValue(NSNumber(int:(_productTypeList.objectAtIndex(i) as! NSString).intValue), forKey: "type")
-                    _productDic.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
-                    _productDic.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
-                    _productDic.setValue(_productConfigDic.objectForKey("colorFile") as! String, forKey: "colorFile")
-                    _productDic.setValue(_productConfigDic.objectForKey("level"), forKey: "level")
-                    _productDic.setValue("", forKey: "name")
-                    _productArr.addObject(_productDic)
+                    _productDic!.setValue(NSNumber(int:(_productTypeList.objectAtIndex(i) as! NSString).intValue), forKey: "type")
+                    _productDic!.setValue(_productConfigDic!.objectForKey("cname") as! String, forKey: "cname")
+                    _productDic!.setValue(_productConfigDic!.objectForKey("ename") as! String, forKey: "ename")
+                    _productDic!.setValue(_productConfigDic!.objectForKey("colorFile") as! String, forKey: "colorFile")
+                    _productDic!.setValue(_productConfigDic!.objectForKey("level"), forKey: "level")
+                    _productDic!.setValue("", forKey: "name")
+                    _newestProductArr.addObject(_productDic!)
                     break
                 }
             }
         }
+        _productDic = nil
+        _productConfigDic = nil
     }
     
-    internal func getProductList() -> NSMutableArray
+    func receiveProductFromSocketControl(productPosFile : String)
     {
-        return _productArr
+//        LogModel.getInstance.insertLog("Receive product from socket: [\(productPosFile)].")
+        let _productDic = self.getProductConfigByProductDataName(productPosFile)
+        if _productDic != nil
+        {
+            self.setNewestProductAddress(_productDic?.objectForKey("ename") as! String, productAddress: _productDic?.objectForKey("pos_file") as! String)
+            self._receivedProductArr.insertObject(_productDic!, atIndex: 0)
+            if self._receivedProductArr.count > MAXRECEIVEPRODUCTCOUNT
+            {
+                self._receivedProductArr.removeLastObject()
+            }
+            NSNotificationCenter.defaultCenter().postNotificationName("\(RECEIVE)\(SOCKET)\(PRODUCT)", object: _productDic)
+        }
+    }
+    
+    func getReceivedProductDicArr() -> NSMutableArray
+    {
+        return _receivedProductArr
+    }
+
+    func setNewestProductAddress(productEname : String, productAddress : String)
+    {
+        var _productDic : NSMutableDictionary?
+        for i in 0 ..< _newestProductArr.count
+        {
+            _productDic = (_newestProductArr.objectAtIndex(i) as? NSMutableDictionary)!
+            if _productDic?.objectForKey("ename") as! String == productEname
+            {
+                _productDic?.setObject(productAddress, forKey: "name")
+            }
+        }
+        _productDic = nil
+    }
+    
+    // Get newest product data from product type list.
+    internal func getNewestProductList() -> NSMutableArray
+    {
+        return _newestProductArr
     }
     
     internal func getElevationData(startTime : NSTimeInterval, endTime _endTime: NSTimeInterval,
@@ -220,8 +263,33 @@ class ProductUtilModel : NSObject {
             }
             LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
             let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
-            NSNotificationCenter.defaultCenter().postNotificationName("\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)",
-                object: NSMutableDictionary(dictionary: resultDic))
+            let resultStr : String = resultDic.valueForKey("result") as! String
+            if resultStr == SUCCESS
+            {
+                let productArr = (resultDic.valueForKey("list") as? NSMutableArray)
+                // Tell user the result.
+                if productArr != nil && productArr?.count > 0
+                {
+                    let productDic = productArr?.objectAtIndex(0) as! NSDictionary
+                    LogModel.getInstance.insertLog("Receive product from HTTP : [\(productDic)].")
+                    let _selectedProductDic = self.getProductConfigByProductDataName(productDic.objectForKey("pos_file") as! String)
+                    if _selectedProductDic != nil
+                    {
+                        _selectedProductDic!.setObject(productDic.objectForKey("file_size")!, forKey: "file_size")
+                        _selectedProductDic!.setObject(productDic.objectForKey("id")!, forKey: "id")
+                        _selectedProductDic!.setObject(productDic.objectForKey("layer")!, forKey: "layer")
+                        _selectedProductDic!.setObject(productDic.objectForKey("mcode")!, forKey: "mcode")
+                        _selectedProductDic!.setObject(productDic.objectForKey("name")!, forKey: "name")
+                        _selectedProductDic!.setObject(productDic.objectForKey("pos_file")!, forKey: "pos_file")
+                        _selectedProductDic!.setObject(productDic.objectForKey("scan_mode")!, forKey: "scan_mode")
+                        _selectedProductDic!.setObject(productDic.objectForKey("time")!, forKey: "time")
+                        _selectedProductDic!.setObject(productDic.objectForKey("type")!, forKey: "type")
+                        self.setNewestProductAddress(_selectedProductDic?.objectForKey("ename") as! String, productAddress: productDic.objectForKey("pos_file") as! String)
+                        NSNotificationCenter.defaultCenter().postNotificationName("\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)",
+                            object: NSMutableDictionary(dictionary: _selectedProductDic!))
+                    }
+                }
+            }
         })
         task.resume()
     }
@@ -316,16 +384,26 @@ class ProductUtilModel : NSObject {
         task.resume()
     }
     
-    internal func productNameToDicControl(productNameStr : String) -> NSMutableDictionary?
+    
+    // Util tools.
+    internal func getProductConfigByProductDataName(productNameStr : String) -> NSMutableDictionary?
     {
-        // Reset productArr by new product type.
-        if _productTypeList.count == 0 || _productConfigArr.count == 0
+        if _productConfigArr.count == 0
         {
             return nil
         }
-        let productNameArr : [String] = productNameStr.componentsSeparatedByString("\\")
+        var productNameArr : [String] = productNameStr.stringByReplacingOccurrencesOfString("\0", withString: "").componentsSeparatedByString("\\")
+        if productNameArr.count == 1
+        {
+            productNameArr.insert((productNameArr[productNameArr.count - 1] as NSString).substringWithRange(NSRange(location: 0, length: 8)), atIndex: 0)
+            productNameArr.insert((productNameArr[productNameArr.count - 1] as NSString).substringWithRange(NSRange(location: 19, length: 3)), atIndex: 1)
+        }
         if productNameArr.count >= 3
         {
+            while productNameArr.count > 3
+            {
+                productNameArr.removeFirst()
+            }
             var _productDic : NSMutableDictionary?
             var _productConfigDic : NSMutableDictionary
             for i in 0 ..< _productConfigArr.count
@@ -337,14 +415,12 @@ class ProductUtilModel : NSObject {
                     _productDic!.setValue(_productConfigDic.objectForKey("type"), forKey: "type")
                     _productDic!.setValue(_productConfigDic.objectForKey("cname") as! String, forKey: "cname")
                     _productDic!.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
-                    _productDic!.setValue(_productConfigDic.objectForKey("ename") as! String, forKey: "ename")
                     _productDic!.setValue(_productConfigDic.objectForKey("colorFile"), forKey: "colorFile")
-                    _productDic!.setValue(productNameStr, forKey: "pos_file")
+                    _productDic!.setValue(productNameArr.joinWithSeparator("\\"), forKey: "pos_file")
                     _productDic!.setValue(productNameArr[productNameArr.count - 1], forKey: "name")
                     _productDic!.setValue((productNameArr[productNameArr.count - 1] as NSString).substringWithRange(NSRange(location: 23, length: 3)), forKey: "scan_mode")
                     _productDic!.setValue((_productConfigDic.objectForKey("type") as! NSNumber).stringValue + "-"
                         + productNameArr[productNameArr.count - 1].componentsSeparatedByString("_")[2], forKey: "mcode")
-                    _productArr.addObject(_productDic!)
                     break
                 }
             }

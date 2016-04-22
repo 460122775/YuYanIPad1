@@ -130,6 +130,14 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     internal func conntcpclient()
     {
+//        NSUserDefaults.standardUserDefaults().removeObjectForKey(IPSTRING)
+        if NSUserDefaults.standardUserDefaults().objectForKey(IPSTRING) != nil
+        {
+            IP_Server = NSUserDefaults.standardUserDefaults().objectForKey(IPSTRING) as! String
+            IP_PT = NSUserDefaults.standardUserDefaults().objectForKey(IPSTRING) as! String
+        }else{
+            NSUserDefaults.standardUserDefaults().setObject(IP_Server, forKey: IPSTRING)
+        }
         appIsActive = true
         if gcdSocket == nil
         {
@@ -207,7 +215,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
                 break
             
             case SOCKETCONST_NET_DATA_TYPE_PTTPUT_GEN_RESULT:
-                NSNotificationCenter.defaultCenter().postNotificationName("\(RECEIVE)\(PRODUCT)", object: _packageData.subdataWithRange(NSMakeRange(20, _packageData.length - 20 - 4)))
+                ProductUtilModel.getInstance.receiveProductFromSocketControl((String.init(data: _packageData.subdataWithRange(NSMakeRange(20, _packageData.length - 20 - 4)), encoding: NSUTF8StringEncoding))!)
                 break
             
             default:

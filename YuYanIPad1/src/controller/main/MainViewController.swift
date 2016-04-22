@@ -15,6 +15,7 @@ class MainViewController : UIViewController
     @IBOutlet var currentBtn: UIButton!
     @IBOutlet var historyBtn: UIButton!
     @IBOutlet var chatBtn: UIButton!
+    @IBOutlet var listBtnClick: UIButton!
     @IBOutlet var thresholdBtn: UIButton!
     @IBOutlet var settingBtn: UIButton!
     @IBOutlet var rightView: UIView!
@@ -101,8 +102,23 @@ class MainViewController : UIViewController
             }
             // Remove all subviews.
             for view in self.rightView.subviews {view.removeFromSuperview()}
-//            self.rightView.subviews.map { $0.removeFromSuperview() }
             self.rightView.addSubview(chatViewController!.view)
+        }
+    }
+    
+    var listViewController : ListViewController?
+    @IBAction func listBtnClick(sender: UIButton)
+    {
+        if self.changeBtnState(sender)
+        {
+            if listViewController == nil
+            {
+                listViewController = ListViewController(nibName: "ListViewController", bundle: nil)
+                self.addChildViewController(listViewController!)
+            }
+            // Remove all subviews.
+            for view in self.rightView.subviews {view.removeFromSuperview()}
+            self.rightView.addSubview(listViewController!.view)
         }
     }
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-var IP_Server : String = "114.55.30.68" //192.168.199.6
+var IP_Server : String = "192.168.199.6" //114.55.30.68
 var PORT_SERVER : Int = 9090 // 8080
 var URL_Server : String = "http://\(IP_Server):\(PORT_SERVER)/XYSystem"
 var URL_DATA : String = "http://\(IP_Server):\(PORT_SERVER)/data"
@@ -39,7 +39,7 @@ let SOCKET : String = "Socket"
 let HTTP : String = "Http"
 let LOGIN : String = "Login"
     let CURRENTUSERINFO : String = "CurrentUserInfo"
-let SUCCESS : String = "Success"
+let SUCCESS : String = "SUCCESS"
 let FAIL : String = "Fail"
 let NODATA : String = "无符合条件的产品数据！"
 let APP_ACTIVE : String = "app_active"
@@ -51,6 +51,7 @@ let UPDATE : String = "Update"
 let SELECT : String = "Select"
 let RECEIVE : String = "Receive"
 
+let IPSTRING : String = "IpString"
 let RADARSTATUS : String = "RadarStatus"
 let PRODUCTCONFIG : String = "ProductConfig"
 let HISTORYPRODUCT : String = "HistoryProduct"
@@ -60,6 +61,7 @@ let PRODUCT : String = "Product"
     let CARTOON : String = "Cartoon"
 let PRODUCTTYPELIST : String = "ProductTypeList"
     let LEVEL_FIRSTCLASS : Int64 = 0
+let LISTLIST : String = "ListList"
 let SYSTEMCONFIG : String = "SystemConfig"
 let ABOUTUS : String = "AboutUs"
 let LAWINFO : String = "LawInfo"

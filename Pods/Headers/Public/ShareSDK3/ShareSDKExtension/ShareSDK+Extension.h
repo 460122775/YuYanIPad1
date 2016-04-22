@@ -1,1 +1,1 @@
-../../../../ShareSDK3/libraries/ShareSDKExtension.framework/Headers/ShareSDK+Extension.h
+../../../../ShareSDK3/ShareSDK/Support/Optional/ShareSDKExtension.framework/Headers/ShareSDK+Extension.h

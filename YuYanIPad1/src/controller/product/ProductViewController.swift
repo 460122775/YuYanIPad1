@@ -60,9 +60,10 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         self.cartoonBarView?.cartoonBarDelegate = self
         self.cartoonBarView!.frame.origin = CGPointMake(428, 630)
         self.productContainerView.addSubview(self.cartoonBarView!)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveProduct(_:)), name: "\(RECEIVE)\(PRODUCT)", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.receiveNewestProductByHttp(_:)), name: "\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ProductViewController.getProductTypeListControl), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:
+            #selector(ProductViewController.receiveNewestProductByHttp(_:)), name: "\(NEWESTDATA)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:
+            #selector(ProductViewController.getProductTypeListControl), name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
         // Init user location.
         self.productViewA!.setUserLocationVisible(false, _updateMapCenterByLocation: true)
     }
@@ -70,28 +71,18 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     override func viewWillAppear(animated: Bool)
     {
         // Add Observer.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:
+            #selector(ProductViewController.receiveProductFromSocket(_:)), name: "\(RECEIVE)\(SOCKET)\(PRODUCT)", object: nil)
         // Use for switchToolView.
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(ProductViewController.receiveDataFromHttp(_:)),
-            name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)",
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(ProductViewController.receiveRadarStatus(_:)),
-            name: "\(RECEIVE)\(RADARSTATUS)",
-            object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(ProductViewController.appActiveControl(_:)),
-            name: "\(APP_ACTIVE)",
-            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,selector:
+            #selector(ProductViewController.receiveDataFromHttp(_:)), name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self,selector:
+            #selector(ProductViewController.receiveRadarStatus(_:)), name: "\(RECEIVE)\(RADARSTATUS)", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:
+            #selector(ProductViewController.appActiveControl(_:)), name: "\(APP_ACTIVE)", object: nil)
         //Use for cartoon.
-        NSNotificationCenter.defaultCenter().addObserver(
-            self,
-            selector: #selector(ProductViewController.receiveCartoonDataFromHttp(_:)),
-            name: "\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)",
-            object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:
+            #selector(ProductViewController.receiveCartoonDataFromHttp(_:)), name: "\(CARTOON)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         // Init radar status.
         self.receiveRadarStatus(nil)
         // Reset Map center.
@@ -105,6 +96,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
         // Stop cartoon.
         self.cartoonBarView?.stopCartoon()
         // Remove Observer.
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(RECEIVE)\(PRODUCT)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCT)\(HTTP)\(SELECT)\(SUCCESS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(RECEIVE)\(RADARSTATUS)", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(APP_ACTIVE)", object: nil)
@@ -114,12 +106,12 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     // Auto show the first product at the first time.
     func getProductTypeListControl()
     {
-        let productArr : NSArray? = ProductUtilModel.getInstance.getProductList()
-        if productArr == nil || productArr!.count == 0
+        let newestProductArr : NSArray? = ProductUtilModel.getInstance.getNewestProductList()
+        if newestProductArr == nil || newestProductArr!.count == 0
         {
             return
         }
-        let firstProductConfigDic = (productArr!.objectAtIndex(0) as? NSMutableDictionary)!
+        let firstProductConfigDic = (newestProductArr!.objectAtIndex(0) as? NSMutableDictionary)!
         ProductUtilModel.getInstance.getNewestDataByType((firstProductConfigDic.objectForKey("type") as! NSNumber).intValue)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "\(PRODUCTTYPELIST)\(SELECT)\(SUCCESS)", object: nil)
     }
@@ -200,58 +192,27 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     func receiveNewestProductByHttp(notification : NSNotification)
     {
         // Clear cartoon data.
-        cartoonPlayArr = nil
-        let resultStr : String = notification.object?.valueForKey("result") as! String
-        if resultStr == FAIL
+        self.cartoonPlayArr = nil
+        let newestProductDic : NSMutableDictionary? = notification.object as? NSMutableDictionary
+        if newestProductDic == nil
         {
             // Tell reason of FAIL.
-            SwiftNotice.showText("服务端查询失败，请重试!")
+            SwiftNotice.showText("未查询到该产品的最新数据!")
             self.synFlag = true
             return
-        }
-        // Show result data.
-        let productArr = (notification.object?.valueForKey("list") as? NSMutableArray)
-        // Tell user the result.
-        if productArr == nil || productArr?.count == 0
-        {
-            SwiftNotice.showText(NODATA)
-            self.synFlag = true
-            return
-        }
-        let productDic = productArr?.objectAtIndex(0) as! NSDictionary
-        LogModel.getInstance.insertLog("Receive product from HTTP : [\(productDic)].")
-        var _nameArrTemp : [String]? = (productDic.objectForKey("pos_file") as! String).componentsSeparatedByString("\\")
-        if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
-        {
-            self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productDic.objectForKey("pos_file") as! String)
-            let _selectedProductDic = NSMutableDictionary()
-            _selectedProductDic.setObject(productDic.objectForKey("file_size")!, forKey: "file_size")
-            _selectedProductDic.setObject(productDic.objectForKey("id")!, forKey: "id")
-            _selectedProductDic.setObject(productDic.objectForKey("layer")!, forKey: "layer")
-            _selectedProductDic.setObject(productDic.objectForKey("mcode")!, forKey: "mcode")
-            _selectedProductDic.setObject(productDic.objectForKey("name")!, forKey: "name")
-            _selectedProductDic.setObject(productDic.objectForKey("pos_file")!, forKey: "pos_file")
-            _selectedProductDic.setObject(productDic.objectForKey("scan_mode")!, forKey: "scan_mode")
-            _selectedProductDic.setObject(productDic.objectForKey("time")!, forKey: "time")
-            _selectedProductDic.setObject(productDic.objectForKey("type")!, forKey: "type")
-            self.selectedProductControl(_selectedProductDic)
+        }else{
+            self.selectedProductControl(newestProductDic!)
         }
     }
     
-    func receiveProduct(notificaiton : NSNotification)
+    func receiveProductFromSocket(notificaiton : NSNotification)
     {
-        if self.productLeftView == nil
+        let productDic : NSMutableDictionary = notificaiton.object as! NSMutableDictionary
+        // Draw the product of the same mcode.
+        if self.cartoonBarView?.isPlaying == false && ( self.currentProductDic == nil ||
+            (productDic.objectForKey("mcode") as! String) == (self.currentProductDic!.objectForKey("mcode") as! String))
         {
-            return
-        }
-        var _nameArrTemp : [String]? = (String.init(data: notificaiton.object as! NSData, encoding: NSUTF8StringEncoding)?.componentsSeparatedByString("\\"))!
-        if  _nameArrTemp != nil && _nameArrTemp!.count >= 3
-        {
-            _nameArrTemp![(_nameArrTemp?.count)! - 1] = _nameArrTemp![(_nameArrTemp?.count)! - 1].stringByReplacingOccurrencesOfString("\0", withString: "")
-            let productFilePosStr : String = "\(_nameArrTemp![(_nameArrTemp?.count)! - 3])\\\(_nameArrTemp![(_nameArrTemp?.count)! - 2])\\\(_nameArrTemp![(_nameArrTemp?.count)! - 1])"
-//            SwiftNotice.showText("收到产品［\(productFilePosStr)］")
-            self.productLeftView!.setProductAddress(_nameArrTemp![(_nameArrTemp?.count)! - 2], productAddress : productFilePosStr)
-            LogModel.getInstance.insertLog("Receive product[\(productFilePosStr)].")
+            self.selectedProductControl(productDic)
         }
     }
     
@@ -263,9 +224,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             let arr : Array = (selectedProductDic.objectForKey("name") as! String).componentsSeparatedByString("\\")
             self.currentProductDic!.setObject(arr.last!, forKey: "name")
         }
-        print("11=====================")
         let analyseProductOperation = NSBlockOperation{ () -> Void in
-            print("21=====================")
             if self.currentProductDic!.valueForKey("level") == nil || self.currentProductDic!.valueForKey("colorFile") == nil
             {
                 // Set Level for each Product.
@@ -294,22 +253,18 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             }else{
                 self.switchToolView!.setBtnVisible(true, hideVolBtn: false)
             }
-            print("22=====================")
         }
         
         let drawProductOperation = NSBlockOperation{ () -> Void in
-            print("51=====================")
             if self.currentProductData != nil
             {
                 self.drawProduct(self.currentProductData!)
                 self.synFlag = true
             }
-            print("52=====================")
         }
         
         // Prepare data.
         let prepareDataOperation = NSBlockOperation{ () -> Void in
-            print("31=====================")
             self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(selectedProductDic.objectForKey("name") as! String)
             if self.currentProductData == nil
             {
@@ -320,7 +275,6 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
                 url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
                 // Download data.
                 Alamofire.request(.GET, url).responseData { response in
-                    print("41=====================")
                     LogModel.getInstance.insertLog("ProductViewController downloaded selected data2:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
                     if response.result.value == nil || response.result.value?.length <= 48
                     {
@@ -342,17 +296,14 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
                     }else{
                        drawProductOperation.start()
                     }
-                    print("42=====================")
                 }
             }else{
                 drawProductOperation.start()
             }
-            print("32=====================")
         }
         prepareDataOperation.addDependency(analyseProductOperation)
         let queue = NSOperationQueue()
         queue.addOperations([prepareDataOperation, analyseProductOperation], waitUntilFinished: false)
-        print("12=====================")
     }
 
     func drawProduct(data : NSData)
@@ -379,7 +330,7 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
     }
     
     // Product left view delegate
-    func chooseProductFromLeftList(productType : Int32, selectedProductDic: NSMutableDictionary?)
+    func chooseProductFromLeftList(productType: Int32, productPosFile: String?)
     {
         // Clear all.
         self.cartoonBarView?.stopCartoon()
@@ -388,9 +339,13 @@ class ProductViewController : UIViewController, ProductLeftViewProtocol, SwitchT
             self.titleLabel.text = "--"
         })
         // Draw newest product or fetch the newest one from server.
-        if selectedProductDic != nil
+        if productPosFile != nil
         {
-            self.selectedProductControl(selectedProductDic!)
+            let _productDic = ProductUtilModel.getInstance.getProductConfigByProductDataName(productPosFile!)
+            if _productDic != nil
+            {
+                self.selectedProductControl(_productDic!)
+            }
         }else{
             ProductUtilModel.getInstance.getNewestDataByType(productType)
         }
