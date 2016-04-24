@@ -15,6 +15,7 @@ protocol HistoryChoiceProtocol
     func historyQueryControl(selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
     func chooseProductControl()
     func timeBtnClick()
+    func queryHistoryData()
 }
 
 class HistoryChoiceView : UIView
@@ -171,13 +172,8 @@ class HistoryChoiceView : UIView
         {
             delegate?.historyQueryControl(self._selectProductConfigDir!, startTimeStr: (startTimeBtn.titleLabel?.text)!, endTimeStr: (endTimeBtn.titleLabel?.text)!) 
         }
+        self.delegate?.queryHistoryData()
         // Get Data.
-        ProductUtilModel.getInstance.getHistoryData(
-            self.startTime!.timeIntervalSince1970,
-            endTime: self.endTime!.timeIntervalSince1970,
-            productType: Int32((self._selectProductConfigDir!.objectForKey("type")?.integerValue)!),
-            currentPage: 1,
-            mcode: nil
-        )
+        
     }
 }

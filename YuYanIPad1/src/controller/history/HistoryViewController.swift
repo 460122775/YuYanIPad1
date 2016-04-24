@@ -39,6 +39,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var endTimeStr : String?
     var requestLayer : Int32 = -1
     var synFlag : Bool = true
+    var currentPageDic : NSMutableDictionary = NSMutableDictionary(objects:[1, 0, 15], forKeys: ["currentPage", "totalNumber", "pageSize"])
     
     override func viewDidLoad()
     {
@@ -231,6 +232,10 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 SwiftNotice.showNoticeWithText(NoticeType.info, text: "当前条件下未查询到数据！", autoClear: true, autoClearTime: 2)
                 return
             }
+            let pageDic = (notification!.object?.valueForKey("pageVo") as? NSDictionary)
+            self.currentPageDic.setObject((pageDic?.objectForKey("currentPage"))!, forKey: "currentPage")
+            self.currentPageDic.setObject((pageDic?.objectForKey("totalNumber"))!, forKey: "totalNumber")
+            self.currentPageDic.setObject((pageDic?.objectForKey("pageSize"))!, forKey: "pageSize")
             self.historyQueryLeftView?.setHistoryQueryResultArr(queryResultArr)
         }
     }
@@ -275,6 +280,42 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         }
     }
     
+    func showLastPageControl()
+    {
+        let currentPage = (self.currentPageDic.objectForKey("currentPage") as! NSNumber).intValue
+        if currentPage - 1 <= 0
+        {
+            return
+        }
+        self.currentPageDic.setObject(currentPage - 1, forKey: "currentPage")
+        self.elevationChooseControl(self.currentElevationValue)
+    }
+    
+    func showNextPageControl()
+    {
+        let currentPage = (self.currentPageDic.objectForKey("currentPage") as! NSNumber).integerValue
+        let totalNumber = (self.currentPageDic.objectForKey("totalNumber") as! NSNumber).integerValue
+        let pageSize = (self.currentPageDic.objectForKey("pageSize") as! NSNumber).integerValue
+        var totalPage = totalNumber / pageSize
+        if totalNumber % pageSize != 0
+        {
+            totalPage += 1
+        }
+        if currentPage >= totalPage
+        {
+            return
+        }
+        self.currentPageDic.setObject(currentPage + 1, forKey: "currentPage")
+        self.elevationChooseControl(self.currentElevationValue)
+    }
+    
+    func queryHistoryData()
+    {
+        self.currentPageDic.setObject(1, forKey: "currentPage")
+        self.currentElevationValue = -1
+        self.elevationChooseControl(self.currentElevationValue)
+    }
+    
     var historyChoiceOfProductView : HistoryChoiceOfProductView?
     func chooseProductControl()
     {
@@ -297,9 +338,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
     {
         currentProductDic = selectedProductDic
-        print("11=====================")
         let analyseProductOperation = NSBlockOperation{ () -> Void in
-            print("21=====================")
             if self.currentProductDic!.objectForKey("level") == nil
             {
                 // Set Level for each Product.
@@ -328,22 +367,18 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             }else{
                 self.switchToolView!.setBtnVisible(true, hideVolBtn: false)
             }
-            print("22=====================")
         }
         
         let drawProductOperation = NSBlockOperation{ () -> Void in
-            print("51=====================")
             if self.currentProductData != nil
             {
                 self.drawProduct(self.currentProductData!)
                 self.synFlag = true
             }
-            print("52=====================")
         }
         
         // Prepare data.
         let prepareDataOperation = NSBlockOperation{ () -> Void in
-            print("31=====================")
             self.currentProductData = CacheManageModel.getInstance.getCacheForProductFile(self.currentProductDic!.objectForKey("name") as! String)
             if self.currentProductData == nil
             {
@@ -354,7 +389,6 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 url = url.stringByReplacingOccurrencesOfString("\\", withString: "/", options: .LiteralSearch, range: nil)
                 // Download data.
                 Alamofire.request(.GET, url).responseData { response in
-                    print("41=====================")
                     LogModel.getInstance.insertLog("HistoryViewController downloaded selected data:[\(URL_DATA)/\(selectedProductDic.objectForKey("pos_file") as! String)].")
                     if response.result.value == nil || response.result.value?.length <= 48
                     {
@@ -376,18 +410,14 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                     }else{
                         drawProductOperation.start()
                     }
-                    print("42=====================")
                 }
             }else{
                 drawProductOperation.start()
             }
-            print("32=====================")
         }
-        
         prepareDataOperation.addDependency(analyseProductOperation)
         let queue = NSOperationQueue()
         queue.addOperations([prepareDataOperation, analyseProductOperation], waitUntilFinished: false)
-        print("12=====================")
     }
 
     var elevationView : HistoryElevationChoiceView?
@@ -421,7 +451,7 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
             (self.historyChoiceView?.startTime?.timeIntervalSince1970)!,
             endTime: (self.historyChoiceView?.endTime?.timeIntervalSince1970)!,
             productType: Int32((currentProductConfigDic!.objectForKey("type") as! NSNumber).intValue),
-            currentPage: 1,
+            currentPage: (self.currentPageDic.objectForKey("currentPage") as! NSNumber).intValue,
             mcode: (elevationValue < 0) ? nil : (String(format: "%i", (currentProductConfigDic!.objectForKey("type") as! NSNumber).intValue) + "-" + String(format: "%.2f", elevationValue))
         )
         self.returnBackToResult()

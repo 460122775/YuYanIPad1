@@ -16,6 +16,8 @@ protocol HistoryQueryLeftViewProtocol
     func returnBackToChoice()
     func selectedProductControl(selectedProductDic : NSMutableDictionary)
     func showElevationChoiceView()
+    func showLastPageControl()
+    func showNextPageControl()
 }
 
 class HistoryQueryLeftView : UIView, HistoryResultProtocol
@@ -115,6 +117,22 @@ class HistoryQueryLeftView : UIView, HistoryResultProtocol
         if historyQueryLeftViewProtocol != nil
         {
             historyQueryLeftViewProtocol?.returnBackToChoice()
+        }
+    }
+    
+    func showLastPage()
+    {
+        if historyQueryLeftViewProtocol != nil
+        {
+            historyQueryLeftViewProtocol?.showLastPageControl()
+        }
+    }
+    
+    func showNextPage()
+    {
+        if historyQueryLeftViewProtocol != nil
+        {
+            historyQueryLeftViewProtocol?.showNextPageControl()
         }
     }
     

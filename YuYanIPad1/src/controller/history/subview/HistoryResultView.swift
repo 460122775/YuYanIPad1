@@ -15,6 +15,8 @@ protocol HistoryResultProtocol
     func returnBackToChoice()
     func selectedProductControl(selectedProductDic : NSMutableDictionary)
     func showElevationChoiceView()
+    func showLastPage()
+    func showNextPage()
 }
 
 class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
@@ -28,6 +30,11 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
     var resultArr : NSMutableArray?
     var ResultListTableCellIndentifier : String = "ResultListTableCellIndentifier"
     var ELEVATIONCHOOSE_ALL : String = "全部"
+    
+    var refreshFooter : SDRefreshFooterView?
+    var refreshHeader : SDRefreshHeaderView?
+    var totalRowCount : NSInteger = 0
+    var noUseCount : NSInteger = 0
     
     @IBOutlet var productTitleLabel: UILabel!
     @IBOutlet var elevationChooseBtn: UIButton!
@@ -46,9 +53,55 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         // Set product table view.
         self.resultTableView!.dataSource = self
         self.resultTableView!.delegate = self
-//        self.resultTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ResultListTableCellIndentifier)
         self.resultTableView.layoutMargins = UIEdgeInsetsZero
         self.resultTableView.separatorInset = UIEdgeInsetsZero
+        
+        self.setupHeader()
+        self.setupFooter()
+    }
+    
+    func setupHeader()
+    {
+        if self.refreshHeader == nil
+        {
+            self.refreshHeader = SDRefreshHeaderView()
+        }
+        // 默认是在navigationController环境下，如果不是在此环境下，请设置 
+        self.refreshHeader!.isEffectedByNavigationController = false
+        self.refreshHeader!.addToScrollView(self.resultTableView)
+        self.refreshHeader!.beginRefreshingOperation = {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (CLongLong)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), {
+//                self.totalRowCount += 3
+//                self.noUseCount = 3
+                self.delegate?.showLastPage()
+                self.resultTableView.reloadData()
+                self.refreshHeader?.endRefreshing()
+                
+            });
+        };
+        // 进入页面自动加载一次数据
+        self.refreshHeader!.autoRefreshWhenViewDidAppear()
+    }
+    
+    func setupFooter()
+    {
+        if self.refreshFooter == nil
+        {
+            self.refreshFooter = SDRefreshFooterView()
+        }
+        self.refreshFooter!.addToScrollView(self.resultTableView)
+        self.refreshFooter!.addTarget(self, refreshAction: #selector(HistoryResultView.footerRefresh))
+    }
+    
+    func footerRefresh()
+    {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (CLongLong)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), {
+//            self.totalRowCount += 2;
+//            self.noUseCount = 2
+            self.delegate?.showNextPage()
+            self.resultTableView.reloadData()
+            self.refreshFooter?.endRefreshing()
+        });
     }
     
     func changResultTitle(_currentProductConfigDic : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
@@ -86,6 +139,8 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         {
             self.elevationChooseBtn.hidden = true
             self.elevationChooseBtn.enabled = false
+            self.totalRowCount = 0
+            self.noUseCount = 0
         }else{
             // Only for first class product.
             if (self.currentProductConfigDic!.valueForKey("level") as! NSNumber).intValue == 0
@@ -93,8 +148,8 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
                 self.elevationChooseBtn.hidden = false
                 self.elevationChooseBtn.enabled = true
             }
-        }
-        // Must reload data in main queue, or maybe crashed.
+            self.totalRowCount = (resultArr?.count)!
+        }        // Must reload data in main queue, or maybe crashed.
         dispatch_async(dispatch_get_main_queue(), {
             self.resultTableView.reloadData()
         });
@@ -114,6 +169,7 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         return resultArr
     }
     
+    // Operate handler.
     @IBAction func elevationBtnClick(sender: UIButton)
     {
         self.delegate!.showElevationChoiceView()
@@ -130,14 +186,16 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    /************** Table view delegate.  ***********/
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        if resultArr != nil
-        {
-            return resultArr!.count
-        }else{
-            return 0
-        }
+        return self.totalRowCount
+//        if resultArr != nil
+//        {
+//            return resultArr!.count
+//        }else{
+//            return 0
+//        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -165,7 +223,11 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
             cell!.separatorInset = UIEdgeInsetsZero
             cell!.layoutMargins = UIEdgeInsetsZero
         }
-        let _productDic : NSMutableDictionary = (resultArr?.objectAtIndex(indexPath.row as Int) as? NSMutableDictionary)!
+        if indexPath.row < noUseCount
+        {
+            return cell!
+        }
+        let _productDic : NSMutableDictionary = (resultArr?.objectAtIndex(indexPath.row as Int - noUseCount) as? NSMutableDictionary)!
         if _productDic != _selectedProductDic
         {
             cell!.contentView.backgroundColor = UIColor.clearColor();
@@ -197,7 +259,7 @@ class HistoryResultView : UIView, UITableViewDelegate, UITableViewDataSource
         {
             return
         }
-        _selectedProductDic = NSMutableDictionary(dictionary: (resultArr?.objectAtIndex(indexPath.row as Int) as? NSDictionary)!)
+        _selectedProductDic = NSMutableDictionary(dictionary: (resultArr?.objectAtIndex(indexPath.row as Int  - noUseCount) as? NSDictionary)!)
         self.delegate?.selectedProductControl(_selectedProductDic!)
     }
 }

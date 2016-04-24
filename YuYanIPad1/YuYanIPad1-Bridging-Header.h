@@ -20,6 +20,8 @@
 #import "VILDrawData.h"
 #import <sqlite3.h>
 #import <CoreLocation/CoreLocation.h>
+#import "SDRefresh.h"
+
 
 //########## ShareSDK  -start ##############
 //#import <ShareSDK/ShareSDK.h>
