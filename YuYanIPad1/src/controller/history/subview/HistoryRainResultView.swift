@@ -81,6 +81,8 @@ class HistoryRainResultView : UIView, UITableViewDelegate, UITableViewDataSource
                 if self.currentPageVo.currentPage > 1
                 {
                     self.requestRainData(self.currentPageVo.currentPage - 1)
+                }else{
+                    SwiftNotice.showText("已经是第一页了。")
                 }
                 self.resultTableView.reloadData()
                 self.refreshHeader?.endRefreshing()
@@ -111,6 +113,8 @@ class HistoryRainResultView : UIView, UITableViewDelegate, UITableViewDataSource
             if self.currentPageVo.currentPage < totalPage
             {
                 self.requestRainData(self.currentPageVo.currentPage + 1)
+            }else{
+                SwiftNotice.showText("已经是最后一页了。")
             }
             self.resultTableView.reloadData()
             self.refreshFooter?.endRefreshing()
@@ -174,6 +178,10 @@ class HistoryRainResultView : UIView, UITableViewDelegate, UITableViewDataSource
         }
         // Show result data.
         resultArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
+        let pageVo = (notification!.object?.valueForKey("pageVo") as? NSMutableDictionary)
+        self.currentPageVo.currentPage = (pageVo?.objectForKey("currentPage") as! NSNumber).intValue
+        self.currentPageVo.totalNumber = (pageVo?.objectForKey("totalNumber") as! NSNumber).intValue
+        self.currentPageVo.pageSize = (pageVo?.objectForKey("pageSize") as! NSNumber).intValue
         // Tell user the result.
         if resultArr == nil || resultArr?.count == 0
         {
@@ -199,6 +207,10 @@ class HistoryRainResultView : UIView, UITableViewDelegate, UITableViewDataSource
         }
         // Show result data.
         resultArr = (notification!.object?.valueForKey("list") as? NSMutableArray)
+        let pageVo = (notification!.object?.valueForKey("pageVo") as? NSMutableDictionary)
+        self.currentPageVo.currentPage = (pageVo?.objectForKey("currentPage") as! NSNumber).intValue
+        self.currentPageVo.totalNumber = (pageVo?.objectForKey("totalNumber") as! NSNumber).intValue
+        self.currentPageVo.pageSize = (pageVo?.objectForKey("pageSize") as! NSNumber).intValue
         // Tell user the result.
         if resultArr == nil || resultArr?.count == 0
         {
