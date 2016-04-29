@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 
-class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryQueryLeftViewProtocol, HSDatePickerViewControllerDelegate, SwitchToolDelegate, ProductViewADelegate, HistoryElevationChoiceProtocol, CartoonBarDelegate
+class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryChoiceOfProductProtocol, HistoryQueryLeftViewProtocol, HSDatePickerViewControllerDelegate, SwitchToolDelegate, ProductViewADelegate, HistoryElevationChoiceProtocol, CartoonBarDelegate, HistoryRainResultProtocol
 {
     @IBOutlet var topTitleBarView: UIView!
     @IBOutlet var titleBarBgImg: UIImageView!
@@ -39,7 +39,9 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     var endTimeStr : String?
     var requestLayer : Int32 = -1
     var synFlag : Bool = true
-    var currentPageDic : NSMutableDictionary = NSMutableDictionary(objects:[1, 0, 15], forKeys: ["currentPage", "totalNumber", "pageSize"])
+    var currentPageVo : PageVo = PageVo()
+    let dateFormatter = NSDateFormatter()
+    var showRainDataQuery : Bool = false
     
     override func viewDidLoad()
     {
@@ -205,6 +207,41 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
         self.historyQueryLeftView?.showQueryResult(_selectProductConfigDir, startTimeStr: _startTimeStr, endTimeStr: _endTimeStr)
     }
     
+    var historyRainResultView : HistoryRainResultView?
+    func queryByDateControl(_selectProductConfigDir : NSMutableDictionary, startTimeStr: String, endTimeStr: String)
+    {
+        self.currentProductConfigDic = _selectProductConfigDir
+        self.historyChoiceView?.removeFromSuperview()
+        if self.historyRainResultView == nil
+        {
+            self.historyRainResultView = (NSBundle.mainBundle().loadNibNamed("HistoryRainResultView", owner: self, options: nil) as NSArray).lastObject as? HistoryRainResultView
+            self.historyRainResultView?.delegate = self
+        }
+        self.historyLeftViewContainer.addSubview(self.historyRainResultView!)
+        self.historyRainResultView?.queryByDateResultControl(startTimeStr, endTimeStr: endTimeStr)
+    }
+    
+    func queryByHourControl(_selectProductConfigDir : NSMutableDictionary, startTimeStr: String, endTimeStr: String)
+    {
+        self.currentProductConfigDic = _selectProductConfigDir
+        self.historyChoiceView?.removeFromSuperview()
+        if self.historyRainResultView == nil
+        {
+            self.historyRainResultView = (NSBundle.mainBundle().loadNibNamed("HistoryRainResultView", owner: self, options: nil) as NSArray).lastObject as? HistoryRainResultView
+            self.historyRainResultView?.delegate = self
+        }
+        self.historyLeftViewContainer.addSubview(self.historyRainResultView!)
+        self.historyRainResultView?.queryByHourResultControl(startTimeStr, endTimeStr: endTimeStr)
+    }
+    
+    func queryHistoryByRain(startTimeStr : String, endTimeStr : String)
+    {
+        showRainDataQuery = true
+        self.historyRainResultView?.removeFromSuperview()
+        self.historyQueryControl(self.currentProductConfigDic!, startTimeStr: startTimeStr, endTimeStr: endTimeStr)
+        self.queryHistoryData()
+    }
+    
     var datePickerController : HSDatePickerViewController?
     func timeBtnClick()
     {
@@ -233,9 +270,9 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
                 return
             }
             let pageDic = (notification!.object?.valueForKey("pageVo") as? NSDictionary)
-            self.currentPageDic.setObject((pageDic?.objectForKey("currentPage"))!, forKey: "currentPage")
-            self.currentPageDic.setObject((pageDic?.objectForKey("totalNumber"))!, forKey: "totalNumber")
-            self.currentPageDic.setObject((pageDic?.objectForKey("pageSize"))!, forKey: "pageSize")
+            currentPageVo.currentPage = (pageDic?.objectForKey("currentPage") as! NSNumber).intValue
+            currentPageVo.pageSize = (pageDic?.objectForKey("pageSize") as! NSNumber).intValue
+            currentPageVo.totalNumber = (pageDic?.objectForKey("totalNumber") as! NSNumber).intValue
             self.historyQueryLeftView?.setHistoryQueryResultArr(queryResultArr)
         }
     }
@@ -282,36 +319,32 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     
     func showLastPageControl()
     {
-        let currentPage = (self.currentPageDic.objectForKey("currentPage") as! NSNumber).intValue
-        if currentPage - 1 <= 0
+        if currentPageVo.currentPage - 1 <= 0
         {
             return
         }
-        self.currentPageDic.setObject(currentPage - 1, forKey: "currentPage")
+        currentPageVo.currentPage = currentPageVo.currentPage - 1
         self.elevationChooseControl(self.currentElevationValue)
     }
     
     func showNextPageControl()
     {
-        let currentPage = (self.currentPageDic.objectForKey("currentPage") as! NSNumber).integerValue
-        let totalNumber = (self.currentPageDic.objectForKey("totalNumber") as! NSNumber).integerValue
-        let pageSize = (self.currentPageDic.objectForKey("pageSize") as! NSNumber).integerValue
-        var totalPage = totalNumber / pageSize
-        if totalNumber % pageSize != 0
+        var totalPage = currentPageVo.totalNumber / currentPageVo.pageSize
+        if currentPageVo.totalNumber % currentPageVo.pageSize != 0
         {
             totalPage += 1
         }
-        if currentPage >= totalPage
+        if currentPageVo.currentPage >= totalPage
         {
             return
         }
-        self.currentPageDic.setObject(currentPage + 1, forKey: "currentPage")
+        currentPageVo.currentPage = currentPageVo.currentPage + 1
         self.elevationChooseControl(self.currentElevationValue)
     }
     
     func queryHistoryData()
     {
-        self.currentPageDic.setObject(1, forKey: "currentPage")
+        currentPageVo.currentPage = 1
         self.currentElevationValue = -1
         self.elevationChooseControl(self.currentElevationValue)
     }
@@ -331,8 +364,14 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     func returnBackToChoice()
     {
         for view in self.historyLeftViewContainer!.subviews {view.removeFromSuperview()}
-//        self.historyLeftViewContainer?.subviews.map { $0.removeFromSuperview() }
-        self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
+        if showRainDataQuery
+        {
+            self.historyLeftViewContainer.addSubview(self.historyRainResultView!)
+            showRainDataQuery = false
+        }else{
+            self.historyLeftViewContainer.addSubview(self.historyChoiceView!)
+            showRainDataQuery = false
+        }
     }
     
     func selectedProductControl(selectedProductDic: NSMutableDictionary)
@@ -447,11 +486,12 @@ class HistoryViewController : UIViewController, HistoryChoiceProtocol, HistoryCh
     {
         currentElevationValue = elevationValue
         self.historyQueryLeftView?.setElevationValue(elevationValue)
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         ProductUtilModel.getInstance.getHistoryData(
-            (self.historyChoiceView?.startTime?.timeIntervalSince1970)!,
-            endTime: (self.historyChoiceView?.endTime?.timeIntervalSince1970)!,
+            dateFormatter.dateFromString(startTimeStr!)!.timeIntervalSince1970,
+            endTime: dateFormatter.dateFromString(endTimeStr!)!.timeIntervalSince1970,
             productType: Int32((currentProductConfigDic!.objectForKey("type") as! NSNumber).intValue),
-            currentPage: (self.currentPageDic.objectForKey("currentPage") as! NSNumber).intValue,
+            currentPage: currentPageVo.currentPage,
             mcode: (elevationValue < 0) ? nil : (String(format: "%i", (currentProductConfigDic!.objectForKey("type") as! NSNumber).intValue) + "-" + String(format: "%.2f", elevationValue))
         )
         self.returnBackToResult()

@@ -130,7 +130,7 @@ class SocketCenter: NSObject, NSNetServiceDelegate, NSNetServiceBrowserDelegate,
     
     internal func conntcpclient()
     {
-//        NSUserDefaults.standardUserDefaults().removeObjectForKey(IPSTRING)
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(IPSTRING)
         if NSUserDefaults.standardUserDefaults().objectForKey(IPSTRING) != nil
         {
             IP_Server = NSUserDefaults.standardUserDefaults().objectForKey(IPSTRING) as! String

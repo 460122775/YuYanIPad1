@@ -16,6 +16,8 @@ protocol HistoryChoiceProtocol
     func chooseProductControl()
     func timeBtnClick()
     func queryHistoryData()
+    func queryByDateControl(_selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
+    func queryByHourControl(_selectProductConfigDir : NSMutableDictionary, startTimeStr : String, endTimeStr : String)
 }
 
 class HistoryChoiceView : UIView
@@ -172,8 +174,35 @@ class HistoryChoiceView : UIView
         {
             delegate?.historyQueryControl(self._selectProductConfigDir!, startTimeStr: (startTimeBtn.titleLabel?.text)!, endTimeStr: (endTimeBtn.titleLabel?.text)!) 
         }
-        self.delegate?.queryHistoryData()
         // Get Data.
-        
+        self.delegate?.queryHistoryData()
+    }
+    
+    @IBAction func queryByDayBtnClick(sender: UIButton)
+    {
+        // If NULL.
+        if self._selectProductConfigDir == nil
+        {
+            return
+        }
+        // Get Data.
+        if delegate != nil
+        {
+            delegate?.queryByDateControl(self._selectProductConfigDir!, startTimeStr: (startTimeBtn.titleLabel?.text)!, endTimeStr: (endTimeBtn.titleLabel?.text)!)
+        }
+    }
+    
+    @IBAction func queryByHourBtnClick(sender: AnyObject)
+    {
+        // If NULL.
+        if self._selectProductConfigDir == nil
+        {
+            return
+        }
+        // Get Data.
+        if delegate != nil
+        {
+            delegate?.queryByHourControl(self._selectProductConfigDir!, startTimeStr: (startTimeBtn.titleLabel?.text)!, endTimeStr: (endTimeBtn.titleLabel?.text)!)
+        }
     }
 }

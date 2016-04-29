@@ -122,6 +122,8 @@
 		01C29CFD1AB7D621008CBE96 /* image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C29CFC1AB7D621008CBE96 /* image.xcassets */; };
 		01C29D011AB7D9C4008CBE96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */; };
 		01C29D021AB7D9C4008CBE96 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */; };
+		01C6E6981CD209BB000032B3 /* HistoryRainResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C6E6961CD209BB000032B3 /* HistoryRainResultView.swift */; };
+		01C6E6991CD209BB000032B3 /* HistoryRainResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01C6E6971CD209BB000032B3 /* HistoryRainResultView.xib */; };
 		01DB7D861C8D0B6E0061475E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D851C8D0B6E0061475E /* CoreLocation.framework */; };
 		01DB7D881C8D0B790061475E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D871C8D0B790061475E /* QuartzCore.framework */; };
 		01DB7D8A1C8D0C020061475E /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01DB7D891C8D0C020061475E /* libsqlite3.0.tbd */; };
@@ -296,6 +298,8 @@
 		01C29CFC1AB7D621008CBE96 /* image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = image.xcassets; sourceTree = "<group>"; };
 		01C29CFF1AB7D9C4008CBE96 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = src/controller/app/AppDelegate.swift; sourceTree = "<group>"; };
 		01C29D001AB7D9C4008CBE96 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = src/controller/app/LaunchScreen.xib; sourceTree = "<group>"; };
+		01C6E6961CD209BB000032B3 /* HistoryRainResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryRainResultView.swift; path = src/controller/history/subview/HistoryRainResultView.swift; sourceTree = "<group>"; };
+		01C6E6971CD209BB000032B3 /* HistoryRainResultView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HistoryRainResultView.xib; path = src/controller/history/subview/HistoryRainResultView.xib; sourceTree = "<group>"; };
 		01DAD1F51C4485CD0007F35F /* NameSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NameSpace.h; path = src/model/common/NameSpace.h; sourceTree = "<group>"; };
 		01DB7D851C8D0B6E0061475E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		01DB7D871C8D0B790061475E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -578,6 +582,8 @@
 		01823A1F1ABBA9F400E70E74 /* subview */ = {
 			isa = PBXGroup;
 			children = (
+				01C6E6961CD209BB000032B3 /* HistoryRainResultView.swift */,
+				01C6E6971CD209BB000032B3 /* HistoryRainResultView.xib */,
 				016FFD3A1AC2643F00596975 /* HistoryChoiceView.swift */,
 				01823A201ABBAA6C00E70E74 /* HistoryChoiceView.xib */,
 				01823A241ABBAABD00E70E74 /* HistoryChoiceOfTimeView.xib */,
@@ -1060,6 +1066,7 @@
 				016F567F1AC3050C008D8615 /* ChatMainView.xib in Resources */,
 				01E405731BEB2D6200C68C21 /* HSDatePickerViewController.xib in Resources */,
 				017AF58A1AC3E2B700757E50 /* ConfigView.xib in Resources */,
+				01C6E6991CD209BB000032B3 /* HistoryRainResultView.xib in Resources */,
 				01823A1A1ABBA96400E70E74 /* ProductListView.xib in Resources */,
 				01FB3C3E1AB980ED00C41264 /* ProductViewController.xib in Resources */,
 				017AF5901AC3E31900757E50 /* VersionView.xib in Resources */,
@@ -1198,6 +1205,7 @@
 				0129CAA21C51DC2A00C58D4B /* OHPDrawData.m in Sources */,
 				017AF5711AC3E09700757E50 /* NavListView.swift in Sources */,
 				01A859EF1BE85DEB009FECCA /* NSArray.swift in Sources */,
+				01C6E6981CD209BB000032B3 /* HistoryRainResultView.swift in Sources */,
 				01A859E71BE85DEB009FECCA /* Bool.swift in Sources */,
 				01823A321ABBAC3600E70E74 /* HistoryViewController.swift in Sources */,
 				012373C11CCA00BF00B4C37B /* UIView+SDExtension.m in Sources */,

@@ -202,6 +202,49 @@ class ProductUtilModel : NSObject {
         return _newestProductArr
     }
     
+    func getHistoryRainDataByDate(startTimeStr : String, endTimeStr : String, currentPage : Int32)
+    {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let startTime = dateFormatter.dateFromString(startTimeStr)!.timeIntervalSince1970
+        let endTime = dateFormatter.dateFromString(endTimeStr)!.timeIntervalSince1970
+        
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectRainDataByMonth?startTime=\(Int64(startTime))&endTime=\(Int64(endTime))&currentPage=\(currentPage)&pageSize=31"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYRAIN_DATE)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
+    func getHistoryRainDataByHour(startTimeStr : String, endTimeStr : String, currentPage : Int32)
+    {
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let startTime = dateFormatter.dateFromString(startTimeStr)!.timeIntervalSince1970
+        let endTime = dateFormatter.dateFromString(endTimeStr)!.timeIntervalSince1970
+        
+        let urlStr : NSString = "\(URL_Server)/ios/product/selectRainDataByDate?startTime=\(Int64(startTime))&endTime=\(Int64(endTime))&currentPage=\(currentPage)&pageSize=24"
+        LogModel.getInstance.insertLog("\(urlStr)")
+        let url = NSURL(string: urlStr.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if response == nil || data == nil
+            {
+                return
+            }
+            let resultDic : NSDictionary = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+            LogModel.getInstance.insertLog(String(data: data!, encoding: NSUTF8StringEncoding)!)
+            NSNotificationCenter.defaultCenter().postNotificationName("\(HISTORYRAIN_HOUR)\(SELECT)\(SUCCESS)", object: NSMutableDictionary(dictionary: resultDic))
+        })
+        task.resume()
+    }
+    
     internal func getElevationData(startTime : NSTimeInterval, endTime _endTime: NSTimeInterval,
         productType _productType : Int32)
     {

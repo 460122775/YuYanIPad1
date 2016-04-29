@@ -8,7 +8,7 @@
 
 import Foundation
 
-var IP_Server : String = "114.55.30.68" //192.168.199.6
+var IP_Server : String = "192.168.199.6" //114.55.30.68
 var PORT_SERVER : Int = 9090 // 8080
 var URL_Server : String = "http://\(IP_Server):\(PORT_SERVER)/XYSystem"
 var URL_DATA : String = "http://\(IP_Server):\(PORT_SERVER)/data"
@@ -56,6 +56,8 @@ let RADARSTATUS : String = "RadarStatus"
 let PRODUCTCONFIG : String = "ProductConfig"
 let HISTORYPRODUCT : String = "HistoryProduct"
 let ELEVATIONLIST : String = "ElevationList"
+let HISTORYRAIN_DATE : String = "HistoryRain_Date"
+let HISTORYRAIN_HOUR : String = "HistoryRain_Hour"
 let PRODUCT : String = "Product"
     let NEWESTDATA : String = "NewestData"
     let CARTOON : String = "Cartoon"
@@ -67,3 +69,4 @@ let ABOUTUS : String = "AboutUs"
 let LAWINFO : String = "LawInfo"
 let CLAUSEINFO : String = "ClauseInfo"
 let VERSIONINFO : String = "VersionInfo"
+let RAINDATA : String = ""
