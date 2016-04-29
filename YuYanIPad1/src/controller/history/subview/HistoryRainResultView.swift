@@ -78,11 +78,10 @@ class HistoryRainResultView : UIView, UITableViewDelegate, UITableViewDataSource
         self.refreshHeader!.addToScrollView(self.resultTableView)
         self.refreshHeader!.beginRefreshingOperation = {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (CLongLong)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), {
-                if self.currentPageVo.currentPage - 1 <= 0
+                if self.currentPageVo.currentPage > 1
                 {
-                    return
+                    self.requestRainData(self.currentPageVo.currentPage - 1)
                 }
-                self.requestRainData(self.currentPageVo.currentPage - 1)
                 self.resultTableView.reloadData()
                 self.refreshHeader?.endRefreshing()
             });
@@ -109,12 +108,10 @@ class HistoryRainResultView : UIView, UITableViewDelegate, UITableViewDataSource
             {
                 totalPage += 1
             }
-            if self.currentPageVo.currentPage >= totalPage
+            if self.currentPageVo.currentPage < totalPage
             {
-                return
+                self.requestRainData(self.currentPageVo.currentPage + 1)
             }
-            
-            self.requestRainData(self.currentPageVo.currentPage + 1)
             self.resultTableView.reloadData()
             self.refreshFooter?.endRefreshing()
         });
